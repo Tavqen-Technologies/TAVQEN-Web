@@ -259,13 +259,13 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div className="pt-4 border-t border-[#E2E8F0] space-y-2 text-xs text-[#64748B]">
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#0088CC]" />
-                <a href="mailto:contact@tavqen.com" className="hover:text-[#0B132B] transition-colors font-medium">
-                  contact@tavqen.com
+                <a href="mailto:tavqentechnologies@gmail.com" className="hover:text-[#0B132B] transition-colors font-medium">
+                  tavqentechnologies@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#0088CC]" />
-                <span>Global Remote Engineering Studio</span>
+                <span>Indore, Madhya Pradesh, India</span>
               </div>
             </div>
           </div>

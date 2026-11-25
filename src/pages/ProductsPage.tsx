@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import OurProducts from '../components/OurProducts';
+import TavqenProductsOrbit from '../components/TavqenProductsOrbit';
 
 interface ProductsPageProps {
   onNavigate?: (path: string) => void;
@@ -16,35 +17,11 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
   };
 
   return (
-    <div className="pt-28 sm:pt-36 pb-20 sm:pb-28">
-      {/* GLOBAL CONTAINER */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Breadcrumb */}
-        <div className="mb-6 sm:mb-8">
-          <button
-            type="button"
-            onClick={() => handleNav('/home')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-          >
-            <span>← Back to Home</span>
-          </button>
-        </div>
-
-        {/* ========================================================= */}
-        {/* PAGE HERO HEADER                                          */}
-        {/* ========================================================= */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
-            Proprietary SaaS & Consumer Products
-          </span>
-          <h1 className="text-3xl sm:text-5xl md:text-[56px] font-medium tracking-tight text-[#0B132B] leading-[1.12]">
-            Products crafted with purpose.
-          </h1>
-          <p className="mt-4 sm:mt-5 text-[15px] sm:text-[17px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto">
-            Alongside our client engineering services, TAVQEN architects, builds, and scales proprietary SaaS platforms and consumer mobile apps loved by tens of thousands of users.
-          </p>
-        </div>
-      </div>
+    <div className="pb-20 sm:pb-28">
+      {/* ========================================================= */}
+      {/* TAVQEN ORBITAL PRODUCTS COSMOS (TOP HERO SHOWCASE)        */}
+      {/* ========================================================= */}
+      <TavqenProductsOrbit onNavigate={onNavigate} />
 
       {/* ========================================================= */}
       {/* FULL PRODUCTS INTERACTIVE GALLERY                         */}
