@@ -5,20 +5,6 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 /**
- * Immediately resets scroll position to the top (0, 0), cancelling any active
- * GSAP scroll tweens and inertial wheel momentum so route switches always start at the top.
- */
-export function scrollToTopInstant() {
-  if (typeof window === 'undefined') return;
-  gsap.killTweensOf(window);
-  window.dispatchEvent(new CustomEvent('tavqen:scroll-reset'));
-  window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  ScrollTrigger.update();
-}
-
-/**
  * Smoothly scrolls to a numeric Y offset or selector using GSAP ScrollToPlugin.
  */
 export function smoothScrollTo(target: number | string, duration = 0.85) {
@@ -146,28 +132,16 @@ export function initSmoothWheelScroll(): () => void {
     }
   };
 
-  const onReset = () => {
-    if (rafId) {
-      window.cancelAnimationFrame(rafId);
-      rafId = 0;
-    }
-    isAnimating = false;
-    currentY = 0;
-    targetY = 0;
-  };
-
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('keydown', onKeyDown, { passive: true });
   window.addEventListener('pointerdown', onPointerDown, { passive: true });
   window.addEventListener('scroll', onNativeScroll, { passive: true });
-  window.addEventListener('tavqen:scroll-reset', onReset);
 
   return () => {
     window.removeEventListener('wheel', onWheel);
     window.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('scroll', onNativeScroll);
-    window.removeEventListener('tavqen:scroll-reset', onReset);
     if (rafId) window.cancelAnimationFrame(rafId);
   };
 }

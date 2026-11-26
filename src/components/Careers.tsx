@@ -447,7 +447,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                         <Icon className="w-5 h-5 stroke-[2]" />
                       </div>
 
-                      <div className="min-w-0 flex-1">
+                      <div>
                         <div className="flex flex-wrap items-center gap-2 mb-1">
                           <span className="font-mono text-[10.5px] font-bold text-[#0088CC] uppercase tracking-wider">
                             {role.code} · {role.departmentLabel}
@@ -487,8 +487,8 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
             })}
 
             {/* Spontaneous General Application Hint */}
-            <div className="rounded-2xl bg-gradient-to-r from-[#E0F7FF]/60 to-[#F8FAFC] border border-[#00C4FF]/25 p-4 flex flex-wrap items-center justify-between gap-3">
-              <div className="min-w-0 flex-1">
+            <div className="rounded-2xl bg-gradient-to-r from-[#E0F7FF]/60 to-[#F8FAFC] border border-[#00C4FF]/25 p-4 flex items-center justify-between gap-3">
+              <div>
                 <p className="text-xs font-bold text-[#0B132B]">
                   Don&apos;t see your exact role?
                 </p>
@@ -502,7 +502,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                   setSubmittedRole(null);
                   setIsApplying(true);
                 }}
-                className="px-3.5 py-2 rounded-full bg-white border border-[#E2E8F0] hover:border-[#0088CC] text-xs font-semibold text-[#0088CC] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                className="px-3.5 py-2 rounded-full bg-white border border-[#E2E8F0] hover:border-[#0088CC] text-xs font-semibold text-[#0088CC] transition-colors whitespace-nowrap cursor-pointer"
               >
                 Pitch Yourself
               </button>
@@ -558,8 +558,8 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                   /* QUICK APPLICATION FORM                                  */
                   /* ------------------------------------------------------- */
                   <div>
-                    <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-[#E2E8F0]">
-                      <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-[#E2E8F0]">
+                      <div>
                         <span className="font-mono text-[11px] font-bold text-[#0088CC] uppercase tracking-wider">
                           Quick Apply · {activeRole.code}
                         </span>
@@ -570,7 +570,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                       <button
                         type="button"
                         onClick={() => setIsApplying(false)}
-                        className="shrink-0 whitespace-nowrap text-xs font-semibold text-[#64748B] hover:text-[#0B132B] px-3 py-1.5 rounded-full border border-[#E2E8F0] cursor-pointer"
+                        className="text-xs font-semibold text-[#64748B] hover:text-[#0B132B] px-3 py-1.5 rounded-full border border-[#E2E8F0] cursor-pointer"
                       >
                         ← Back
                       </button>
@@ -578,7 +578,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
 
                     <form onSubmit={handleApplySubmit} className="space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="min-w-0 flex-1">
+                        <div>
                           <label className="block text-xs font-semibold text-[#0B132B] mb-1.5">
                             Full Name *
                           </label>
@@ -592,7 +592,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                           />
                         </div>
 
-                        <div className="min-w-0 flex-1">
+                        <div>
                           <label className="block text-xs font-semibold text-[#0B132B] mb-1.5">
                             Email Address *
                           </label>
@@ -608,7 +608,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="min-w-0 flex-1">
+                        <div>
                           <label className="block text-xs font-semibold text-[#0B132B] mb-1.5">
                             GitHub / Portfolio / LinkedIn URL
                           </label>
@@ -621,7 +621,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                           />
                         </div>
 
-                        <div className="min-w-0 flex-1">
+                        <div>
                           <label className="block text-xs font-semibold text-[#0B132B] mb-1.5">
                             Experience Level
                           </label>
@@ -638,7 +638,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
                         </div>
                       </div>
 
-                      <div className="min-w-0 flex-1">
+                      <div>
                         <label className="block text-xs font-semibold text-[#0B132B] mb-1.5">
                           What have you built that you&apos;re proudest of?
                         </label>

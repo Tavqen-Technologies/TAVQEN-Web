@@ -166,12 +166,12 @@ export default function WhyTavqen() {
     <section
       ref={sectionRef}
       id="why"
-      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] lg:min-h-[380vh]"
+      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] min-h-[420vh]"
     >
       {/* ========================================================= */}
-      {/* STICKY CONTAINER (Sticky on lg+ where 2-col fits height)  */}
+      {/* STICKY CONTAINER: Stays in viewport as user scrolls        */}
       {/* ========================================================= */}
-      <div className="lg:sticky lg:top-20 py-14 sm:py-16 lg:py-8 overflow-hidden flex flex-col justify-center">
+      <div className="sticky top-16 sm:top-20 py-8 sm:py-12 overflow-hidden flex flex-col justify-center">
         {/* Subtle ambient lighting */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] pointer-events-none opacity-25 -z-10"
@@ -220,12 +220,12 @@ export default function WhyTavqen() {
                     <button
                       type="button"
                       onClick={() => jumpToStep(idx)}
-                      className={`relative z-10 w-9 h-9 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-[22px] flex items-center justify-center font-mono font-bold transition-all duration-300 cursor-pointer shrink-0 ${
+                      className={`relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-[18px] sm:rounded-[22px] flex items-center justify-center font-mono font-bold transition-all duration-300 cursor-pointer ${
                         isActive
-                          ? 'bg-white border-2 border-[#00C4FF] text-[#0088CC] text-xs sm:text-lg shadow-[0_0_25px_rgba(0,196,255,0.35)] ring-2 sm:ring-4 ring-[#00C4FF]/15 scale-105'
+                          ? 'bg-white border-2 border-[#00C4FF] text-[#0088CC] text-base sm:text-lg shadow-[0_0_25px_rgba(0,196,255,0.35)] ring-4 ring-[#00C4FF]/15 scale-105'
                           : isPassed
-                          ? 'bg-white border border-[#0088CC]/50 text-[#0088CC] text-xs sm:text-base hover:border-[#00C4FF]'
-                          : 'bg-white border border-[#E2E8F0] text-[#94A3B8] text-xs sm:text-base hover:border-gray-400 hover:text-[#0B132B]'
+                          ? 'bg-white border border-[#0088CC]/50 text-[#0088CC] text-sm sm:text-base hover:border-[#00C4FF]'
+                          : 'bg-white border border-[#E2E8F0] text-[#94A3B8] text-sm sm:text-base hover:border-gray-400 hover:text-[#0B132B]'
                       }`}
                       aria-label={`Jump to why step ${step.number}: ${step.title}`}
                     >
@@ -234,7 +234,7 @@ export default function WhyTavqen() {
 
                     {/* Connecting line to next step with smooth fluid fill */}
                     {idx < STEPS.length - 1 && (
-                      <div className="flex-1 min-w-[12px] h-[2px] mx-1 sm:mx-2 bg-[#E2E8F0] rounded-full overflow-hidden relative">
+                      <div className="flex-1 h-[2px] mx-1 sm:mx-2 bg-[#E2E8F0] rounded-full overflow-hidden relative">
                         <div
                           className="h-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] transition-all duration-150 ease-out"
                           style={{ width: `${Math.round(lineProgress * 100)}%` }}
@@ -263,7 +263,7 @@ export default function WhyTavqen() {
             />
 
             {/* Crossfading Step Panels for Silky-Smooth Scroll Progression */}
-            <div className="relative min-h-[340px] sm:min-h-[360px] lg:min-h-[370px]">
+            <div className="relative min-h-[380px] sm:min-h-[390px] lg:min-h-[400px]">
               {STEPS.map((step, idx) => {
                 const isCurrent = activeIndex === idx;
 
@@ -325,7 +325,7 @@ export default function WhyTavqen() {
 
                     {/* RIGHT COLUMN: Realistic Preview Visual */}
                     <div className="lg:col-span-5 w-full flex items-center justify-center">
-                      <div className="w-full h-[210px] sm:h-[270px] lg:h-[310px] rounded-[24px] sm:rounded-[28px] overflow-hidden border border-black/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.08)] relative bg-[#F1F5F9] group">
+                      <div className="w-full h-[260px] sm:h-[320px] lg:h-[350px] rounded-[24px] sm:rounded-[28px] overflow-hidden border border-black/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.08)] relative bg-[#F1F5F9] group">
                         <img
                           src={step.image}
                           alt={step.alt}

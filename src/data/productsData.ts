@@ -11,8 +11,8 @@ import {
   Zap,
 } from 'lucide-react';
 
-import tavqenPdfBanner from '../assits/pdf-showcase/showcase-5.png';
-import vPlayerBanner from '../assits/pdf-showcase/showcase-6.png';
+import product1 from '../assits/products/product1.webp';
+import product2 from '../assits/products/product2.webp';
 import product3 from '../assits/products/product3.webp';
 import product4 from '../assits/products/product4.webp';
 import mobileImg from '../assits/mobile.avif';
@@ -48,7 +48,7 @@ export const TAVQEN_PRODUCTS: ProductDetail[] = [
     flowDescription: 'Documents scanned on mobile are OCR-extracted and encrypted in real-time.',
     overview:
       'A high-speed document intelligence suite engineered to make scanning, OCR text extraction, PDF editing, digital signing, and encrypted vault archiving effortless across mobile and web.',
-    image: tavqenPdfBanner,
+    image: product1,
     icon: FileText,
     badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
     platforms: ['iOS', 'Android', 'Web App'],
@@ -87,7 +87,7 @@ export const TAVQEN_PRODUCTS: ProductDetail[] = [
     flowDescription: 'Hardware-accelerated zero-buffering video streaming and custom audio equalizer.',
     overview:
       'A modern multimedia player engineered for buttery-smooth 4K and 8K playback across broad codecs, featuring smart subtitle sync, tactile gesture controls, and picture-in-picture mode.',
-    image: vPlayerBanner,
+    image: product2,
     icon: Play,
     badgeColor: 'text-[#E11D48] bg-[#FFE4ED]',
     platforms: ['Android', 'iOS', 'Android TV'],

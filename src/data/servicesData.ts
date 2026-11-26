@@ -1,7 +1,7 @@
-import mobileImg from '../assits/pdf-showcase/showcase-1.png';
-import websiteImg from '../assits/pdf-showcase/showcase-2.png';
-import saasImg from '../assits/pdf-showcase/showcase-3.png';
-import customImg from '../assits/pdf-showcase/showcase-4.png';
+import mobileImg from '../assits/mobile.avif';
+import websiteImg from '../assits/website.avif';
+import saasImg from '../assits/saas product.avif';
+import customImg from '../assits/Custom.avif';
 import aiN8nWorkflowImg from '../assits/ai-n8n-workflow.jpg';
 import product2Img from '../assits/products/product2.webp';
 import product3Img from '../assits/products/product3.webp';

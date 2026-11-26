@@ -19,8 +19,8 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
   useEffect(() => {
     const updateRadius = () => {
       const w = window.innerWidth;
-      if (w < 640) setOrbitRadius(108);
-      else if (w < 768) setOrbitRadius(164);
+      if (w < 640) setOrbitRadius(130);
+      else if (w < 768) setOrbitRadius(168);
       else setOrbitRadius(186);
     };
     updateRadius();
@@ -208,7 +208,7 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
           {/* ========================================================= */}
           <div className="lg:col-span-7 flex flex-col items-center">
             <div
-              className="relative w-[276px] h-[276px] sm:w-[420px] sm:h-[420px] md:w-[470px] md:h-[470px] flex items-center justify-center"
+              className="relative w-[330px] h-[330px] sm:w-[430px] sm:h-[430px] md:w-[470px] md:h-[470px] flex items-center justify-center"
               onMouseEnter={() => setIsPlaying(false)}
               onMouseLeave={() => setIsPlaying(true)}
             >
@@ -216,28 +216,28 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
               <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-[#00D4FF]/15 via-[#0088CC]/5 to-transparent pointer-events-none" />
 
               {/* Orbital Ring Path Line */}
-              <div className="absolute inset-6 sm:inset-10 md:inset-12 rounded-full border border-dashed border-[#00C4FF]/35 pointer-events-none" />
+              <div className="absolute inset-8 sm:inset-10 md:inset-12 rounded-full border border-dashed border-[#00C4FF]/35 pointer-events-none" />
 
               {/* Secondary Inner Orbital Ring */}
-              <div className="absolute inset-16 sm:inset-24 md:inset-28 rounded-full border border-[#E2E8F0] pointer-events-none" />
+              <div className="absolute inset-20 sm:inset-24 md:inset-28 rounded-full border border-[#E2E8F0] pointer-events-none" />
 
               {/* CENTER HUB */}
-              <div className="relative z-30 w-32 min-h-[104px] sm:w-44 sm:h-32 md:w-48 md:h-36 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-[#00C4FF]/40 shadow-[0_16px_45px_rgba(0,196,255,0.18)] p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:scale-105 transition-transform duration-300">
+              <div className="relative z-30 w-36 h-28 sm:w-44 sm:h-32 md:w-48 md:h-36 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-[#00C4FF]/40 shadow-[0_16px_45px_rgba(0,196,255,0.18)] p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:scale-105 transition-transform duration-300">
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#00D4FF]/25 to-[#0088CC]/20 rounded-3xl blur-xl -z-10 group-hover:opacity-100 transition-opacity" />
 
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1.5">
                   <img
                     src={tavqenLogo}
                     alt="TAVQEN"
-                    className="h-5 sm:h-7 w-auto object-contain hover:opacity-90 transition-opacity"
+                    className="h-6 sm:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
                   />
                 </div>
 
-                <span className="text-[10px] sm:text-xs font-mono font-medium text-[#64748B] leading-tight">
+                <span className="text-[11px] sm:text-xs font-mono font-medium text-[#64748B]">
                   10 products · shared data
                 </span>
 
-                <div className="mt-1.5 flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[9px] sm:text-[10px] text-[#0088CC] font-mono font-semibold whitespace-nowrap">
+                <div className="mt-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[10px] text-[#0088CC] font-mono font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC] animate-pulse" />
                   <span>Real-time Sync</span>
                 </div>

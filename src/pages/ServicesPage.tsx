@@ -93,7 +93,7 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* ========================================================= */}
       {/* EXTENDED CAPABILITIES MATRIX                              */}
       {/* ========================================================= */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-14 sm:mt-20">
+      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-20 sm:mt-24">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
             Specialized Capabilities
@@ -133,7 +133,7 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
                 }}
                 className="group cursor-pointer rounded-3xl bg-white border border-[#E2E8F0] p-7 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] hover:border-[#00C4FF]/55 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,136,204,0.08)] transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-[#F1F5F9]">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F5F9]">
                   <span className="text-[11px] font-bold uppercase tracking-widest text-[#0088CC]">
                     0{idx + 1} · Service Details
                   </span>

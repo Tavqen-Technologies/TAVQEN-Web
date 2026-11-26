@@ -222,10 +222,21 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
     <section
       id="products"
       className={`bg-white border-t border-[#E2E8F0] relative ${
-        isFullPage ? 'py-14 sm:py-20' : 'py-20 sm:py-24 lg:py-28'
+        isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
       }`}
     >
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back to Home Breadcrumb for Full Page View */}
+        {isFullPage && (
+          <div className="mb-6 sm:mb-8">
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors"
+            >
+              <span>← Back to Home</span>
+            </a>
+          </div>
+        )}
 
         {/* ========================================================= */}
         {/* SECTION HEADER (Clean, balanced typography)               */}
@@ -287,12 +298,12 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
                     </div>
 
                     {/* Short Description */}
-                    <p className="text-[13px] sm:text-[13.5px] text-[#475569] leading-relaxed mb-4 lg:max-w-[260px]">
+                    <p className="text-[13px] sm:text-[13.5px] text-[#475569] leading-relaxed mb-4 max-w-[260px]">
                       {product.description}
                     </p>
 
                     {/* Download Badges (App Store & Google Play) */}
-                    <div className="flex flex-wrap flex-row lg:flex-col gap-2 mb-4">
+                    <div className="flex flex-row lg:flex-col gap-2 mb-4">
                       {/* App Store Badge */}
                       <a
                         href={product.appStoreUrl}
@@ -373,45 +384,45 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
                         className="w-[130px] sm:w-[145px] md:w-[155px] lg:w-[165px] flex-shrink-0 flex flex-col items-center"
                       >
                         {/* Top 2-Line Tagline Title (Centered above phone) */}
-                        <div className="min-h-[34px] flex flex-col items-center justify-center text-center px-1 mb-1.5">
+                        <div className="h-8 flex flex-col items-center justify-center text-center px-1 mb-1.5">
                           <span
-                            className={`text-[10.5px] sm:text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
+                            className={`text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
                           >
                             {phone.line1}
                           </span>
                           <span
-                            className={`text-[10.5px] sm:text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
+                            className={`text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
                           >
                             {phone.line2}
                           </span>
                         </div>
 
-                        {/* iPhone Mockup Frame */}
-                        <div className="w-full h-[245px] sm:h-[280px] md:h-[300px] rounded-[22px] sm:rounded-[25px] p-1.5 bg-[#FAF9F6] border border-black/10 shadow-[0_8px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_35px_rgba(0,196,255,0.16)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative group cursor-pointer">
+                        {/* iPhone Mockup Frame (Matching screenshot proportions) */}
+                        <div className="w-full h-[255px] sm:h-[280px] md:h-[300px] rounded-[22px] sm:rounded-[25px] p-1.5 bg-[#FAF9F6] border border-black/10 shadow-[0_8px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_35px_rgba(0,196,255,0.16)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative group cursor-pointer">
                           {/* Inner Screen with phone bezel */}
-                          <div className="w-full h-full rounded-[18px] sm:rounded-[20px] overflow-hidden bg-white border-[2px] border-[#18181b] relative flex flex-col justify-between pt-4 pb-2.5 px-1.5">
+                          <div className="w-full h-full rounded-[18px] sm:rounded-[20px] overflow-hidden bg-white border-[2px] border-[#18181b] relative flex flex-col">
                             {/* Dynamic Island Notch */}
-                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-7 h-1.5 bg-black rounded-full z-20" />
+                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-7 h-2 bg-black rounded-full z-20" />
 
-                            {/* Screen Mockup Image (Aspect-safe contain so landscape shots aren't 70% sliced) */}
-                            <div className="flex-1 w-full rounded-xl overflow-hidden bg-[#F8FAFC] flex items-center justify-center">
+                            {/* Screen Mockup Image */}
+                            <div className="w-full h-full relative overflow-hidden bg-gray-50">
                               <img
                                 src={phone.image}
                                 alt={phone.line1}
-                                className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.05]"
                                 loading="lazy"
                               />
-                            </div>
 
-                            {/* Bottom Metric Pill Above Home Bar */}
-                            <div className="mt-1.5 bg-[#F8FAFC] rounded-lg py-0.5 px-1.5 border border-[#E2E8F0] text-center">
-                              <span className="text-[7.5px] sm:text-[8px] font-extrabold uppercase tracking-wider text-[#0B132B] block truncate">
-                                {phone.badge}
-                              </span>
+                              {/* Bottom Floating Pill Metric */}
+                              <div className="absolute bottom-2 left-1.5 right-1.5 bg-white/95 backdrop-blur-md rounded-lg py-0.5 px-1.5 border border-black/5 shadow-2xs text-center">
+                                <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#0B132B]">
+                                  {phone.badge}
+                                </span>
+                              </div>
                             </div>
 
                             {/* Home indicator bar */}
-                            <div className="mt-1 mx-auto w-8 h-0.5 bg-black/30 rounded-full" />
+                            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-black/40 rounded-full z-20" />
                           </div>
                         </div>
                       </div>

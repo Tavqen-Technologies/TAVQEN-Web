@@ -1,9 +1,9 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   initSmoothWheelScroll,
   registerGlobalScrollAnimations,
-  scrollToTopInstant,
+  smoothScrollTo,
 } from './utils/smoothScroll';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -52,16 +52,12 @@ export default function App() {
   };
 
   useEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-
     const cleanupSmoothWheel = initSmoothWheelScroll();
 
     const handleLocationChange = () => {
       const active = parseCurrentRoute();
       setRoute(active);
-      scrollToTopInstant();
+      smoothScrollTo(0, 0.7);
     };
 
     handleLocationChange();
@@ -76,14 +72,7 @@ export default function App() {
     };
   }, []);
 
-  useLayoutEffect(() => {
-    scrollToTopInstant();
-    const raf = window.requestAnimationFrame(() => scrollToTopInstant());
-    return () => window.cancelAnimationFrame(raf);
-  }, [route]);
-
   useEffect(() => {
-    scrollToTopInstant();
     const cleanupAnimations = registerGlobalScrollAnimations(appRef.current);
     const refreshTimer = window.setTimeout(() => {
       ScrollTrigger.refresh();
@@ -100,7 +89,6 @@ export default function App() {
     const routePart = clean.split('?')[0];
     const newRoute = parseCurrentRouteFromString(routePart);
 
-    scrollToTopInstant();
     setRoute(newRoute);
 
     if (window.history.pushState) {
@@ -109,7 +97,7 @@ export default function App() {
       window.location.hash = clean;
     }
 
-    window.requestAnimationFrame(() => scrollToTopInstant());
+    smoothScrollTo(0, 0.75);
   };
 
   const parseCurrentRouteFromString = (target: string): AppRoute => {

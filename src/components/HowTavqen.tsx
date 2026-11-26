@@ -370,7 +370,7 @@ export default function HowTavqen() {
 
                 {/* Alternating Content Block Inside Horizontal Lane */}
                 <div
-                  className={`serpentine-text absolute z-10 -translate-y-1/2 w-[50%] lg:w-[53%] ${
+                  className={`serpentine-text absolute z-10 -translate-y-1/2 w-[54%] ${
                     isLeftMedallion ? 'text-right pr-2' : 'text-left pl-2'
                   }`}
                   style={{
@@ -380,25 +380,25 @@ export default function HowTavqen() {
                   }}
                 >
                   <div
-                    className={`inline-flex flex-wrap items-center gap-1.5 lg:gap-2 mb-1 lg:mb-1.5 ${
+                    className={`inline-flex items-center gap-2 mb-1.5 ${
                       isLeftMedallion ? 'flex-row-reverse' : 'flex-row'
                     }`}
                   >
                     <span
-                      className={`font-mono text-[10px] lg:text-[11px] font-bold px-2 lg:px-2.5 py-0.5 rounded-full border ${step.badgeBg}`}
+                      className={`font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${step.badgeBg}`}
                     >
                       {step.number} · Step {idx + 1} of 4
                     </span>
-                    <span className="text-[10px] lg:text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8]">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8]">
                       {step.tagline}
                     </span>
                   </div>
 
-                  <h3 className="text-lg lg:text-2xl font-bold text-[#0B132B] tracking-tight group-hover:text-[#0088CC] transition-colors leading-tight">
+                  <h3 className="text-xl lg:text-2xl font-bold text-[#0B132B] tracking-tight group-hover:text-[#0088CC] transition-colors">
                     {step.title}
                   </h3>
 
-                  <p className="mt-1 text-[11px] lg:text-[13.5px] text-[#64748B] leading-snug lg:leading-relaxed font-normal max-w-[360px] inline-block line-clamp-2 lg:line-clamp-none">
+                  <p className="mt-1 text-xs lg:text-[13.5px] text-[#64748B] leading-relaxed font-normal max-w-[360px] inline-block">
                     {step.description}
                   </p>
                 </div>

@@ -107,7 +107,7 @@ export default function Hero() {
 
 </div>
       {/* CONTINUOUSLY SLIDING PRODUCT IMAGES SHOWCASE */}
-      <div className="mt-12 sm:mt-16 w-full relative">
+      <div className="mt-14 sm:mt-18 w-full relative">
         {/* Soft edge mask so cards fade seamlessly */}
         <div className="mask-radial-edges w-full overflow-hidden py-3 space-y-4 sm:space-y-5">
           {/* TRACK 1: Sliding Left */}

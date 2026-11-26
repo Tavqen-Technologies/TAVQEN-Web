@@ -141,7 +141,7 @@ export default function ProductDetailPage({ productId, onNavigate }: ProductDeta
               </div>
 
               {/* Key Stats Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 py-4 px-4 sm:px-5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] mb-7">
+              <div className="grid grid-cols-3 gap-4 py-4 px-5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] mb-7">
                 {product.stats.map((stat) => (
                   <div key={stat.label}>
                     <div className="text-base sm:text-xl font-bold text-[#0B132B] font-mono">
@@ -177,19 +177,17 @@ export default function ProductDetailPage({ productId, onNavigate }: ProductDeta
 
             {/* Right Visual Mockup */}
             <div className="lg:col-span-5">
-              <div className="w-full rounded-[24px] overflow-hidden border border-black/[0.08] shadow-[0_18px_45px_rgba(15,23,42,0.1)] bg-[#F8FAFC] group">
-                <div className="w-full aspect-video lg:aspect-[16/11] bg-white overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-700"
-                  />
-                </div>
-                <div className="px-4 py-3 bg-white border-t border-[#E2E8F0] flex items-center justify-between gap-2">
+              <div className="w-full h-[280px] sm:h-[360px] lg:h-[400px] rounded-[24px] overflow-hidden border border-black/[0.08] shadow-[0_18px_45px_rgba(15,23,42,0.1)] bg-[#F1F5F9] relative group">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute bottom-4 left-4 right-4 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-sm flex items-center justify-between gap-2">
                   <span className="text-xs font-bold text-[#0B132B] truncate">
                     {product.flowTitle}
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] shrink-0">
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC]">
                     Synced
                   </span>
                 </div>
@@ -201,7 +199,7 @@ export default function ProductDetailPage({ productId, onNavigate }: ProductDeta
         {/* ========================================================= */}
         {/* KEY PRODUCT CAPABILITIES GRID                             */}
         {/* ========================================================= */}
-        <div className="pd-animate mb-14 sm:mb-16">
+        <div className="pd-animate mb-14 sm:mb-18">
           <div className="max-w-2xl mb-8">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" />
