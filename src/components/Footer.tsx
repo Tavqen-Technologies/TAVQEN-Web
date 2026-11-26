@@ -21,7 +21,7 @@ export default function Footer({ onNavigate }: FooterProps) {
     <footer className="bg-white border-t border-[#E2E8F0] relative overflow-hidden">
 
       {/* Main Footer Links */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20" data-animate="fade-up">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Brand Column (Col 1-4) */}
           <div className="lg:col-span-4 flex flex-col justify-between">
@@ -140,6 +140,16 @@ export default function Footer({ onNavigate }: FooterProps) {
                   className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer"
                 >
                   Our Work
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleNav('/careers')}
+                  className="text-[#64748B] hover:text-[#0088CC] transition-colors inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <span>Careers</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-emerald-50 text-emerald-700 font-semibold">Hiring</span>
                 </button>
               </li>
               <li>

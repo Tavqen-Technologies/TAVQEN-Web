@@ -241,7 +241,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
         {/* ========================================================= */}
         {/* SECTION HEADER (Clean, balanced typography)               */}
         {/* ========================================================= */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 mb-12 sm:mb-16">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 mb-12 sm:mb-16" data-animate="fade-up">
           <div>
             {isFullPage && (
               <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
@@ -272,6 +272,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
             return (
               <div
                 key={product.id}
+                data-animate="fade-up"
                 className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8 xl:gap-10 pb-12 sm:pb-16 border-b border-[#E2E8F0] last:border-b-0 last:pb-0"
               >
                 {/* ---------------------------------------------------- */}

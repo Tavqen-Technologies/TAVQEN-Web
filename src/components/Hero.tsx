@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import product1 from '../assits/products/product1.webp';
 import product2 from '../assits/products/product2.webp';
 import product3 from '../assits/products/product3.webp';
@@ -11,8 +13,35 @@ const PRODUCT_IMAGES_ROW_1 = [
 ];
 
 export default function Hero() {
+  const heroRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.hero-stagger',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power3.out',
+          clearProps: 'transform',
+        }
+      );
+    }, hero);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative min-h-screen pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
+    <section ref={heroRef} className="relative min-h-screen pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
       {/* DEVZEL ORGANIC LIGHT & CAUSTIC SHADOW TEXTURE */}
       <div
         className="absolute inset-0 pointer-events-none opacity-45 -z-10"
@@ -40,20 +69,20 @@ export default function Hero() {
      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
 
   {/* Headline */}
-  <h1 className="text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
+  <h1 className="hero-stagger text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
     Building digital experiences,
     <br className="hidden sm:inline" /> shaping what&apos;s next.
   </h1>
 
   {/* Subtitle */}
-  <p className="mt-5 sm:mt-6 text-[15px] sm:text-[16.5px] text-[#64748B] max-w-[600px] mx-auto font-normal leading-relaxed">
+  <p className="hero-stagger mt-5 sm:mt-6 text-[15px] sm:text-[16.5px] text-[#64748B] max-w-[600px] mx-auto font-normal leading-relaxed">
     TAVQEN Technologies is a digital technology company building modern
     websites, software products, and scalable solutions that help
     businesses grow and move forward.
   </p>
 
   {/* CTA */}
-  <div className="mt-7 sm:mt-8 flex justify-center">
+  <div className="hero-stagger mt-7 sm:mt-8 flex justify-center">
     <a
       href="/start-a-project"
       className="

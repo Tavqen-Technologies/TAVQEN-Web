@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import tavqenLogo from '../assits/Tavqen-logo.png';
 
 interface NavbarProps {
-  currentRoute?: 'home' | 'company' | 'services' | 'products' | 'work' | 'start-a-project';
+  currentRoute?: 'home' | 'company' | 'services' | 'service-detail' | 'products' | 'product-detail' | 'work' | 'work-detail' | 'careers' | 'start-a-project';
   onNavigate?: (path: string) => void;
 }
 
@@ -25,6 +25,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
       // Dynamic Section Detection mapped to menu links when on home page
       if (currentRoute === 'home') {
         const sectionElements = [
+          { id: 'careers', menuId: 'careers' },
           { id: 'why', menuId: 'company' },
           { id: 'how', menuId: 'company' },
           { id: 'work', menuId: 'work' },
@@ -60,6 +61,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
     { name: 'Services', path: '/services', id: 'services' },
     { name: 'SaaS Products', path: '/products', id: 'products' },
     { name: 'Our Work', path: '/our-work', id: 'work' },
+    { name: 'Careers', path: '/careers', id: 'careers' },
   ];
 
   const handleNav = (path: string) => {
@@ -112,7 +114,10 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         <nav className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => {
             const isActive =
-              currentRoute === link.id || (currentRoute === 'home' && activeSection === link.id);
+              currentRoute === link.id ||
+              (currentRoute === 'service-detail' && link.id === 'services') ||
+              (currentRoute === 'product-detail' && link.id === 'products') ||
+              (currentRoute === 'home' && activeSection === link.id);
 
             return (
               <button

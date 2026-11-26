@@ -1,22 +1,39 @@
-import { useEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
-import { ArrowRight, ArrowUpRight, Lightbulb, Target, TrendingUp } from 'lucide-react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Globe,
+  Layers,
+  Play,
+  Smartphone,
+  Sparkles,
+  TrendingUp,
+  Users,
+} from 'lucide-react';
+import { smoothScrollTo } from '../utils/smoothScroll';
 
 import product1 from '../assits/products/product1.webp';
 import product2 from '../assits/products/product2.webp';
 import product3 from '../assits/products/product3.webp';
 import product4 from '../assits/products/product4.webp';
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface OurWorkPageProps {
   onNavigate?: (path: string) => void;
 }
 
-type FilterId = 'all' | 'web' | 'mobile' | 'saas';
-
 interface CaseStudy {
   id: string;
-  category: Exclude<FilterId, 'all'>;
+  number: string;
+  category: 'web' | 'mobile' | 'saas';
   categoryLabel: string;
+  shortTitle: string;
   title: string;
   client: string;
   impact: string;
@@ -25,226 +42,229 @@ interface CaseStudy {
   solution: string;
   technologies: string[];
   image: string;
+  icon: typeof FileText;
   stats: { label: string; value: string }[];
 }
 
-/* ------------------------------------------------------------------ */
-/* ANIMATION HELPERS (IntersectionObserver based, no extra deps)       */
-/* ------------------------------------------------------------------ */
-
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  typeof window.matchMedia === 'function' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function useInView<T extends HTMLElement>(threshold = 0.15) {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    if (typeof IntersectionObserver === 'undefined' || prefersReducedMotion()) {
-      setInView(true);
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          io.disconnect();
-        }
-      },
-      { threshold, rootMargin: '0px 0px -8% 0px' }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [threshold]);
-
-  return { ref, inView };
-}
-
-function Reveal({
-  children,
-  delay = 0,
-  className = '',
-}: {
-  children: ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out ${
-        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
-
-function parseValue(value: string) {
-  const m = value.match(/^([^\d]*)([\d,]*\.?\d+)(.*)$/);
-  if (!m) return null;
-  const raw = m[2];
-  return {
-    prefix: m[1],
-    suffix: m[3],
-    num: parseFloat(raw.replace(/,/g, '')),
-    decimals: raw.includes('.') ? raw.split('.')[1].length : 0,
-    grouped: raw.includes(','),
-  };
-}
-
-/** Counts up numeric values like "45,000+", "99.99%", "-42%" when scrolled into view */
-function CountUp({ value, duration = 1400 }: { value: string; duration?: number }) {
-  const parsed = parseValue(value);
-  const { ref, inView } = useInView<HTMLSpanElement>(0.4);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    if (!inView || !parsed) return;
-    if (prefersReducedMotion()) {
-      setProgress(1);
-      return;
-    }
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      setProgress(1 - Math.pow(1 - t, 3)); // easeOutCubic
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, duration, value]);
-
-  if (!parsed) return <span>{value}</span>;
-
-  const current = parsed.num * progress;
-  const text = current.toLocaleString('en-US', {
-    minimumFractionDigits: parsed.decimals,
-    maximumFractionDigits: parsed.decimals,
-    useGrouping: parsed.grouped,
-  });
-
-  return (
-    <span ref={ref}>
-      {parsed.prefix}
-      {text}
-      {parsed.suffix}
-    </span>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* DATA (unchanged content, same ids / categories)                     */
-/* ------------------------------------------------------------------ */
-
 const CASE_STUDIES: CaseStudy[] = [
   {
-    id: 'busypixel',
-    category: 'web',
-    categoryLabel: 'Web Application · Marketing',
-    title: 'BusyPixel — Modern Influencer Marketing Platform',
-    client: 'BusyPixel Media',
-    impact: '+340% Campaign Engagement',
+    id: 'tavqen-pdf',
+    number: '01',
+    category: 'mobile',
+    categoryLabel: 'Mobile App · Productivity',
+    shortTitle: 'TAVQEN PDF',
+    title: 'TAVQEN PDF — AI Document & OCR App',
+    client: 'TAVQEN Flagship Product',
+    impact: '300 DPI Smart OCR',
     overview:
-      'A comprehensive creator management ecosystem engineered to connect forward-looking consumer brands with top-tier creators. Features automated contract signing, real-time analytics dashboards, and instant escrow payouts.',
-    challenge: 'Managing fragmented communications and delayed milestone reporting across 5,000+ brand ambassadors.',
-    solution: 'Architected a modular Next.js web application with real-time websocket activity feeds and automated Stripe invoice handling.',
-    technologies: ['Next.js 14', 'React', 'Node.js', 'PostgreSQL', 'Stripe Connect', 'Tailwind CSS'],
+      'High-speed mobile and web PDF suite for scanning, OCR extraction, e-signing, and encrypted cloud vault sync.',
+    challenge:
+      'Slow PDF apps, poor low-light OCR accuracy, and fragmented document sync.',
+    solution:
+      'On-device edge scanner with smart OCR pipelines and AES-256 encrypted vault.',
+    technologies: ['React Native', 'TypeScript', 'Smart OCR', 'AES-256 Vault'],
     image: product1,
+    icon: FileText,
     stats: [
-      { label: 'Monthly Active Creators', value: '45,000+' },
-      { label: 'Avg Page Load Speed', value: '0.4s' },
+      { label: 'Export Quality', value: '300 DPI' },
+      { label: 'Scan Speed', value: '0.4s' },
+      { label: 'Encryption', value: 'AES-256' },
+    ],
+  },
+  {
+    id: 'gramsetu',
+    number: '02',
+    category: 'web',
+    categoryLabel: 'Web Application · Civic Tech',
+    shortTitle: 'GramSetu',
+    title: 'GramSetu — Digital Governance Portal',
+    client: 'TAVQEN Civic Initiative',
+    impact: '100% Digital Records',
+    overview:
+      'Unified civic platform connecting villages and citizens with live grievance tracking, welfare access, and offline sync.',
+    challenge:
+      'Low-connectivity areas faced delayed grievance tracking and scattered records.',
+    solution:
+      'Offline-first Next.js & SQLite architecture with voice-first local dialect support.',
+    technologies: ['Next.js 14', 'SQLite Sync', 'FastAPI', 'PostgreSQL'],
+    image: product3,
+    icon: Users,
+    stats: [
+      { label: 'Offline Mode', value: 'Zero Signal' },
+      { label: 'API Speed', value: '62ms' },
       { label: 'Uptime SLA', value: '99.99%' },
     ],
   },
   {
-    id: 'alpha',
+    id: 'tavqen-v-player',
+    number: '03',
     category: 'mobile',
-    categoryLabel: 'Mobile App · EdTech',
-    title: 'Alpha — Smarter Learning Experience for Students',
-    client: 'Alpha EduTech Ltd.',
-    impact: '120K+ Active Daily Learners',
+    categoryLabel: 'Mobile App · Entertainment',
+    shortTitle: 'TAVQEN V Player',
+    title: 'TAVQEN V Player — 4K/8K Media Engine',
+    client: 'TAVQEN Consumer Suite',
+    impact: '4K / 8K Playback',
     overview:
-      'An ergonomic, interactive mobile learning application built for secondary and university students. Includes gamified quiz loops, offline lecture caching, and peer-to-peer study sessions.',
-    challenge: 'Students in low-bandwidth regions suffered dropped video sessions and corrupted offline data caches.',
-    solution: 'Engineered a resilient React Native architecture with local SQLite offline synchronization and adaptive bitrate streaming.',
-    technologies: ['React Native', 'TypeScript', 'Expo', 'SQLite', 'Python FastAPI', 'AWS CloudFront'],
-    image: product3,
-    stats: [
-      { label: 'App Store Rating', value: '4.9 / 5.0' },
-      { label: 'Daily Quiz Sessions', value: '180,000+' },
-      { label: 'Crash-Free Rate', value: '99.95%' },
-    ],
-  },
-  {
-    id: 'noisy-them',
-    category: 'saas',
-    categoryLabel: 'SaaS Platform · Creators',
-    title: 'Noisy Them — Creator-First Media & Community Hub',
-    client: 'Noisy Media Inc.',
-    impact: '3.2x User Growth in Q1',
-    overview:
-      'A creator subscription and digital asset marketplace with customized community feeds, gated video workshops, and self-serve tiers.',
-    challenge: 'High churn caused by sluggish mobile web loading and convoluted subscription billing steps.',
-    solution: 'Redesigned the complete UI/UX flow from ground up and optimized server-side rendering for instant page transitions.',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Docker', 'Redis', 'Cloudflare Workers'],
-    image: product4,
-    stats: [
-      { label: 'Checkout Conversion', value: '+38%' },
-      { label: 'Server Response Time', value: '62ms' },
-      { label: 'Active Communities', value: '1,200+' },
-    ],
-  },
-  {
-    id: 'frootreet',
-    category: 'web',
-    categoryLabel: 'Web Experience · E-Commerce',
-    title: 'Frootreet — Playful Digital Brand Experience',
-    client: 'Frootreet Confections',
-    impact: '2.5x Increase in Online Orders',
-    overview:
-      'An immersive, playful consumer e-commerce storefront crafted for an artisanal dessert brand, packed with micro-interactions and instant local delivery tracking.',
-    challenge: 'Generic storefront templates failed to reflect the vibrant boutique brand personality.',
-    solution: 'Crafted bespoke organic layout designs, interactive flavor customizers, and sub-second checkout loops.',
-    technologies: ['Next.js', 'Framer Motion', 'Headless Shopify', 'Tailwind CSS', 'Vercel Edge'],
+      'Hardware-accelerated video player supporting multi-format 4K/8K playback, smart subtitle sync, and PiP mode.',
+    challenge:
+      'Heavy 4K streams caused frame drops, audio desync, and high battery drain.',
+    solution:
+      'Native hardware decoding pipelines with adaptive gestures and background play.',
+    technologies: ['Kotlin', 'Swift', 'React Native', 'FFmpeg Core'],
     image: product2,
+    icon: Play,
     stats: [
-      { label: 'Session Duration', value: '+65%' },
-      { label: 'Mobile Bounce Rate', value: '-42%' },
-      { label: 'Customer Re-orders', value: '+54%' },
+      { label: 'Resolution', value: '4K / 8K' },
+      { label: 'Crash-Free', value: '99.95%' },
+      { label: 'Modes', value: 'PiP + BG' },
+    ],
+  },
+  {
+    id: 'tavqen-saas-studio',
+    number: '04',
+    category: 'saas',
+    categoryLabel: 'SaaS Platform · Enterprise',
+    shortTitle: 'TAVQEN Cloud SaaS',
+    title: 'TAVQEN Cloud Studio — Web & SaaS Systems',
+    client: 'Enterprise & Startup Partners',
+    impact: '40+ Products Shipped',
+    overview:
+      'Multitenant SaaS platforms, workflow engines, and fast web apps built for startups and enterprise teams.',
+    challenge:
+      'Fragmented legacy tools, sluggish dashboards, and rigid software architectures.',
+    solution:
+      'Modular Next.js & API systems with Stripe billing, RBAC, and zero-downtime CI/CD.',
+    technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'AWS / Docker'],
+    image: product4,
+    icon: Layers,
+    stats: [
+      { label: 'Shipped', value: '40+' },
+      { label: 'Uptime', value: '99.9%' },
+      { label: 'Rating', value: '4.9 / 5' },
     ],
   },
 ];
 
-const FILTER_TABS: { id: FilterId; label: string }[] = [
-  { id: 'all', label: 'All Projects' },
-  { id: 'web', label: 'Web Applications' },
-  { id: 'mobile', label: 'Mobile Apps' },
-  { id: 'saas', label: 'SaaS Platforms' },
-];
+function polar(cx: number, cy: number, r: number, deg: number) {
+  const rad = (deg * Math.PI) / 180;
+  return {
+    x: cx + r * Math.cos(rad),
+    y: cy + r * Math.sin(rad),
+  };
+}
 
-const ALL_TECHNOLOGIES = Array.from(new Set(CASE_STUDIES.flatMap((s) => s.technologies)));
+function buildArcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number): string {
+  const start = polar(cx, cy, r, startDeg);
+  const end = polar(cx, cy, r, endDeg);
+  const largeArc = endDeg - startDeg > 180 ? 1 : 0;
+  return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 ${largeArc} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+}
 
-/* ------------------------------------------------------------------ */
-/* PAGE                                                                */
-/* ------------------------------------------------------------------ */
+const HUB_SVG_W = 430;
+const HUB_SVG_H = 430;
+const HUB_CX = 132;
+const HUB_CY = 215;
+const HUB_R_ARC = 152;
 
 export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
-  const [filter, setFilter] = useState<FilterId>('all');
+  const [filter, setFilter] = useState<'all' | 'web' | 'mobile' | 'saas'>('all');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState(() => {
+    if (typeof window === 'undefined') return 0;
+    const param = new URLSearchParams(window.location.search).get('project');
+    if (!param) return 0;
+    const foundIdx = CASE_STUDIES.findIndex((c) => c.id === param);
+    return foundIdx >= 0 ? foundIdx : 0;
+  });
+
+  const pageRef = useRef<HTMLDivElement | null>(null);
+  const arcRef = useRef<SVGPathElement | null>(null);
+  const hubRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const tabDockRef = useRef<HTMLDivElement | null>(null);
+  const tabPillRef = useRef<HTMLDivElement | null>(null);
+  const tabBtnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const hasInitializedPillRef = useRef(false);
+  const prevFilterRef = useRef(filter);
+  const activeIndexRef = useRef(activeIndex);
+  const skipScrollSyncUntilRef = useRef(0);
+  const didInitialDeepLinkRef = useRef(false);
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  const filterTabs = useMemo(
+    () => [
+      { id: 'all' as const, label: 'All Projects', icon: Sparkles, count: CASE_STUDIES.length },
+      {
+        id: 'web' as const,
+        label: 'Web Applications',
+        icon: Globe,
+        count: CASE_STUDIES.filter((c) => c.category === 'web').length,
+      },
+      {
+        id: 'mobile' as const,
+        label: 'Mobile Apps',
+        icon: Smartphone,
+        count: CASE_STUDIES.filter((c) => c.category === 'mobile').length,
+      },
+      {
+        id: 'saas' as const,
+        label: 'SaaS Platforms',
+        icon: Layers,
+        count: CASE_STUDIES.filter((c) => c.category === 'saas').length,
+      },
+    ],
+    []
+  );
+
+  // Smooth GSAP sliding pill behind active filter tab
+  useEffect(() => {
+    const updatePill = (immediate = false) => {
+      const pill = tabPillRef.current;
+      const btn = tabBtnRefs.current[filter];
+      if (!pill || !btn) return;
+
+      const props = {
+        x: btn.offsetLeft,
+        y: btn.offsetTop,
+        width: btn.offsetWidth,
+        height: btn.offsetHeight,
+      };
+
+      if (immediate) {
+        gsap.set(pill, props);
+      } else {
+        gsap.to(pill, {
+          ...props,
+          duration: 0.45,
+          ease: 'power3.out',
+        });
+      }
+    };
+
+    const isFirstMount = !hasInitializedPillRef.current;
+    hasInitializedPillRef.current = true;
+    const raf = window.requestAnimationFrame(() => updatePill(isFirstMount));
+
+    const onResize = () => updatePill(true);
+    window.addEventListener('resize', onResize);
+
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && tabDockRef.current) {
+      observer = new ResizeObserver(() => updatePill(true));
+      observer.observe(tabDockRef.current);
+    }
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      observer?.disconnect();
+    };
+  }, [filter]);
 
   const handleNav = (path: string) => {
-    
     if (onNavigate) {
       onNavigate(path);
     } else {
@@ -253,175 +273,295 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
     }
   };
 
-  const filteredStudies =
-    filter === 'all' ? CASE_STUDIES : CASE_STUDIES.filter((item) => item.category === filter);
+  const filteredStudies = useMemo(
+    () => (filter === 'all' ? CASE_STUDIES : CASE_STUDIES.filter((item) => item.category === filter)),
+    [filter]
+  );
 
-  const countFor = (id: FilterId) =>
-    id === 'all' ? CASE_STUDIES.length : CASE_STUDIES.filter((s) => s.category === id).length;
+  useEffect(() => {
+    if (prevFilterRef.current !== filter) {
+      prevFilterRef.current = filter;
+      setActiveIndex(0);
+    }
+  }, [filter]);
+
+  const safeActiveIndex = Math.min(activeIndex, Math.max(0, filteredStudies.length - 1));
+
+  const arcNodes = useMemo(() => {
+    const count = filteredStudies.length;
+    const totalSpan = count === 1 ? 0 : count === 2 ? 58 : 114;
+    const step = count <= 1 ? 0 : totalSpan / (count - 1);
+
+    return filteredStudies.map((study, idx) => {
+      const deg = count === 1 ? 0 : -totalSpan / 2 + idx * step;
+      return {
+        study,
+        idx,
+        deg,
+        pos: polar(HUB_CX, HUB_CY, HUB_R_ARC, deg),
+        tail: polar(HUB_CX, HUB_CY, HUB_R_ARC + 20, deg),
+      };
+    });
+  }, [filteredStudies]);
+
+  const arcStartDeg = arcNodes.length > 1 ? arcNodes[0].deg - 12 : -30;
+  const arcEndDeg = arcNodes.length > 1 ? arcNodes[arcNodes.length - 1].deg + 12 : 30;
+  const orbitalArcPath = useMemo(
+    () => buildArcPath(HUB_CX, HUB_CY, HUB_R_ARC, arcStartDeg, arcEndDeg),
+    [arcStartDeg, arcEndDeg]
+  );
+
+  const activeNodeDeg = arcNodes[safeActiveIndex]?.deg ?? 0;
+  const activeArcProgressPath = useMemo(
+    () =>
+      buildArcPath(
+        HUB_CX,
+        HUB_CY,
+        HUB_R_ARC,
+        arcStartDeg,
+        Math.max(arcStartDeg + 4, activeNodeDeg)
+      ),
+    [arcStartDeg, activeNodeDeg]
+  );
+
+  const scrollToCard = useCallback(
+    (idx: number) => {
+      const clamped = Math.max(0, Math.min(filteredStudies.length - 1, idx));
+      setActiveIndex(clamped);
+
+      const el = cardRefs.current[clamped];
+      if (!el) return;
+
+      skipScrollSyncUntilRef.current = performance.now() + 800;
+      const targetTop = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 120);
+      smoothScrollTo(targetTop, 0.75);
+    },
+    [filteredStudies.length]
+  );
+
+  const handleStep = useCallback(
+    (dir: -1 | 1) => {
+      if (filteredStudies.length <= 1) return;
+      const next = (activeIndexRef.current + dir + filteredStudies.length) % filteredStudies.length;
+      scrollToCard(next);
+    },
+    [filteredStudies.length, scrollToCard]
+  );
+
+  // Sync deep-link ?project= to matching card on initial mount
+  useEffect(() => {
+    if (didInitialDeepLinkRef.current) return;
+    didInitialDeepLinkRef.current = true;
+
+    const param = new URLSearchParams(window.location.search).get('project');
+    if (param) {
+      const idx = filteredStudies.findIndex((c) => c.id === param);
+      if (idx > 0) {
+        const timer = window.setTimeout(() => scrollToCard(idx), 180);
+        return () => window.clearTimeout(timer);
+      }
+    }
+  }, [filteredStudies, scrollToCard]);
+
+  // GSAP animations + scroll tracking across the cards on the right
+  useEffect(() => {
+    const container = pageRef.current;
+    if (!container) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      if (hubRef.current) {
+        gsap.fromTo(
+          hubRef.current,
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.75, ease: 'power3.out', clearProps: 'transform' }
+        );
+      }
+
+      if (arcRef.current) {
+        const len = arcRef.current.getTotalLength();
+        gsap.fromTo(
+          arcRef.current,
+          { strokeDasharray: len, strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 0.9, ease: 'power2.out' }
+        );
+      }
+
+      gsap.fromTo(
+        '.orbital-dot',
+        { opacity: 0, scale: 0 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.45,
+          stagger: 0.08,
+          delay: 0.2,
+          ease: 'back.out(1.6)',
+          transformOrigin: 'center center',
+        }
+      );
+
+      const cards = gsap.utils.toArray<HTMLElement>('.work-radial-card');
+      cards.forEach((card, idx) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: 30, y: 22, scale: 0.98 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 0.72,
+            delay: idx === 0 ? 0.08 : 0,
+            ease: 'power3.out',
+            clearProps: 'transform',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 86%',
+              once: true,
+            },
+          }
+        );
+      });
+    }, container);
+
+    // Closest-card tracking while scrolling past the right column
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        ticking = false;
+        if (performance.now() < skipScrollSyncUntilRef.current) return;
+
+        const targetCenter = window.innerHeight * 0.42;
+        let closestIdx = 0;
+        let minDist = Infinity;
+
+        cardRefs.current.slice(0, filteredStudies.length).forEach((el, idx) => {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const cardCenter = rect.top + rect.height / 2;
+          const dist = Math.abs(cardCenter - targetCenter);
+          if (dist < minDist) {
+            minDist = dist;
+            closestIdx = idx;
+          }
+        });
+
+        if (closestIdx !== activeIndexRef.current) {
+          setActiveIndex(closestIdx);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      ctx.revert();
+    };
+  }, [filter, filteredStudies.length]);
+
+  // Keyboard ArrowLeft / ArrowRight navigation
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') handleStep(1);
+      else if (e.key === 'ArrowLeft') handleStep(-1);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [handleStep]);
 
   return (
-    <div className="relative pt-28 sm:pt-36 pb-20 sm:pb-28">
-      {/* Page-scoped keyframes (kept local so no other file needs editing) */}
-      <style>{`
-        @keyframes ow-fade-up {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes ow-float {
-          0%, 100% { transform: translate3d(0, 0, 0); }
-          50%      { transform: translate3d(0, -14px, 0); }
-        }
-        @keyframes ow-ping-soft {
-          0%   { transform: scale(1); opacity: 0.55; }
-          100% { transform: scale(2.4); opacity: 0; }
-        }
-        @keyframes ow-shimmer {
-          0%   { transform: translateX(-120%) skewX(-18deg); }
-          100% { transform: translateX(260%) skewX(-18deg); }
-        }
-        .ow-fade-up { opacity: 0; animation: ow-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        .ow-float { animation: ow-float 7s ease-in-out infinite; }
-        .ow-ping-soft { animation: ow-ping-soft 2.2s ease-out infinite; }
-        .ow-shimmer::after {
-          content: '';
-          position: absolute;
-          top: 0; bottom: 0; left: 0;
-          width: 35%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-          animation: ow-shimmer 3.2s ease-in-out infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .ow-fade-up { opacity: 1; animation: none; }
-          .ow-float, .ow-ping-soft, .ow-shimmer::after { animation: none; }
-        }
-      `}</style>
+    <div ref={pageRef} className="pt-28 sm:pt-36 pb-20 sm:pb-28 bg-[#F8FAFC] relative overflow-x-clip">
+      {/* Subtle Ambient TAVQEN Radial Lighting */}
+      <div
+        className="absolute top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none opacity-30 -z-10"
+        style={{
+          background:
+            'radial-gradient(ellipse, rgba(0, 196, 255, 0.16) 0%, rgba(155, 227, 223, 0.12) 45%, transparent 72%)',
+        }}
+      />
 
-      {/* Ambient background glows */}
-      <div className="absolute inset-x-0 top-0 h-[700px] overflow-hidden pointer-events-none -z-10" aria-hidden="true">
-        <div
-          className="ow-float absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[520px] opacity-40"
-          style={{
-            background:
-              'radial-gradient(ellipse, rgba(0,196,255,0.20) 0%, rgba(0,136,204,0.07) 45%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute top-40 -right-32 w-[420px] h-[420px] opacity-40"
-          style={{ background: 'radial-gradient(circle, rgba(255,228,237,0.9) 0%, transparent 65%)' }}
-        />
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(14,165,233,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.06) 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
-            maskImage: 'linear-gradient(to bottom, black 0%, transparent 85%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 85%)',
-          }}
-        />
-      </div>
-
-      {/* ========================================================= */}
-      {/* HEADER                                                    */}
-      {/* ========================================================= */}
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back to Home Breadcrumb */}
-        <div className="mb-6 sm:mb-8 ow-fade-up">
+        <div className="mb-6 sm:mb-8">
           <button
             type="button"
             onClick={() => handleNav('/home')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
           >
-            <span className="transition-transform group-hover:-translate-x-1">←</span>
+            <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
           </button>
         </div>
 
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <span
-            className="ow-fade-up inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur border border-[#00C4FF]/30 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-5 shadow-sm"
-            style={{ animationDelay: '80ms' }}
-          >
-            <span className="relative flex w-2 h-2">
-              <span className="ow-ping-soft absolute inset-0 rounded-full bg-[#00C4FF]" />
-              <span className="relative w-2 h-2 rounded-full bg-[#0088CC]" />
-            </span>
-            Portfolio &amp; Case Studies
+        {/* ========================================================= */}
+        {/* PAGE HERO HEADER                                          */}
+        {/* ========================================================= */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12" data-animate="fade-up">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Portfolio &amp; Case Studies</span>
           </span>
-
-          <h1
-            className="ow-fade-up text-4xl sm:text-5xl md:text-[60px] font-medium tracking-[-0.03em] text-[#0B132B] leading-[1.1]"
-            style={{ animationDelay: '160ms' }}
-          >
-            Work that drives{' '}
+          <h1 className="text-3xl sm:text-5xl md:text-[56px] font-medium tracking-tight text-[#0B132B] leading-[1.12]">
+            Work that drives real{' '}
             <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-              real measurable impact.
+              measurable impact.
             </span>
           </h1>
-
-          <p
-            className="ow-fade-up mt-5 text-[15px] sm:text-[17px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto"
-            style={{ animationDelay: '260ms' }}
-          >
+          <p className="mt-4 sm:mt-5 text-[15px] sm:text-[17px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto">
             Explore recent digital products, mobile applications, and web platforms designed and engineered by TAVQEN Technologies.
           </p>
         </div>
-      </div>
 
-      {/* ========================================================= */}
-      {/* TECH MARQUEE (uses existing .animate-marquee utilities)   */}
-      {/* ========================================================= */}
-      <div className="mb-14 sm:mb-16">
-        <p className="text-center text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-4">
-          Built with
-        </p>
-        <div className="mask-radial-edges w-full overflow-hidden">
-          <div className="animate-marquee pause-on-hover gap-3">
-            {[...ALL_TECHNOLOGIES, ...ALL_TECHNOLOGIES].map((tech, idx) => (
-              <span
-                key={`${tech}-${idx}`}
-                className="flex-shrink-0 px-4 py-2 rounded-full bg-white border border-[#E2E8F0] text-[12.5px] font-mono font-medium text-[#475569] shadow-sm hover:border-[#00C4FF]/60 hover:text-[#0088CC] transition-colors mr-3"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ========================================================= */}
-      {/* FILTER + CASE STUDIES                                     */}
-      {/* ========================================================= */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Sticky filter bar */}
-        <div className="sticky top-[84px] sm:top-[96px] z-30 flex justify-center mb-10 sm:mb-14 pointer-events-none">
+        {/* ========================================================= */}
+        {/* FILTER SEGMENTED DOCK WITH GLIDING INDICATOR              */}
+        {/* ========================================================= */}
+        <div className="flex justify-center mb-12 sm:mb-16">
           <div
-            role="tablist"
-            aria-label="Filter projects"
-            className="pointer-events-auto flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-[26px] sm:rounded-full bg-white/80 backdrop-blur-xl border border-black/[0.06] shadow-[0_10px_35px_rgba(15,23,42,0.08)]"
+            ref={tabDockRef}
+            className="relative inline-flex flex-wrap items-center justify-center gap-1 p-1.5 rounded-2xl sm:rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-[0_12px_32px_rgba(15,23,42,0.05)]"
           >
-            {FILTER_TABS.map((tab) => {
-              const active = filter === tab.id;
+            <div
+              ref={tabPillRef}
+              aria-hidden="true"
+              className="absolute top-0 left-0 rounded-xl sm:rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] shadow-[0_6px_18px_rgba(0,196,255,0.32)] pointer-events-none"
+            />
+
+            {filterTabs.map((tab) => {
+              const TabIcon = tab.icon;
+              const isActive = filter === tab.id;
               return (
                 <button
                   key={tab.id}
+                  ref={(el) => {
+                    tabBtnRefs.current[tab.id] = el;
+                  }}
                   type="button"
-                  role="tab"
-                  aria-selected={active}
                   onClick={() => setFilter(tab.id)}
-                  className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13.5px] font-semibold transition-all duration-300 cursor-pointer ${
-                    active
-                      ? 'bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white shadow-[0_6px_18px_rgba(0,196,255,0.35)]'
-                      : 'text-[#64748B] hover:text-[#0B132B] hover:bg-[#F1F5F9]'
+                  className={`relative z-10 inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full text-xs sm:text-[13px] font-semibold transition-colors duration-300 cursor-pointer select-none ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-[#64748B] hover:text-[#0B132B]'
                   }`}
                 >
+                  <TabIcon
+                    className={`w-3.5 h-3.5 transition-colors duration-300 ${
+                      isActive ? 'text-white' : 'text-[#0088CC]'
+                    }`}
+                  />
                   <span>{tab.label}</span>
                   <span
-                    className={`min-w-[20px] h-5 px-1.5 rounded-full text-[10.5px] font-mono font-bold flex items-center justify-center transition-colors ${
-                      active ? 'bg-white/25 text-white' : 'bg-[#E0F7FF] text-[#0088CC]'
+                    className={`font-mono text-[10.5px] font-bold px-1.5 py-0.5 rounded-full transition-colors duration-300 ${
+                      isActive
+                        ? 'bg-white/25 text-white'
+                        : 'bg-[#F1F5F9] text-[#64748B]'
                     }`}
                   >
-                    {countFor(tab.id)}
+                    {tab.count}
                   </span>
                 </button>
               );
@@ -429,220 +569,392 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
           </div>
         </div>
 
-        <p className="sr-only" aria-live="polite">
-          Showing {filteredStudies.length} of {CASE_STUDIES.length} projects
-        </p>
+        {/* ========================================================= */}
+        {/* STICKY LEFT ORBITAL HUB + SCROLLING RIGHT WORK CARDS      */}
+        {/* Left section stays sticky until all right cards finish!   */}
+        {/* ========================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start mb-20 sm:mb-24">
+          {/* LEFT STICKY COLUMN */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start flex flex-col items-center">
+            {/* Desktop Radial Arc Stage */}
+            <div
+              className="hidden lg:block relative mx-auto lg:scale-[0.88] xl:scale-100 origin-left"
+              style={{ width: `${HUB_SVG_W}px`, height: `${HUB_SVG_H}px` }}
+            >
+              <svg
+                viewBox={`0 0 ${HUB_SVG_W} ${HUB_SVG_H}`}
+                className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
+              >
+                <defs>
+                  <linearGradient id="workArcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#00D4FF" />
+                    <stop offset="55%" stopColor="#0088CC" />
+                    <stop offset="100%" stopColor="#0B132B" />
+                  </linearGradient>
+                </defs>
 
-        {/* Case studies (key re-mounts list so reveal animations replay on filter change) */}
-        <div key={filter} className="space-y-14 sm:space-y-20 mb-20 sm:mb-28">
-          {filteredStudies.map((study, idx) => {
-            const [name, ...rest] = study.title.split(' — ');
-            const tagline = rest.join(' — ');
-            const imageFirst = idx % 2 === 1;
+                {/* Base Orbital Track */}
+                <path
+                  ref={arcRef}
+                  d={orbitalArcPath}
+                  fill="none"
+                  stroke="#E2E8F0"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
 
-            return (
-              <Reveal key={study.id}>
-                <article
-                  id={`case-${study.id}`}
-                  className="group/card relative rounded-[32px] sm:rounded-[40px] bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.04)] overflow-hidden hover:border-[#00C4FF]/50 hover:shadow-[0_28px_70px_rgba(0,196,255,0.12)] transition-all duration-500"
-                >
-                  {/* top accent line */}
-                  <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-[#00C4FF]/70 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                {/* Active Cyan Progress Arc */}
+                <path
+                  d={activeArcProgressPath}
+                  fill="none"
+                  stroke="url(#workArcGrad)"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="transition-all duration-500 ease-out"
+                />
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 sm:p-10 lg:p-12 items-center">
-                    {/* ---------------- Story column ---------------- */}
-                    <div className={`lg:col-span-7 flex flex-col ${imageFirst ? 'lg:order-2' : ''}`}>
-                      <div className="flex flex-wrap items-center gap-2.5 mb-4">
-                        <span className="font-mono text-xs font-bold text-[#0B132B]">
-                          {String(idx + 1).padStart(2, '0')}
-                          <span className="text-[#94A3B8]"> / {String(filteredStudies.length).padStart(2, '0')}</span>
-                        </span>
-                        <span className="w-6 h-[2px] bg-[#E2E8F0] rounded-full" />
-                        <span className="px-3 py-1 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[11px] sm:text-xs font-bold font-mono uppercase tracking-wider">
-                          {study.categoryLabel}
-                        </span>
-                      </div>
+                {/* End Caps */}
+                {(() => {
+                  const startCap = polar(HUB_CX, HUB_CY, HUB_R_ARC, arcStartDeg);
+                  const endCap = polar(HUB_CX, HUB_CY, HUB_R_ARC, arcEndDeg);
+                  return (
+                    <>
+                      <circle cx={startCap.x} cy={startCap.y} r="3.5" fill="#00D4FF" />
+                      <circle cx={endCap.x} cy={endCap.y} r="3.5" fill="#94A3B8" />
+                    </>
+                  );
+                })()}
 
-                      <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-bold text-[#0B132B] tracking-tight leading-[1.2] mb-3">
-                        {name}
-                        {tagline && (
-                          <span className="block mt-1 text-lg sm:text-xl lg:text-[22px] font-medium text-[#64748B] tracking-tight">
-                            {tagline}
-                          </span>
-                        )}
-                      </h3>
-
-                      <div className="flex items-center gap-2.5 mb-5">
-                        <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#00D4FF] to-[#0088CC] text-white text-xs font-bold flex items-center justify-center shadow-sm">
-                          {study.client.charAt(0)}
-                        </span>
-                        <p className="text-xs sm:text-sm text-[#475569]">
-                          Client: <span className="font-semibold text-[#0088CC]">{study.client}</span>
-                        </p>
-                      </div>
-
-                      <p className="text-sm sm:text-[15px] text-[#64748B] leading-[1.75] mb-6 font-normal">
-                        {study.overview}
-                      </p>
-
-                      {/* Challenge & Solution */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
-                        <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#CBD5E1] transition-colors">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="w-7 h-7 rounded-lg bg-white border border-[#E2E8F0] text-[#64748B] flex items-center justify-center">
-                              <Target className="w-3.5 h-3.5" />
-                            </span>
-                            <span className="text-[11px] font-bold text-[#0B132B] uppercase tracking-wider">
-                              The Challenge
-                            </span>
-                          </div>
-                          <p className="text-xs sm:text-[13px] text-[#64748B] leading-relaxed">{study.challenge}</p>
-                        </div>
-
-                        <div className="p-5 rounded-2xl bg-gradient-to-br from-[#E0F7FF]/70 to-[#F0F9FF] border border-[#00C4FF]/25 hover:border-[#00C4FF]/50 transition-colors">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="w-7 h-7 rounded-lg bg-white border border-[#00C4FF]/30 text-[#0088CC] flex items-center justify-center">
-                              <Lightbulb className="w-3.5 h-3.5" />
-                            </span>
-                            <span className="text-[11px] font-bold text-[#0088CC] uppercase tracking-wider">
-                              Our Engineering Solution
-                            </span>
-                          </div>
-                          <p className="text-xs sm:text-[13px] text-[#475569] leading-relaxed">{study.solution}</p>
-                        </div>
-                      </div>
-
-                      {/* Technology tags */}
-                      <div className="flex flex-wrap gap-2 mb-7">
-                        {study.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2.5 py-1 rounded-md bg-[#F1F5F9] text-[#475569] text-xs font-medium font-mono border border-transparent hover:border-[#00C4FF]/40 hover:bg-white hover:text-[#0088CC] hover:-translate-y-0.5 transition-all duration-200 cursor-default"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Key Metrics (animated count-up) */}
-                      <div className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-6 border-t border-[#E2E8F0]">
-                        {study.stats.map((s) => (
-                          <div
-                            key={s.label}
-                            className="rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] p-3 sm:p-4 hover:bg-white hover:border-[#00C4FF]/40 hover:shadow-[0_10px_25px_rgba(0,196,255,0.10)] transition-all duration-300"
-                          >
-                            <div className="text-base sm:text-xl font-bold text-[#0B132B] font-mono leading-tight">
-                              <CountUp value={s.value} />
-                            </div>
-                            <div className="mt-1 text-[10.5px] sm:text-xs text-[#94A3B8] leading-snug">{s.label}</div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Card CTA */}
-                      <div className="mt-6">
-                        <button
-                          type="button"
-                          onClick={() => handleNav('/start-a-project')}
-                          className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer group/cta"
-                        >
-                          <span>Build something similar</span>
-                          <ArrowRight className="w-4 h-4 transition-transform group-hover/cta:translate-x-1" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* ---------------- Visual column ---------------- */}
-                    <div className={`lg:col-span-5 ${imageFirst ? 'lg:order-1' : ''}`}>
-                      <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[540px] rounded-[24px] sm:rounded-[28px] overflow-hidden border border-black/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-[#F1F5F9] group/img">
-                        <img
-                          src={study.image}
-                          alt={study.title}
-                          className="w-full h-full object-cover object-top group-hover/img:scale-[1.06] transition-transform duration-[900ms] ease-out"
-                          loading="lazy"
+                {/* Connector Ticks + Clickable Milestone Nodes */}
+                {arcNodes.map((node) => {
+                  const isActive = node.idx === safeActiveIndex;
+                  return (
+                    <g
+                      key={node.study.id}
+                      className="orbital-dot pointer-events-auto cursor-pointer"
+                      onClick={() => scrollToCard(node.idx)}
+                    >
+                      <line
+                        x1={node.pos.x}
+                        y1={node.pos.y}
+                        x2={node.tail.x}
+                        y2={node.tail.y}
+                        stroke={isActive ? '#00C4FF' : '#CBD5E1'}
+                        strokeWidth={isActive ? 2 : 1.25}
+                        strokeDasharray={isActive ? undefined : '3 3'}
+                      />
+                      {isActive && (
+                        <circle
+                          cx={node.pos.x}
+                          cy={node.pos.y}
+                          r="13"
+                          fill="#00C4FF"
+                          fillOpacity="0.18"
                         />
+                      )}
+                      <circle
+                        cx={node.pos.x}
+                        cy={node.pos.y}
+                        r={isActive ? 7 : 5.5}
+                        fill="#FFFFFF"
+                        stroke={isActive ? '#00C4FF' : '#0088CC'}
+                        strokeWidth={isActive ? 3.5 : 2.5}
+                      />
+                    </g>
+                  );
+                })}
+              </svg>
 
-                        {/* soft vignette */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/35 via-transparent to-transparent pointer-events-none" />
+              {/* Circular White Center Hub */}
+              <div
+                ref={hubRef}
+                className="absolute rounded-full bg-white border border-[#E2E8F0] shadow-[0_24px_65px_rgba(15,23,42,0.08)] flex flex-col items-center justify-center text-center p-6 z-10 overflow-hidden"
+                style={{
+                  width: '236px',
+                  height: '236px',
+                  left: `${HUB_CX - 118}px`,
+                  top: `${HUB_CY - 118}px`,
+                }}
+              >
+                <div
+                  className="absolute inset-2 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 30% 25%, rgba(0, 212, 255, 0.10) 0%, transparent 65%)',
+                  }}
+                />
 
-                        {/* light sweep on hover */}
-                        <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/img:translate-x-[320%] skew-x-[-18deg] transition-transform duration-1000 pointer-events-none" />
+                <span className="relative z-10 px-3 py-1 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[10px] font-mono font-bold uppercase tracking-wider mb-2">
+                  TAVQEN Studio
+                </span>
 
-                        {/* Impact glass chip */}
-                        <div className="absolute left-3 right-3 bottom-3 sm:left-4 sm:right-4 sm:bottom-4 flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-[0_12px_30px_rgba(15,23,42,0.18)] translate-y-0 group-hover/img:-translate-y-1 transition-transform duration-500">
-                          <div className="flex items-center gap-2.5 min-w-0">
-                            <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/70 flex items-center justify-center flex-shrink-0">
-                              <TrendingUp className="w-4 h-4" />
+                <h2 className="relative z-10 text-lg font-bold text-[#0B132B] tracking-tight leading-snug">
+                  Our Work &amp; Products
+                </h2>
+
+                <p className="relative z-10 text-[11.5px] text-[#64748B] mt-1.5 leading-relaxed max-w-[175px]">
+                  Click any milestone or scroll to explore all projects.
+                </p>
+
+                <div className="relative z-10 mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[10.5px] font-mono font-bold text-[#0088CC]">
+                  <span>40+ Shipped · 99.9% SLA</span>
+                </div>
+
+                {filteredStudies.length > 1 && (
+                  <div className="relative z-10 mt-3 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleStep(-1)}
+                      className="w-7 h-7 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
+                      aria-label="Previous project"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="font-mono text-[11px] font-bold text-[#0B132B] px-1">
+                      0{safeActiveIndex + 1} / 0{filteredStudies.length}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleStep(1)}
+                      className="w-7 h-7 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
+                      aria-label="Next project"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Clickable 01..04 Milestone Labels along the Arc */}
+              {arcNodes.map((node) => {
+                const isActive = node.idx === safeActiveIndex;
+                return (
+                  <button
+                    key={`node-label-${node.study.id}`}
+                    type="button"
+                    onClick={() => scrollToCard(node.idx)}
+                    style={{
+                      left: `${node.tail.x + 10}px`,
+                      top: `${node.tail.y}px`,
+                      transform: 'translateY(-50%)',
+                    }}
+                    className={`absolute z-20 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border transition-all duration-300 cursor-pointer whitespace-nowrap ${
+                      isActive
+                        ? 'bg-white border-[#00C4FF] shadow-[0_10px_24px_rgba(0,196,255,0.18)] text-[#0B132B] scale-105'
+                        : 'bg-white/85 border-[#E2E8F0]/80 text-[#64748B] hover:text-[#0088CC] hover:border-[#00C4FF]/45 hover:bg-white'
+                    }`}
+                  >
+                    <span className="font-mono text-[11px] font-bold text-[#0088CC]">
+                      {node.study.number}
+                    </span>
+                    <span className="text-xs font-semibold">{node.study.shortTitle}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Mobile / Tablet Clickable Pills (< lg) */}
+            <div className="lg:hidden w-full grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {filteredStudies.map((study, idx) => {
+                const isActive = idx === safeActiveIndex;
+                return (
+                  <button
+                    key={study.id}
+                    type="button"
+                    onClick={() => scrollToCard(idx)}
+                    className={`px-3.5 py-3 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
+                      isActive
+                        ? 'bg-white border-[#00C4FF] shadow-[0_10px_25px_rgba(0,196,255,0.14)]'
+                        : 'bg-white/80 border-[#E2E8F0] hover:border-[#00C4FF]/40'
+                    }`}
+                  >
+                    <div className="font-mono text-[11px] font-bold text-[#0088CC]">
+                      {study.number}
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-[#0B132B] truncate mt-0.5">
+                      {study.shortTitle}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* RIGHT SCROLLING COLUMN: Gallery-First Large Visual Showcase Cards */}
+          <div className="lg:col-span-7 space-y-8 sm:space-y-10">
+            {filteredStudies.map((study, idx) => {
+              const isActive = idx === safeActiveIndex;
+              const isExpanded = expandedId === study.id;
+              return (
+                <div
+                  key={study.id}
+                  ref={(el) => {
+                    cardRefs.current[idx] = el;
+                  }}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`work-radial-card group relative rounded-[26px] sm:rounded-[32px] bg-white border transition-all duration-500 overflow-hidden cursor-pointer ${
+                    isActive
+                      ? 'border-[#00C4FF]/65 shadow-[0_24px_60px_rgba(0,196,255,0.13)]'
+                      : 'border-[#E2E8F0] shadow-[0_14px_40px_rgba(15,23,42,0.04)] hover:border-[#00C4FF]/45 hover:shadow-[0_20px_52px_rgba(0,196,255,0.10)]'
+                  }`}
+                >
+                  {/* Top Active Highlight Hairline */}
+                  <div
+                    className={`absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-[#00C4FF]/80 to-transparent pointer-events-none z-20 transition-opacity duration-500 ${
+                      isActive ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+
+                  {/* LARGE HERO VISUAL STAGE */}
+                  <div className="relative p-3 sm:p-4 pb-0">
+                    <div className="relative w-full h-[240px] sm:h-[310px] xl:h-[345px] rounded-[20px] sm:rounded-[24px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/55">
+                      <img
+                        src={study.image}
+                        alt={study.title}
+                        className="w-full h-full object-cover object-top group-hover:scale-[1.035] transition-transform duration-700 ease-out"
+                        loading="lazy"
+                      />
+
+                      {/* Soft top & bottom gradient scrims for legible floating pills */}
+                      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#0B132B]/25 via-[#0B132B]/5 to-transparent pointer-events-none" />
+                      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0B132B]/35 via-transparent to-transparent pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                      {/* Top Floating Glass Badges */}
+                      <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 z-10">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/92 backdrop-blur-md border border-white/60 shadow-sm text-[10.5px] font-bold font-mono text-[#0B132B] uppercase tracking-wider">
+                          <span className="text-[#0088CC]">{study.number}</span>
+                          <span className="text-[#CBD5E1]">·</span>
+                          <span>{study.categoryLabel.split('·')[0].trim()}</span>
+                        </span>
+
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/92 backdrop-blur-md border border-white/60 shadow-sm text-[10.5px] font-bold text-emerald-700">
+                          <TrendingUp className="w-3 h-3 text-emerald-600" />
+                          <span>{study.impact}</span>
+                        </span>
+                      </div>
+
+                      {/* Bottom Compact Stack Strip Floating on Visual */}
+                      <div className="hidden sm:flex absolute bottom-3.5 left-3.5 right-3.5 items-center justify-between gap-2 z-10">
+                        <div className="flex items-center gap-1.5">
+                          {study.technologies.slice(0, 3).map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-2.5 py-1 rounded-full bg-[#0B132B]/75 backdrop-blur-md text-white/95 text-[10px] font-mono font-medium border border-white/15"
+                            >
+                              {tech}
                             </span>
-                            <div className="min-w-0">
-                              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#94A3B8]">
-                                Result
-                              </div>
-                              <div className="text-[13px] sm:text-sm font-bold text-[#0B132B] truncate">
-                                {study.impact}
-                              </div>
-                            </div>
-                          </div>
-                          <ArrowUpRight className="w-4 h-4 text-[#0088CC] flex-shrink-0 transition-transform group-hover/img:translate-x-0.5 group-hover/img:-translate-y-0.5" />
+                          ))}
                         </div>
+                        <span className="px-3 py-1 rounded-full bg-white/92 backdrop-blur-md text-[#0B132B] text-[10.5px] font-bold shadow-sm">
+                          {study.client}
+                        </span>
                       </div>
                     </div>
                   </div>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
 
-      {/* ========================================================= */}
-      {/* START A PROJECT CTA BANNER                                */}
-      {/* ========================================================= */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-8 sm:p-14 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
-            {/* floating orbs */}
-            <div
-              className="ow-float absolute -top-16 -left-16 w-56 h-56 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(0,196,255,0.22), transparent 70%)' }}
-            />
-            <div
-              className="ow-float absolute -bottom-20 -right-10 w-64 h-64 rounded-full pointer-events-none"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,228,237,0.85), transparent 70%)',
-                animationDelay: '1.5s',
-              }}
-            />
+                  {/* MINIMAL EDITORIAL FOOTER */}
+                  <div className="relative z-10 px-5 sm:px-7 pt-5 pb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+                      <div>
+                        <h3 className="text-xl sm:text-[22px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors">
+                          {study.title}
+                        </h3>
+                        <p className="mt-1.5 text-xs sm:text-[13.5px] text-[#64748B] leading-relaxed line-clamp-2 max-w-xl">
+                          {study.overview}
+                        </p>
+                      </div>
+                    </div>
 
-            <span className="relative inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
-              Your Next Success Story
-            </span>
-            <h2 className="relative text-2xl sm:text-4xl font-bold text-[#0B132B] tracking-tight max-w-xl leading-snug">
-              Ready to build your next case study with us?
-            </h2>
-            <p className="relative mt-3 text-sm sm:text-base text-[#64748B] max-w-lg mb-8 leading-relaxed">
-              Partner with TAVQEN to build a scalable digital product that drives real business results.
-            </p>
+                    {/* Optional On-Demand Case Notes Drawer */}
+                    {isExpanded && (
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] animate-in fade-in duration-300"
+                      >
+                        <div>
+                          <span className="text-[10px] font-bold text-[#0B132B] uppercase tracking-wider block mb-0.5">
+                            Challenge
+                          </span>
+                          <p className="text-xs text-[#64748B] leading-snug">{study.challenge}</p>
+                        </div>
+                        <div className="sm:border-l sm:border-[#E2E8F0] sm:pl-3.5 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2E8F0]">
+                          <span className="text-[10px] font-bold text-[#0088CC] uppercase tracking-wider block mb-0.5">
+                            Solution
+                          </span>
+                          <p className="text-xs text-[#475569] leading-snug">{study.solution}</p>
+                        </div>
+                      </div>
+                    )}
 
-            <div className="relative flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => handleNav('/start-a-project')}
-                className="ow-shimmer relative overflow-hidden inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-sm font-semibold shadow-[0_8px_25px_rgba(0,196,255,0.3)] hover:shadow-[0_12px_32px_rgba(0,196,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Start a Project</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNav('/services')}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-sm font-semibold hover:border-[#0088CC] hover:text-[#0088CC] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Explore Services</span>
-              </button>
-            </div>
+                    {/* Clean Minimal Metrics + CTA Footer */}
+                    <div className="pt-3.5 border-t border-[#E2E8F0]/80 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-4 sm:gap-6">
+                        {study.stats.map((s, sIdx) => (
+                          <div key={sIdx} className="flex items-baseline gap-1.5">
+                            <span className="text-sm sm:text-[15px] font-extrabold text-[#0B132B] font-mono">
+                              {s.value}
+                            </span>
+                            <span className="text-[10.5px] text-[#94A3B8] font-medium hidden sm:inline">
+                              {s.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-2 ml-auto">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedId(isExpanded ? null : study.id);
+                          }}
+                          className="px-3 py-1.5 rounded-full bg-[#F8FAFC] hover:bg-[#F1F5F9] border border-[#E2E8F0] text-[#475569] text-[11.5px] font-semibold transition-colors cursor-pointer"
+                        >
+                          {isExpanded ? 'Hide Notes' : 'Case Notes'}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleNav('/start-a-project');
+                          }}
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-[11.5px] font-bold transition-all duration-300 cursor-pointer group/btn shadow-xs"
+                        >
+                          <span>Build Similar</span>
+                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </Reveal>
+        </div>
+
+        {/* ========================================================= */}
+        {/* START A PROJECT CTA BANNER                                */}
+        {/* ========================================================= */}
+        <div className="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-8 sm:p-12 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
+          <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
+            Your Next Success Story
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#0B132B] tracking-tight max-w-xl leading-snug">
+            Ready to build your next case study with us?
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-[#64748B] max-w-lg mb-8 leading-relaxed">
+            Partner with TAVQEN to build a scalable digital product that drives real business results.
+          </p>
+          <button
+            type="button"
+            onClick={() => handleNav('/start-a-project')}
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-sm font-semibold shadow-[0_8px_25px_rgba(0,196,255,0.3)] hover:shadow-[0_12px_32px_rgba(0,196,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+          >
+            <span>Start a Project</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
