@@ -1,7 +1,9 @@
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+
+import product1 from '../assits/products/product1.jpg';
+import product2 from '../assits/products/product2.jpg';
+import product3 from '../assits/products/product3.jpg';
+import product4 from '../assits/products/product4.jpg';
+import { ProgressiveImage, ErrorState } from '../components/loading';
 
 const ALL_PROJECTS = {
   col1: [
@@ -59,16 +61,20 @@ export default function WorkDetailPage({ projectId }: { projectId?: string }) {
   if (!project) {
     return (
       <section className="bg-[#F8FAFC] min-h-screen py-24 sm:py-28 lg:py-32 flex items-center justify-center p-4">
-        <div className="max-w-3xl text-center">
-          <h1 className="text-3xl sm:text-4xl font-medium text-[#0B132B] mb-4">Loading Project...</h1>
-        </div>
+        <ErrorState
+          title="Case Study Not Found"
+          message="The project or case study you requested could not be located."
+          onBack={() => {
+            window.location.hash = 'work';
+          }}
+        />
       </section>
     );
   }
 
   return (
     <section className="bg-[#F8FAFC] border-t border-[#E2E8F0] relative min-h-screen py-24 sm:py-28 lg:py-32">
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="mb-6 sm:mb-8">
           <a
             href="#"
@@ -114,11 +120,11 @@ export default function WorkDetailPage({ projectId }: { projectId?: string }) {
 
             <div className="lg:col-span-5 flex items-center justify-center">
               <div className="w-full h-[400px] sm:h-[500px] lg:h-[560px] rounded-[24px] overflow-hidden border border-black/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-[#F1F5F9] group relative">
-                <img
+                <ProgressiveImage
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-                  loading="lazy"
+                  containerClassName="w-full h-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>

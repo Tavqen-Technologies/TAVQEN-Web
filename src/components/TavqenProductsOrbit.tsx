@@ -110,7 +110,7 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb */}
         <div className="mb-5 sm:mb-6">
           <button

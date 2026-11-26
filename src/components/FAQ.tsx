@@ -114,7 +114,7 @@ export default function FAQ() {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* ========================================================= */}
           {/* LEFT STICKY COLUMN: HEADER, TOPICS & DIRECT HELP CARD      */}

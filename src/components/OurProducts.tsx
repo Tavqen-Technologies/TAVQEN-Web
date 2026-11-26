@@ -1,12 +1,28 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight, FileText, Play, Users, ArrowRight } from 'lucide-react';
+import { ProgressiveImage } from './loading';
 
-import pdfImg from '../assits/products/product1.webp';
-import playerImg from '../assits/products/product2.webp';
-import gramsetuImg from '../assits/products/product3.webp';
+import gramsetuImg from '../assits/products/product3.jpg';
 import mobileImg from '../assits/mobile.avif';
 import websiteImg from '../assits/website.avif';
 import saasImg from '../assits/saas product.avif';
+
+// TavqenPDF Real UI Screenshots
+import pdfHome from '../assits/products/TavqenPDF/home.jpg';
+import pdfHomeLight from '../assits/products/TavqenPDF/homeLight.jpg';
+import pdfAllPages from '../assits/products/TavqenPDF/allPages.jpg';
+import pdfTools from '../assits/products/TavqenPDF/pdfTools.jpg';
+import pdfConversion from '../assits/products/TavqenPDF/conversion.jpg';
+import pdfMyFiles from '../assits/products/TavqenPDF/myFiles.jpg';
+import pdfSettings from '../assits/products/TavqenPDF/settings.jpg';
+
+// TavqenVPlayer Real UI Screenshots
+import vplayerHome from '../assits/products/TavqenVPlayer/home.jpg';
+import vplayerHomeLight from '../assits/products/TavqenVPlayer/homelight.jpg';
+import vplayerAllPages from '../assits/products/TavqenVPlayer/allpages.jpg';
+import vplayerLibrary from '../assits/products/TavqenVPlayer/libaray.jpg';
+import vplayerSearch from '../assits/products/TavqenVPlayer/search.jpg';
+import vplayerAddTitles from '../assits/products/TavqenVPlayer/addTittles.jpg';
 
 interface PhoneCard {
   line1: string;
@@ -43,46 +59,53 @@ const PRODUCTS: ProductShowcase[] = [
   playStoreUrl: '#contact',
   phones: [
     {
-      line1: 'AI-Powered',
-      line2: 'Document Scanner',
-      badge: 'Smart OCR',
+      line1: 'Smart AI',
+      line2: 'Dashboard Home',
+      badge: 'Home Screen',
       titleColor: 'text-[#0088CC]',
-      image: mobileImg,
+      image: pdfHome,
     },
     {
-      line1: 'High Quality',
-      line2: 'PDF Export',
-      badge: '300 DPI',
+      line1: 'Light Mode',
+      line2: 'Modern Clean UI',
+      badge: 'Light Theme',
       titleColor: 'text-[#0B132B]',
-      image: pdfImg,
+      image: pdfHomeLight,
     },
     {
-      line1: 'Smart Sign',
-      line2: '& Form Filling',
-      badge: 'e-Sign Ready',
+      line1: 'Document Grid',
+      line2: '& Multi-Page View',
+      badge: 'All Pages',
       titleColor: 'text-[#0088CC]',
-      image: websiteImg,
+      image: pdfAllPages,
     },
     {
-      line1: 'Secure Cloud',
-      line2: 'Document Vault',
-      badge: 'Encrypted',
+      line1: 'Comprehensive',
+      line2: 'PDF Tool Suite',
+      badge: 'PDF Tools',
       titleColor: 'text-[#0B132B]',
-      image: saasImg,
+      image: pdfTools,
     },
     {
-      line1: 'Batch PDF',
-      line2: 'Split & Merge',
-      badge: 'Fast Processing',
+      line1: 'High-Speed',
+      line2: 'Format Converter',
+      badge: 'Conversion Engine',
       titleColor: 'text-[#0088CC]',
-      image: pdfImg,
+      image: pdfConversion,
     },
     {
-      line1: 'Smart Text',
-      line2: 'Extraction',
-      badge: 'OCR Powered',
+      line1: 'Cloud Synced',
+      line2: 'File Vault',
+      badge: 'My Files',
       titleColor: 'text-[#0B132B]',
-      image: mobileImg,
+      image: pdfMyFiles,
+    },
+    {
+      line1: 'Customizable',
+      line2: 'User Preferences',
+      badge: 'Settings & Security',
+      titleColor: 'text-[#0088CC]',
+      image: pdfSettings,
     },
   ],
 },
@@ -101,45 +124,45 @@ const PRODUCTS: ProductShowcase[] = [
   phones: [
     {
       line1: 'Ultra HD',
-      line2: '4K / 8K Playback',
-      badge: 'High Quality',
+      line2: '4K / 8K Player Home',
+      badge: 'Home Dashboard',
       titleColor: 'text-[#E11D48]',
-      image: playerImg,
+      image: vplayerHome,
     },
     {
-      line1: 'Universal',
-      line2: 'Video Support',
-      badge: 'Multi Format',
+      line1: 'Crisp Light',
+      line2: 'Playback Interface',
+      badge: 'Light Theme',
       titleColor: 'text-[#0B132B]',
-      image: mobileImg,
+      image: vplayerHomeLight,
     },
     {
-      line1: 'Smart Subtitle',
-      line2: 'Sync',
-      badge: 'Auto Match',
+      line1: 'Media Browser',
+      line2: '& Video Grid',
+      badge: 'All Media Files',
       titleColor: 'text-[#E11D48]',
-      image: playerImg,
+      image: vplayerAllPages,
     },
     {
-      line1: 'Smooth Gesture',
-      line2: 'Controls',
-      badge: 'Touch Ready',
+      line1: 'Organized',
+      line2: 'Video Library',
+      badge: 'Library Manager',
       titleColor: 'text-[#0B132B]',
-      image: websiteImg,
+      image: vplayerLibrary,
     },
     {
-      line1: 'Picture in Picture',
-      line2: 'Background Play',
-      badge: 'PiP Ready',
+      line1: 'Instant Fast',
+      line2: 'Global Search',
+      badge: 'Smart Search',
       titleColor: 'text-[#E11D48]',
-      image: playerImg,
+      image: vplayerSearch,
     },
     {
-      line1: 'Immersive',
-      line2: 'Audio Experience',
-      badge: 'Audio Controls',
+      line1: 'Subtitle Sync',
+      line2: '& Audio Tracks',
+      badge: 'Audio & Titles',
       titleColor: 'text-[#0B132B]',
-      image: mobileImg,
+      image: vplayerAddTitles,
     },
   ],
 },
@@ -225,7 +248,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
         isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
       }`}
     >
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb for Full Page View */}
         {isFullPage && (
           <div className="mb-6 sm:mb-8">
@@ -241,7 +264,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
         {/* ========================================================= */}
         {/* SECTION HEADER (Clean, balanced typography)               */}
         {/* ========================================================= */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 mb-12 sm:mb-16" data-animate="fade-up">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 mb-12 sm:mb-16">
           <div>
             {isFullPage && (
               <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
@@ -272,7 +295,6 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
             return (
               <div
                 key={product.id}
-                data-animate="fade-up"
                 className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8 xl:gap-10 pb-12 sm:pb-16 border-b border-[#E2E8F0] last:border-b-0 last:pb-0"
               >
                 {/* ---------------------------------------------------- */}
@@ -406,15 +428,15 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
 
                             {/* Screen Mockup Image */}
                             <div className="w-full h-full relative overflow-hidden bg-gray-50">
-                              <img
+                              <ProgressiveImage
                                 src={phone.image}
                                 alt={phone.line1}
                                 className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.05]"
-                                loading="lazy"
+                                containerClassName="w-full h-full"
                               />
 
                               {/* Bottom Floating Pill Metric */}
-                              <div className="absolute bottom-2 left-1.5 right-1.5 bg-white/95 backdrop-blur-md rounded-lg py-0.5 px-1.5 border border-black/5 shadow-2xs text-center">
+                              <div className="absolute bottom-2 left-1.5 right-1.5 bg-white/95 backdrop-blur-md rounded-lg py-0.5 px-1.5 border border-black/5 shadow-2xs text-center z-10">
                                 <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#0B132B]">
                                   {phone.badge}
                                 </span>

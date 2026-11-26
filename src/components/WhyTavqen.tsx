@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Check, ArrowRight } from 'lucide-react';
 
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+import product1 from '../assits/products/product1.jpg';
+import product2 from '../assits/products/product2.jpg';
+import product3 from '../assits/products/product3.jpg';
+import product4 from '../assits/products/product4.jpg';
 import saasImg from '../assits/saas product.avif';
 
 interface ValueStep {
@@ -181,7 +181,7 @@ export default function WhyTavqen() {
           }}
         />
 
-        <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           {/* ===================================================== */}
           {/* TOP SECTION HEADER (Two-tone matching screenshot)      */}
           {/* ===================================================== */}

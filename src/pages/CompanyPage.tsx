@@ -276,7 +276,7 @@ export default function CompanyPage({ onNavigate }: CompanyPageProps) {
   return (
     <div className="pt-28 sm:pt-36 pb-20 sm:pb-28">
       {/* GLOBAL CONTAINER */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb */}
         <div className="mb-6 sm:mb-8">
           <button
@@ -380,7 +380,7 @@ export default function CompanyPage({ onNavigate }: CompanyPageProps) {
       {/* ========================================================= */}
       <HowTavqen />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-20 sm:mt-24">
+      <div className="site-container mt-20 sm:mt-24">
         {/* ========================================================= */}
         {/* CORE ENGINEERING VALUES (Clean Minimal Cards)             */}
         {/* ========================================================= */}

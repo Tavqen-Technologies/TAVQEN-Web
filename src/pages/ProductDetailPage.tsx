@@ -8,6 +8,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { TAVQEN_PRODUCTS, getProductById } from '../data/productsData';
+import { ProgressiveImage } from '../components/loading';
 
 interface ProductDetailPageProps {
   productId?: string;
@@ -75,7 +76,7 @@ export default function ProductDetailPage({ productId, onNavigate }: ProductDeta
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Top Breadcrumb Navigation */}
         <div className="mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3">
           <button
@@ -178,12 +179,13 @@ export default function ProductDetailPage({ productId, onNavigate }: ProductDeta
             {/* Right Visual Mockup */}
             <div className="lg:col-span-5">
               <div className="w-full h-[280px] sm:h-[360px] lg:h-[400px] rounded-[24px] overflow-hidden border border-black/[0.08] shadow-[0_18px_45px_rgba(15,23,42,0.1)] bg-[#F1F5F9] relative group">
-                <img
+                <ProgressiveImage
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  containerClassName="w-full h-full"
                 />
-                <div className="absolute bottom-4 left-4 right-4 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-sm flex items-center justify-between gap-2">
+                <div className="absolute bottom-4 left-4 right-4 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-sm flex items-center justify-between gap-2 z-20">
                   <span className="text-xs font-bold text-[#0B132B] truncate">
                     {product.flowTitle}
                   </span>

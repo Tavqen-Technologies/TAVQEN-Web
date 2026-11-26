@@ -16,6 +16,7 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Careers from './components/Careers';
 import Footer from './components/Footer';
+import { PageLoader, RouteProgressBar } from './components/loading';
 
 import CompanyPage from './pages/CompanyPage';
 import ServicesPage from './pages/ServicesPage';
@@ -30,7 +31,18 @@ export type AppRoute = 'home' | 'company' | 'services' | 'service-detail' | 'pro
 
 export default function App() {
   const [route, setRoute] = useState<AppRoute>('home');
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
   const appRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Initial page load transition
+    const timer = window.setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 550);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const parseCurrentRoute = (): AppRoute => {
     const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
@@ -46,7 +58,7 @@ export default function App() {
     if (target === 'our-work' || target === 'work') return 'work';
     if (target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
     if (target === 'careers' || target === 'career') return 'careers';
-    if (target === 'start-a-project' || target === 'project') return 'start-a-project';
+    if (target === 'start-a-project' || target === 'project' || target === 'contact') return 'start-a-project';
 
     return 'home';
   };
@@ -55,9 +67,13 @@ export default function App() {
     const cleanupSmoothWheel = initSmoothWheelScroll();
 
     const handleLocationChange = () => {
+      setIsNavigating(true);
       const active = parseCurrentRoute();
       setRoute(active);
-      smoothScrollTo(0, 0.7);
+      smoothScrollTo(0, 0.6);
+      window.setTimeout(() => {
+        setIsNavigating(false);
+      }, 250);
     };
 
     handleLocationChange();
@@ -85,6 +101,7 @@ export default function App() {
   }, [route]);
 
   const navigateTo = (path: string) => {
+    setIsNavigating(true);
     const clean = path.replace(/^\/?/, '').replace(/^#\/?/, '');
     const routePart = clean.split('?')[0];
     const newRoute = parseCurrentRouteFromString(routePart);
@@ -97,7 +114,10 @@ export default function App() {
       window.location.hash = clean;
     }
 
-    smoothScrollTo(0, 0.75);
+    smoothScrollTo(0, 0.65);
+    window.setTimeout(() => {
+      setIsNavigating(false);
+    }, 280);
   };
 
   const parseCurrentRouteFromString = (target: string): AppRoute => {
@@ -109,15 +129,18 @@ export default function App() {
     if (target === 'our-work' || target === 'work') return 'work';
     if (target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
     if (target === 'careers' || target === 'career') return 'careers';
-    if (target === 'start-a-project' || target === 'project') return 'start-a-project';
+    if (target === 'start-a-project' || target === 'project' || target === 'contact') return 'start-a-project';
 
     return 'home';
   };
 
   return (
-    <div ref={appRef} className="min-h-screen bg-[#F8FAFC] selection:bg-[#00C4FF]/30 selection:text-[#0B132B] font-sans antialiased flex flex-col justify-between">
+    <div ref={appRef} className="min-h-screen bg-[#F8FAFC] selection:bg-[#00C4FF]/30 selection:text-[#0B132B] font-sans antialiased flex flex-col justify-between relative">
+      <RouteProgressBar isLoading={isNavigating} />
+      <PageLoader isLoading={isInitialLoading} />
+      
       <Navbar currentRoute={route} onNavigate={navigateTo} />
-      <main className="flex-1">
+      <main className="flex-1 transition-opacity duration-200">
         {route === 'home' && (
           <>
             <Hero />

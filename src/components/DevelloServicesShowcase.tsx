@@ -108,7 +108,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb */}
         <div className="mb-6 sm:mb-8">
           <button

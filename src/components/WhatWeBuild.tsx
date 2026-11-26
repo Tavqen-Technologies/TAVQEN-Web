@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { Smartphone, Monitor, Layers, Cpu, Bot, Check, ArrowRight } from 'lucide-react';
+import { Smartphone, Monitor, Layers, Cpu, Check, ArrowRight } from 'lucide-react';
+import { ProgressiveImage } from './loading';
 
-import mobileImg from '../assits/mobile.avif';
-import websiteImg from '../assits/website.avif';
+import mobileImg from '../assits/products/ServcesMobile.png';
+import websiteImg from '../assits/products/servicesWeb.png';
 import saasImg from '../assits/saas product.avif';
 import customImg from '../assits/Custom.avif';
-import aiImg from '../assits/ai-n8n-workflow.jpg';
 
 interface ServiceItem {
   number: string;
@@ -99,24 +99,6 @@ const SERVICES: ServiceItem[] = [
     ctaText: 'More about Custom Software Development',
     ctaLink: '#contact',
   },
-  {
-    number: '05',
-    count: '05 / 05',
-    title: 'AI Automation',
-    description:
-      'Production LLM agents, hybrid RAG search, and automated document extraction pipelines engineered with deterministic guardrails to eliminate repetitive operational work.',
-    icon: Bot,
-    image: aiImg,
-    alt: 'AI Automation Mockup',
-    features: [
-      'Autonomous LLM & tool-calling workflow agents',
-      'Document OCR & structured data extraction',
-      'Permission-aware hybrid RAG knowledge bases',
-      'Accuracy eval suites & latency guardrails',
-    ],
-    ctaText: 'More about AI Automation',
-    ctaLink: '/service?id=ai',
-  },
 ];
 
 export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: WhatWeBuildProps) {
@@ -160,39 +142,40 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
     <section
       id="services"
       className={`relative bg-[#F8FAFC] border-t border-[#E2E8F0] ${
-        isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
+        isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'section-spacing'
       }`}
     >
       {/* Back to Home Breadcrumb for Full Page View */}
       {isFullPage && (
-        <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors"
+        <div className="site-container mb-6 sm:mb-8">
+          <button
+            type="button"
+            onClick={() => (onNavigate ? onNavigate('home') : (window.location.hash = ''))}
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
           >
             <span>← Back to Home</span>
-          </a>
+          </button>
         </div>
       )}
 
       {/* SECTION HEADING */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 text-center" data-animate="fade-up">
+      <div className="site-container mb-12 sm:mb-16 text-center">
         {isFullPage && (
-          <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
+          <span className="section-eyebrow">
             Services & Capabilities
           </span>
         )}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B132B] max-w-3xl mx-auto leading-[1.15]">
+        <h2 className="section-heading max-w-3xl mx-auto">
           {isFullPage ? 'What We Build & Engineer' : 'What We Build'}
         </h2>
-        <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15.5px] text-[#64748B] max-w-xl mx-auto font-normal leading-relaxed">
+        <p className="section-desc max-w-xl mx-auto">
           {isFullPage
             ? 'Comprehensive digital product development covering mobile apps, web applications, SaaS platforms, and custom operational software.'
             : 'Digital products designed to solve real problems, create better experiences, and help businesses grow.'}
         </p>
       </div>
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-14 items-start">
           {/* ========================================================= */}
           {/* LEFT COLUMN: STICKY INTERACTIVE VISUAL CARD               */}
@@ -245,59 +228,22 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
 
               {/* Floating Mockup Images (Crossfade & subtle scale transition) */}
               <div className="relative w-full h-full flex items-center justify-center">
-                {displayedServices.map((item, idx) => {
-                  const mappedId =
-                    ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
-                      item.number
-                    ] || 'mobile';
-                  const openDetail = () => {
-                    const targetPath = `/service?id=${mappedId}`;
-                    if (onNavigate) {
-                      onNavigate(targetPath);
-                    } else {
-                      window.location.href = targetPath;
-                    }
-                  };
-
-                  return (
-                    <div
-                      key={item.number}
-                      role="button"
-                      tabIndex={activeIndex === idx ? 0 : -1}
-                      onClick={openDetail}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          openDetail();
-                        }
-                      }}
-                      title={`View ${item.title} details`}
-                      className={`group absolute inset-0 flex items-center justify-center p-3 transition-all duration-700 ease-out cursor-pointer ${
-                        activeIndex === idx
-                          ? 'opacity-100 scale-100 pointer-events-auto'
-                          : 'opacity-0 scale-[0.96] pointer-events-none'
-                      }`}
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.alt}
-                        className={`max-h-[300px] xl:max-h-[340px] max-w-[85%] w-auto object-contain drop-shadow-[0_20px_40px_rgba(15,23,42,0.12)] group-hover:scale-[1.03] transition-transform duration-500 ${
-                          item.number === '05' ? 'rounded-2xl border border-[#E2E8F0]' : ''
-                        }`}
-                      />
-                      {item.number === '05' && (
-                        <span className="absolute top-5 left-12 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#E2E8F0] shadow-xs text-[10px] font-bold text-[#0B132B]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                          n8n Workflow Flow
-                        </span>
-                      )}
-                      <span className="absolute bottom-5 right-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E2E8F0] shadow-sm text-[11px] font-bold text-[#0B132B] group-hover:bg-[#0B132B] group-hover:text-white group-hover:border-[#0B132B] transition-colors">
-                        <span>View Details</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  );
-                })}
+                {displayedServices.map((item, idx) => (
+                  <div
+                    key={item.number}
+                    className={`absolute inset-0 flex items-center justify-center p-3 transition-all duration-700 ease-out ${
+                      activeIndex === idx
+                        ? 'opacity-100 scale-100 pointer-events-auto'
+                        : 'opacity-0 scale-[0.96] pointer-events-none'
+                    }`}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      className="max-h-[300px] xl:max-h-[340px] max-w-[85%] w-auto object-contain drop-shadow-[0_20px_40px_rgba(15,23,42,0.12)] hover:scale-[1.02] transition-transform duration-500"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -312,7 +258,6 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
                 <div
                   key={item.number}
                   ref={(el) => (serviceRefs.current[idx] = el)}
-                  data-animate="fade-up"
                   className="scroll-mt-32"
                 >
                   {/* Top Header Badge: Icon in pill + Number & horizontal rule */}
@@ -340,50 +285,13 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
                   </p>
 
                   {/* Mobile-Only Image Preview */}
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => {
-                      const mappedId =
-                        ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
-                          item.number
-                        ] || 'mobile';
-                      const targetPath = `/service?id=${mappedId}`;
-                      if (onNavigate) {
-                        onNavigate(targetPath);
-                      } else {
-                        window.location.href = targetPath;
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        const mappedId =
-                          ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
-                            item.number
-                          ] || 'mobile';
-                        const targetPath = `/service?id=${mappedId}`;
-                        if (onNavigate) {
-                          onNavigate(targetPath);
-                        } else {
-                          window.location.href = targetPath;
-                        }
-                      }
-                    }}
-                    className="lg:hidden relative group cursor-pointer mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] hover:border-[#00C4FF]/50 p-5 flex items-center justify-center transition-all"
-                  >
-                    <img
+                  <div className="lg:hidden mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] p-5 flex items-center justify-center">
+                    <ProgressiveImage
                       src={item.image}
                       alt={item.alt}
-                      className={`max-h-[240px] w-auto object-contain drop-shadow-md group-hover:scale-[1.02] transition-transform duration-300 ${
-                        item.number === '05' ? 'rounded-xl border border-[#E2E8F0]' : ''
-                      }`}
-                      loading="lazy"
+                      className="max-h-[240px] w-auto object-contain drop-shadow-md"
+                      containerClassName="flex items-center justify-center"
                     />
-                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] shadow-xs">
-                      <span>Details</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </span>
                   </div>
 
                   {/* Features List */}
@@ -405,27 +313,14 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
 
                   {/* Link CTA */}
                   <div className="pt-1">
-                    <a
-                      href={`/service?id=${
-                        ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
-                          item.number
-                        ] || 'mobile'
-                      }`}
-                      onClick={(e) => {
-                        const mappedId =
-                          ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
-                            item.number
-                          ] || 'mobile';
-                        if (onNavigate) {
-                          e.preventDefault();
-                          onNavigate(`/service?id=${mappedId}`);
-                        }
-                      }}
-                      className="inline-flex items-center gap-2 text-[13.5px] sm:text-[14px] font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors group"
+                    <button
+                      type="button"
+                      onClick={() => (onNavigate ? onNavigate('start-a-project') : (window.location.hash = 'contact'))}
+                      className="inline-flex items-center gap-2 text-[13.5px] sm:text-[14px] font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors group cursor-pointer"
                     >
                       <span>{item.ctaText}</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </a>
+                    </button>
                   </div>
                 </div>
               );
@@ -438,8 +333,9 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
         {/* ========================================================= */}
         {limit && limit < SERVICES.length && (
           <div className="mt-14 sm:mt-18 flex flex-col items-center justify-center text-center">
-            <a
-              href="/services"
+            <button
+              type="button"
+              onClick={() => (onNavigate ? onNavigate('services') : (window.location.href = '/services'))}
               className="
                 inline-flex items-center gap-2.5
                 px-7 sm:px-8 py-3 sm:py-3.5
@@ -449,12 +345,12 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
                 shadow-[0_4px_20px_rgba(0,0,0,0.04)]
                 hover:border-[#0088CC] hover:text-[#0088CC] hover:shadow-[0_8px_25px_rgba(0,196,255,0.15)]
                 hover:scale-[1.02] active:scale-95
-                transition-all group
+                transition-all group cursor-pointer
               "
             >
               <span>Explore All Services</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#0088CC]" />
-            </a>
+            </button>
             <p className="mt-2.5 text-xs text-[#94A3B8]">
               View our full capabilities including SaaS & Custom Software engineering
             </p>
@@ -473,18 +369,20 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
               Let&apos;s turn your vision into high-performance software designed to scale.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#project"
-                className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:scale-[1.02] transition-all"
+              <button
+                type="button"
+                onClick={() => (onNavigate ? onNavigate('start-a-project') : (window.location.hash = 'project'))}
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:scale-[1.02] transition-all cursor-pointer"
               >
                 Start a Project
-              </a>
-              <a
-                href="#"
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white border border-[#E2E8F0] text-gray-700 text-xs sm:text-sm font-medium hover:text-black transition-all"
+              </button>
+              <button
+                type="button"
+                onClick={() => (onNavigate ? onNavigate('home') : (window.location.hash = ''))}
+                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white border border-[#E2E8F0] text-gray-700 text-xs sm:text-sm font-medium hover:text-black transition-all cursor-pointer"
               >
                 Return to Home
-              </a>
+              </button>
             </div>
           </div>
         )}

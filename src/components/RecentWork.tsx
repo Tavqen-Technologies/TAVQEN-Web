@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, FileText, Sparkles, Users } from 'lucide-react';
+import { ProgressiveImage } from './loading';
 
-import product1 from '../assits/products/product1.webp';
-import product3 from '../assits/products/product3.webp';
+import product1 from '../assits/products/product1.jpg';
+import product3 from '../assits/products/product3.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -197,7 +198,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* ========================================================= */}
         {/* SECTION HEADER (Matches TAVQEN typography & palette)       */}
         {/* ========================================================= */}
@@ -328,13 +329,13 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
 
                         {/* Compact Project Preview Visual */}
                         <div className="mt-5 relative h-[175px] sm:h-[200px] rounded-[18px] overflow-hidden border border-black/[0.06] bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
-                          <img
+                          <ProgressiveImage
                             src={project.image}
                             alt={project.alt}
                             className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                            loading="lazy"
+                            containerClassName="w-full h-full"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
                           {/* Floating Impact Badge */}
                           <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-xs">

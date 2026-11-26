@@ -21,6 +21,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     text-rendering: optimizeLegibility;
   }
 
@@ -33,6 +34,49 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
   }
+}
+
+/* Premium Skeleton Shimmer Effect */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: #E2E8F0;
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 1.8s infinite;
+}
+
+@keyframes spin-smooth {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-smooth {
+  animation: spin-smooth 0.8s linear infinite;
 }
 
 /* Smooth GPU-composited micro-transitions & subtle glow pulse */
@@ -63,7 +107,48 @@
 @layer components {
   /* Unified Global Content Container used across all sections & navbar */
   .site-container {
-    @apply w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Consistent Section Vertical Spacing */
+  .section-spacing {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  /* Standard Section Header Subcomponents */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5;
+  }
+
+  .section-heading {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B132B] tracking-tight leading-[1.15];
+  }
+
+  .section-desc {
+    @apply mt-3.5 text-sm sm:text-base text-[#64748B] max-w-2xl leading-relaxed;
+  }
+
+  /* Standard Reusable Button Language */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00D4FF] via-[#00A3E0] to-[#0088CC] text-white text-xs sm:text-sm font-semibold shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_12px_32px_rgba(0,196,255,0.38)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer select-none disabled:opacity-70 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] hover:text-[#0088CC] hover:border-[#0088CC] text-xs sm:text-sm font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,196,255,0.12)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer select-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-[#0B132B] hover:text-[#0088CC] bg-black/[0.03] hover:bg-black/[0.06] border border-black/[0.08] transition-all cursor-pointer select-none active:scale-95;
+  }
+
+  /* Standard Reusable Card System */
+  .card-standard {
+    @apply rounded-2xl sm:rounded-3xl bg-white border border-[#E2E8F0] p-6 sm:p-7 shadow-[0_8px_30px_rgba(15,23,42,0.03)] hover:shadow-[0_16px_40px_rgba(0,196,255,0.12)] hover:border-[#00C4FF]/50 transition-all duration-300;
+  }
+
+  /* Standard Form Inputs */
+  .input-standard {
+    @apply w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0B132B] placeholder-[#94A3B8] focus:outline-hidden focus:border-[#00C4FF] focus:bg-white focus:ring-3 focus:ring-[#00C4FF]/10 transition-all;
   }
 }
 

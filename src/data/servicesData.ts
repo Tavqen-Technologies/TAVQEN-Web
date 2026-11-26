@@ -2,10 +2,10 @@ import mobileImg from '../assits/mobile.avif';
 import websiteImg from '../assits/website.avif';
 import saasImg from '../assits/saas product.avif';
 import customImg from '../assits/Custom.avif';
-import aiN8nWorkflowImg from '../assits/ai-n8n-workflow.jpg';
-import product2Img from '../assits/products/product2.webp';
-import product3Img from '../assits/products/product3.webp';
-import product4Img from '../assits/products/product4.webp';
+import product1Img from '../assits/products/product1.jpg';
+import product2Img from '../assits/products/product2.jpg';
+import product3Img from '../assits/products/product3.jpg';
+import product4Img from '../assits/products/product4.jpg';
 
 export interface ServiceDeliverable {
   title: string;
@@ -346,7 +346,7 @@ export const TAVQEN_SERVICES: ServiceDetail[] = [
       'We combine structured JSON tool-calling, hybrid vector+keyword RAG, human-in-the-loop review queues, and automated accuracy evals.',
     timeline: '5–10 Weeks',
     engagementModel: 'AI Discovery + Production Implementation',
-    image: aiN8nWorkflowImg,
+    image: product1Img,
     accentColor: '#00C4FF',
     deliverables: [
       {

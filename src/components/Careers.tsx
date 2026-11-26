@@ -17,6 +17,7 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
+import { ButtonLoader } from './loading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -173,6 +174,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
   const [department, setDepartment] = useState<RoleDepartment>('all');
   const [selectedRoleId, setSelectedRoleId] = useState<string>(OPEN_ROLES[0].id);
   const [isApplying, setIsApplying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRole, setSubmittedRole] = useState<string | null>(null);
   const [formState, setFormState] = useState({
     name: '',
@@ -276,16 +278,20 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
 
   const handleApplySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formState.name.trim() || !formState.email.trim()) return;
-    setSubmittedRole(activeRole.title);
-    setIsApplying(false);
-    setFormState({
-      name: '',
-      email: '',
-      portfolio: '',
-      experience: '2–4 Years',
-      note: '',
-    });
+    if (!formState.name.trim() || !formState.email.trim() || isSubmitting) return;
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmittedRole(activeRole.title);
+      setIsApplying(false);
+      setFormState({
+        name: '',
+        email: '',
+        portfolio: '',
+        experience: '2–4 Years',
+        note: '',
+      });
+    }, 800);
   };
 
   return (
@@ -305,7 +311,7 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb when on /careers page */}
         {isFullPage && (
           <div className="mb-6 sm:mb-8">
@@ -664,10 +670,17 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
 
                         <button
                           type="submit"
-                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-semibold shadow-[0_8px_22px_rgba(0,196,255,0.28)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                          disabled={isSubmitting}
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-semibold shadow-[0_8px_22px_rgba(0,196,255,0.28)] hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
                         >
-                          <span>Submit Application</span>
-                          <Send className="w-3.5 h-3.5" />
+                          {isSubmitting ? (
+                            <ButtonLoader text="Submitting..." color="white" size="sm" />
+                          ) : (
+                            <>
+                              <span>Submit Application</span>
+                              <Send className="w-3.5 h-3.5" />
+                            </>
+                          )}
                         </button>
                       </div>
                     </form>

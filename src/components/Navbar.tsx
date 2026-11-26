@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Calendar, Menu, X } from 'lucide-react';
 import tavqenLogo from '../assits/Tavqen-logo.png';
 
 interface NavbarProps {
@@ -55,12 +55,13 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentRoute]);
 
-  // NAVBAR MENU ITEMS
+  // NAVBAR MENU ITEMS (Standardized hierarchy)
   const navLinks = [
-    { name: 'Company', path: '/company', id: 'company' },
+    { name: 'Home', path: '/home', id: 'home' },
     { name: 'Services', path: '/services', id: 'services' },
-    { name: 'SaaS Products', path: '/products', id: 'products' },
+    { name: 'Products', path: '/products', id: 'products' },
     { name: 'Our Work', path: '/our-work', id: 'work' },
+    { name: 'Company', path: '/company', id: 'company' },
     { name: 'Careers', path: '/careers', id: 'careers' },
   ];
 
@@ -76,12 +77,12 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
 
   return (
     <header className="fixed top-3.5 sm:top-5 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none">
-      {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1180px]) */}
+      {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1240px]) */}
       <div
         style={{
           transform: isScrolled ? 'translateY(3px)' : 'translateY(0px)',
         }}
-        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-5 py-2.5 sm:px-7 sm:py-3 flex items-center justify-between border relative overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-[1240px] rounded-full transition-all duration-400 ease-out px-5 py-2.5 sm:px-7 sm:py-3 flex items-center justify-between border relative overflow-hidden ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-xl border-black/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.08)]'
             : 'bg-white/90 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
@@ -143,11 +144,21 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
 
         {/* RIGHT: Action Buttons */}
         <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Reserve Slot Button */}
+          <button
+            type="button"
+            onClick={() => handleNav('/contact?tab=book')}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-[#0B132B] hover:text-[#0088CC] bg-black/[0.03] hover:bg-black/[0.06] border border-black/[0.08] transition-all cursor-pointer select-none active:scale-95"
+          >
+            <Calendar className="w-3.5 h-3.5 text-[#0088CC]" />
+            <span>Reserve Slot</span>
+          </button>
+
           {/* Start a project Pill CTA */}
           <button
             type="button"
             onClick={() => handleNav('/start-a-project')}
-            className={`inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
+            className={`inline-flex items-center justify-center px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white text-xs sm:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
               currentRoute === 'start-a-project'
                 ? 'bg-gradient-to-r from-[#0088CC] to-[#00C4FF] ring-2 ring-[#00C4FF]'
                 : 'bg-gradient-to-r from-[#00D4FF] to-[#0088CC]'
@@ -160,7 +171,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-gray-700 hover:text-black hover:bg-gray-100 transition-colors focus:outline-hidden cursor-pointer"
+            className="md:hidden p-2 rounded-full text-gray-700 hover:text-black hover:bg-gray-100 transition-colors focus:outline-hidden cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
             aria-label="Toggle navigation menu"
           >
             {isMobileMenuOpen ? (
@@ -174,7 +185,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
 
       {/* MOBILE DROPDOWN MODAL */}
       {isMobileMenuOpen && (
-        <div className="pointer-events-auto absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-2xl p-5 md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="pointer-events-auto absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-2xl p-5 md:hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50">
           <div className="flex flex-col gap-2">
             {navLinks.map((link) => {
               const isActive =
@@ -200,6 +211,14 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
             })}
 
             <div className="pt-3 border-t border-gray-100 mt-1 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => handleNav('/contact?tab=book')}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-sm font-semibold border border-[#00C4FF]/30 cursor-pointer"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Reserve Slot</span>
+              </button>
               <button
                 type="button"
                 onClick={() => handleNav('/start-a-project')}

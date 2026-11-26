@@ -16,11 +16,12 @@ import {
   Users,
 } from 'lucide-react';
 import { smoothScrollTo } from '../utils/smoothScroll';
+import { ProgressiveImage } from '../components/loading';
 
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+import product1 from '../assits/products/product1.jpg';
+import product2 from '../assits/products/product2.jpg';
+import product3 from '../assits/products/product3.jpg';
+import product4 from '../assits/products/product4.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -485,7 +486,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Back to Home Breadcrumb */}
         <div className="mb-6 sm:mb-8">
           <button
@@ -808,11 +809,11 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                   {/* LARGE HERO VISUAL STAGE */}
                   <div className="relative p-3 sm:p-4 pb-0">
                     <div className="relative w-full h-[240px] sm:h-[310px] xl:h-[345px] rounded-[20px] sm:rounded-[24px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/55">
-                      <img
+                      <ProgressiveImage
                         src={study.image}
                         alt={study.title}
                         className="w-full h-full object-cover object-top group-hover:scale-[1.035] transition-transform duration-700 ease-out"
-                        loading="lazy"
+                        containerClassName="w-full h-full"
                       />
 
                       {/* Soft top & bottom gradient scrims for legible floating pills */}

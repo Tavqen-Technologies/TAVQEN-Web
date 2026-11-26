@@ -13,6 +13,7 @@ import {
   TAVQEN_SERVICES,
   type ServiceDetail,
 } from '../data/servicesData';
+import { ProgressiveImage } from '../components/loading';
 
 interface ServiceDetailPageProps {
   serviceId?: string;
@@ -182,10 +183,11 @@ export default function ServiceDetailPage({ serviceId, onNavigate }: ServiceDeta
                 }}
               />
               <div className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(11,19,43,0.12)]">
-                <img
+                <ProgressiveImage
                   src={service.image}
                   alt={service.title}
                   className="w-full h-[240px] sm:h-[310px] object-cover"
+                  containerClassName="w-full h-[240px] sm:h-[310px]"
                 />
                 <div className="px-4 py-3 bg-white border-t border-[#E2E8F0] flex items-center justify-between gap-2">
                   <span className="text-xs font-bold text-[#0B132B] truncate">

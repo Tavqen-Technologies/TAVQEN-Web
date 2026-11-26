@@ -1,47 +1,27 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+import product1 from '../assits/products/product1.jpg';
+import product2 from '../assits/products/product2.jpg';
+import product3 from '../assits/products/product3.jpg';
+import product4 from '../assits/products/product4.jpg';
+import product5 from '../assits/products/product5.jpg';
+import product6 from '../assits/products/product6.jpg';
+import { ProgressiveImage } from './loading';
+
+interface HeroProps {
+  onNavigate?: (path: string) => void;
+}
 
 const PRODUCT_IMAGES_ROW_1 = [
   { id: 'prod-1', src: product1, alt: 'Tavqen Product 1' },
   { id: 'prod-2', src: product2, alt: 'Tavqen Product 2' },
   { id: 'prod-3', src: product3, alt: 'Tavqen Product 3' },
   { id: 'prod-4', src: product4, alt: 'Tavqen Product 4' },
+  { id: 'prod-5', src: product5, alt: 'Tavqen Product 5' },
+  { id: 'prod-6', src: product6, alt: 'Tavqen Product 6' },
 ];
 
-export default function Hero() {
-  const heroRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.hero-stagger',
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: 'power3.out',
-          clearProps: 'transform',
-        }
-      );
-    }, hero);
-
-    return () => ctx.revert();
-  }, []);
-
+export default function Hero({ onNavigate }: HeroProps) {
   return (
-    <section ref={heroRef} className="relative min-h-screen pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
+    <section className="relative min-h-screen pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
       {/* DEVZEL ORGANIC LIGHT & CAUSTIC SHADOW TEXTURE */}
       <div
         className="absolute inset-0 pointer-events-none opacity-45 -z-10"
@@ -65,44 +45,31 @@ export default function Hero() {
         }}
       />
 
-      {/* MAIN HERO CONTENT (Exact Devzel layout & typography) */}
-     <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
+      {/* MAIN HERO CONTENT */}
+     <div className="site-container text-center flex-1 flex flex-col items-center justify-center">
 
   {/* Headline */}
-  <h1 className="hero-stagger text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
+  <h1 className="text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
     Building digital experiences,
     <br className="hidden sm:inline" /> shaping what&apos;s next.
   </h1>
 
   {/* Subtitle */}
-  <p className="hero-stagger mt-5 sm:mt-6 text-[15px] sm:text-[16.5px] text-[#64748B] max-w-[600px] mx-auto font-normal leading-relaxed">
+  <p className="mt-5 sm:mt-6 text-[15px] sm:text-[16.5px] text-[#64748B] max-w-[600px] mx-auto font-normal leading-relaxed">
     TAVQEN Technologies is a digital technology company building modern
     websites, software products, and scalable solutions that help
     businesses grow and move forward.
   </p>
 
   {/* CTA */}
-  <div className="hero-stagger mt-7 sm:mt-8 flex justify-center">
-    <a
-      href="/start-a-project"
-      className="
-        inline-flex items-center justify-center
-        px-6 sm:px-7
-        py-2.5 sm:py-3
-        rounded-full
-        bg-gradient-to-r from-[#00D4FF] to-[#0088CC]
-        text-white
-        text-xs sm:text-[13.5px]
-        font-medium
-        shadow-[0_8px_25px_rgba(0,196,255,0.25)]
-        hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)]
-        hover:scale-[1.02]
-        active:scale-95
-        transition-all
-      "
+  <div className="mt-7 sm:mt-8 flex justify-center">
+    <button
+      type="button"
+      onClick={() => (onNavigate ? onNavigate('start-a-project') : (window.location.hash = 'start-a-project'))}
+      className="btn-primary"
     >
       <span>Start a Project</span>
-    </a>
+    </button>
   </div>
 
 </div>
@@ -121,11 +88,12 @@ export default function Hero() {
                 key={`${product.id}-${idx}`}
                 className="w-[290px] sm:w-[380px] md:w-[440px] h-[190px] sm:h-[250px] md:h-[280px] flex-shrink-0 bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-black/[0.07] shadow-[0_6px_25px_rgba(0,0,0,0.04)] hover:shadow-[0_14px_35px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
               >
-                <img
+                <ProgressiveImage
                   src={product.src}
                   alt={product.alt}
                   className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
-                  loading="lazy"
+                  containerClassName="w-full h-full"
+                  priority={idx < 4}
                 />
               </div>
             ))}

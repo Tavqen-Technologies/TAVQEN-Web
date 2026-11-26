@@ -28,7 +28,7 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
       {/* ========================================================= */}
       <OurProducts isFullPage={true} />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-20 sm:mt-24">
+      <div className="site-container mt-20 sm:mt-24">
         {/* ========================================================= */}
         {/* START A PROJECT CTA BANNER                                */}
         {/* ========================================================= */}

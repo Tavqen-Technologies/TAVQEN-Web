@@ -7,24 +7,33 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 /**
  * Smoothly scrolls to a numeric Y offset or selector using GSAP ScrollToPlugin.
  */
-export function smoothScrollTo(target: number | string, duration = 0.85) {
+export function smoothScrollTo(target: number | string, duration = 0.75) {
   const prefersReduced =
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const NAV_OFFSET = 88;
 
   if (prefersReduced) {
     if (typeof target === 'number') {
       window.scrollTo({ top: target, behavior: 'auto' });
     } else {
       const el = document.querySelector(target);
-      el?.scrollIntoView({ behavior: 'auto' });
+      if (el) {
+        const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET);
+        window.scrollTo({ top, behavior: 'auto' });
+      }
     }
     return;
   }
 
   gsap.to(window, {
     duration,
-    scrollTo: { y: target, autoKill: true },
+    scrollTo: {
+      y: target,
+      offsetY: typeof target === 'string' ? NAV_OFFSET : 0,
+      autoKill: true,
+    },
     ease: 'power3.out',
   });
 }
