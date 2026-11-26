@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Smartphone, Monitor, Palette, TrendingUp, Database, ArrowRight, CheckCircle2, Rocket, ShieldCheck, Sparkles, Bell, Check, MousePointer2 } from 'lucide-react';
+import { Smartphone, Monitor, Palette, TrendingUp, Database, Bot, ArrowRight, CheckCircle2, Rocket, ShieldCheck, Sparkles, Bell, Check, MousePointer2 } from 'lucide-react';
 
 interface DevelloServicesShowcaseProps {
   onNavigate?: (path: string) => void;
@@ -60,6 +60,15 @@ const TABS: ServiceTab[] = [
     icon: Database,
     tagline: 'Mission-Critical Enterprise Workflows',
     floatingBadge: 'End-to-end delivery',
+  },
+  {
+    id: 'ai',
+    number: '06',
+    title: 'AI Automation',
+    windowTitle: 'AI Automation',
+    icon: Bot,
+    tagline: 'LLM Agents, RAG & Intelligent Workflows',
+    floatingBadge: '99.2% Accuracy',
   },
 ];
 
@@ -246,7 +255,31 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                 {/* ----------------------------------------------------- */}
                 {/* DYNAMIC VECTOR PREVIEW CANVAS (Soft Light Gradient)   */}
                 {/* ----------------------------------------------------- */}
-                <div className="md:col-span-7 rounded-[24px] sm:rounded-[28px] bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 border border-[#E2E8F0] p-4 sm:p-5 relative overflow-hidden flex items-center justify-center min-h-[340px] sm:min-h-[380px] shadow-inner">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    const detailPath = `/service?id=${activeTab.id}`;
+                    if (onNavigate) {
+                      onNavigate(detailPath);
+                    } else {
+                      window.location.href = detailPath;
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      const detailPath = `/service?id=${activeTab.id}`;
+                      if (onNavigate) {
+                        onNavigate(detailPath);
+                      } else {
+                        window.location.href = detailPath;
+                      }
+                    }
+                  }}
+                  title={`Open ${activeTab.title} details`}
+                  className="md:col-span-7 group cursor-pointer rounded-[24px] sm:rounded-[28px] bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 border border-[#E2E8F0] hover:border-[#00C4FF]/55 p-4 sm:p-5 relative overflow-hidden flex items-center justify-center min-h-[340px] sm:min-h-[380px] shadow-inner transition-colors"
+                >
                   {/* Subtle Grid Dot Pattern Background */}
                   <div
                     className="absolute inset-0 pointer-events-none opacity-30 -z-0"
@@ -527,11 +560,151 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                       </div>
                     </div>
                   )}
+
+                  {/* ================================================= */}
+                  {/* TAB 06: AI AUTOMATION (ANIMATED N8N WORKFLOW)     */}
+                  {/* ================================================= */}
+                  {activeTab.id === 'ai' && (
+                    <div className="relative z-10 w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-500">
+                      <div className="w-full max-w-[335px] bg-white rounded-2xl border border-[#E2E8F0] shadow-xl p-3.5 sm:p-4 relative overflow-hidden">
+                        {/* n8n Canvas Header */}
+                        <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-[#E2E8F0]">
+                          <div className="flex items-center gap-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#EA4B71]/10 text-[#EA4B71] text-[10px] font-black tracking-tight font-mono">
+                              n8n
+                            </span>
+                            <span className="text-[11px] font-bold text-[#0B132B]">AI Workflow Engine</span>
+                          </div>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[9px] font-bold font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                            Executing
+                          </span>
+                        </div>
+
+                        {/* Animated n8n Node Graph Canvas */}
+                        <div className="relative h-[185px] rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] overflow-hidden p-2.5">
+                          <div
+                            className="absolute inset-0 opacity-45 pointer-events-none"
+                            style={{
+                              backgroundImage: 'radial-gradient(#94A3B8 0.9px, transparent 0.9px)',
+                              backgroundSize: '14px 14px',
+                            }}
+                          />
+
+                          {/* SVG Bezier Wires with Animated Data Packets */}
+                          <svg
+                            viewBox="0 0 300 175"
+                            className="absolute inset-0 w-full h-full pointer-events-none"
+                            fill="none"
+                          >
+                            {/* Trigger -> AI Agent */}
+                            <path
+                              id="n8n-path-1"
+                              d="M 68 62 C 92 62, 92 62, 114 62"
+                              stroke="#CBD5E1"
+                              strokeWidth="2"
+                            />
+                            <path
+                              d="M 68 62 C 92 62, 92 62, 114 62"
+                              stroke="#00C4FF"
+                              strokeWidth="2"
+                              strokeDasharray="4 4"
+                            />
+                            <circle r="3.2" fill="#0088CC">
+                              <animateMotion dur="1.8s" repeatCount="indefinite" path="M 68 62 C 92 62, 92 62, 114 62" />
+                            </circle>
+
+                            {/* AI Agent -> CRM Node */}
+                            <path
+                              d="M 188 54 C 210 54, 210 38, 232 38"
+                              stroke="#CBD5E1"
+                              strokeWidth="2"
+                            />
+                            <circle r="3" fill="#00C4FF">
+                              <animateMotion dur="1.9s" begin="0.3s" repeatCount="indefinite" path="M 188 54 C 210 54, 210 38, 232 38" />
+                            </circle>
+
+                            {/* AI Agent -> Slack/Ops Node */}
+                            <path
+                              d="M 188 70 C 210 70, 210 92, 232 92"
+                              stroke="#CBD5E1"
+                              strokeWidth="2"
+                            />
+                            <circle r="3" fill="#10B981">
+                              <animateMotion dur="2.1s" begin="0.6s" repeatCount="indefinite" path="M 188 70 C 210 70, 210 92, 232 92" />
+                            </circle>
+
+                            {/* Sub-nodes: LLM + RAG Memory */}
+                            <path d="M 140 84 C 140 105, 116 105, 116 122" stroke="#0088CC" strokeWidth="1.5" strokeDasharray="3 3" />
+                            <path d="M 162 84 C 162 105, 188 105, 188 122" stroke="#0088CC" strokeWidth="1.5" strokeDasharray="3 3" />
+                            <circle r="2.6" fill="#00C4FF">
+                              <animateMotion dur="1.6s" repeatCount="indefinite" path="M 116 122 C 116 105, 140 105, 140 84" />
+                            </circle>
+                          </svg>
+
+                          {/* Node 1: Webhook Trigger */}
+                          <div className="absolute left-2.5 top-[38px] w-[58px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
+                            <div className="w-5 h-5 mx-auto rounded-md bg-[#EA4B71]/10 text-[#EA4B71] flex items-center justify-center mb-1 text-[10px] font-bold">
+                              ⚡
+                            </div>
+                            <p className="text-[8.5px] font-bold text-[#0B132B] leading-tight">Webhook</p>
+                            <span className="block text-[7px] text-emerald-600 font-mono">Trigger</span>
+                          </div>
+
+                          {/* Node 2: AI Agent Hub */}
+                          <div className="absolute left-[110px] top-[34px] w-[82px] rounded-xl bg-white border-2 border-[#00C4FF] shadow-md p-2 text-center z-10">
+                            <div className="w-6 h-6 mx-auto rounded-lg bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-1">
+                              <Bot className="w-3.5 h-3.5" />
+                            </div>
+                            <p className="text-[9.5px] font-extrabold text-[#0B132B] leading-tight">AI Agent</p>
+                            <span className="block text-[7.5px] text-[#0088CC] font-mono">Orchestrator</span>
+                          </div>
+
+                          {/* Node 3A: CRM Sync */}
+                          <div className="absolute right-2.5 top-[18px] w-[62px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
+                            <div className="w-4 h-4 mx-auto rounded bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
+                              <Check className="w-2.5 h-2.5" />
+                            </div>
+                            <p className="text-[8.5px] font-bold text-[#0B132B]">CRM Sync</p>
+                          </div>
+
+                          {/* Node 3B: Slack / API */}
+                          <div className="absolute right-2.5 top-[72px] w-[62px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
+                            <div className="w-4 h-4 mx-auto rounded bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
+                              <Sparkles className="w-2.5 h-2.5" />
+                            </div>
+                            <p className="text-[8.5px] font-bold text-[#0B132B]">Slack Alert</p>
+                          </div>
+
+                          {/* Sub-nodes Bottom */}
+                          <div className="absolute left-[84px] bottom-2.5 px-2 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#00C4FF]" />
+                            <span className="text-[8px] font-bold text-[#0B132B]">LLM</span>
+                          </div>
+                          <div className="absolute left-[160px] bottom-2.5 px-2 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            <span className="text-[8px] font-bold text-[#0B132B]">RAG DB</span>
+                          </div>
+                        </div>
+
+                        <div className="mt-2.5 flex items-center justify-between text-[10px] font-mono text-[#64748B]">
+                          <span>24/7 Autonomous Nodes</span>
+                          <span className="text-emerald-600 font-bold">8x Faster Ops</span>
+                        </div>
+                      </div>
+
+                      {/* Floating AI Badge Top-Right */}
+                      <div className="hidden sm:flex absolute top-3 right-2 px-3 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-md items-center gap-1.5 z-20">
+                        <Sparkles className="w-3.5 h-3.5 text-[#0088CC]" />
+                        <span className="text-[11px] font-bold text-[#0B132B]">n8n + Agentic AI</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Floating Bottom Badge: Matches Devello "End-to-end delivery" Pill */}
-              <div className="mt-4 pt-3 sm:mt-5 sm:pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+              {/* Floating Bottom Badge + Service Detail Action */}
+              <div className="mt-4 pt-3 sm:mt-5 sm:pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-[#64748B] font-medium hidden sm:inline">
                     Service Highlight:
@@ -541,10 +714,28 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   </span>
                 </div>
 
-                {/* Devello-Style Green Floating Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E2E8F0] shadow-sm text-xs font-semibold text-[#0B132B]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 fill-emerald-100" />
-                  <span>{activeTab.floatingBadge}</span>
+                <div className="flex items-center gap-2.5 ml-auto">
+                  {/* Devello-Style Green Floating Badge */}
+                  <div className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E2E8F0] shadow-sm text-xs font-semibold text-[#0B132B]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 fill-emerald-100" />
+                    <span>{activeTab.floatingBadge}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const detailPath = `/service?id=${activeTab.id}`;
+                      if (onNavigate) {
+                        onNavigate(detailPath);
+                      } else {
+                        window.location.href = detailPath;
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-xs font-bold shadow-sm transition-colors"
+                  >
+                    <span>View {activeTab.title} Details</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
                 </div>
               </div>
             </div>

@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { Smartphone, Monitor, Layers, Cpu, Check, ArrowRight } from 'lucide-react';
+import { Smartphone, Monitor, Layers, Cpu, Bot, Check, ArrowRight } from 'lucide-react';
 
 import mobileImg from '../assits/mobile.avif';
 import websiteImg from '../assits/website.avif';
 import saasImg from '../assits/saas product.avif';
 import customImg from '../assits/Custom.avif';
+import aiImg from '../assits/ai-n8n-workflow.jpg';
 
 interface ServiceItem {
   number: string;
@@ -22,6 +23,7 @@ interface ServiceItem {
 export interface WhatWeBuildProps {
   limit?: number;
   isFullPage?: boolean;
+  onNavigate?: (path: string) => void;
 }
 
 const SERVICES: ServiceItem[] = [
@@ -97,9 +99,27 @@ const SERVICES: ServiceItem[] = [
     ctaText: 'More about Custom Software Development',
     ctaLink: '#contact',
   },
+  {
+    number: '05',
+    count: '05 / 05',
+    title: 'AI Automation',
+    description:
+      'Production LLM agents, hybrid RAG search, and automated document extraction pipelines engineered with deterministic guardrails to eliminate repetitive operational work.',
+    icon: Bot,
+    image: aiImg,
+    alt: 'AI Automation Mockup',
+    features: [
+      'Autonomous LLM & tool-calling workflow agents',
+      'Document OCR & structured data extraction',
+      'Permission-aware hybrid RAG knowledge bases',
+      'Accuracy eval suites & latency guardrails',
+    ],
+    ctaText: 'More about AI Automation',
+    ctaLink: '/service?id=ai',
+  },
 ];
 
-export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildProps) {
+export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: WhatWeBuildProps) {
   const displayedServices = limit ? SERVICES.slice(0, limit) : SERVICES;
   const [activeIndex, setActiveIndex] = useState(0);
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -156,7 +176,7 @@ export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildPr
       )}
 
       {/* SECTION HEADING */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 text-center">
+      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 text-center" data-animate="fade-up">
         {isFullPage && (
           <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
             Services & Capabilities
@@ -225,22 +245,59 @@ export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildPr
 
               {/* Floating Mockup Images (Crossfade & subtle scale transition) */}
               <div className="relative w-full h-full flex items-center justify-center">
-                {displayedServices.map((item, idx) => (
-                  <div
-                    key={item.number}
-                    className={`absolute inset-0 flex items-center justify-center p-3 transition-all duration-700 ease-out ${
-                      activeIndex === idx
-                        ? 'opacity-100 scale-100 pointer-events-auto'
-                        : 'opacity-0 scale-[0.96] pointer-events-none'
-                    }`}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.alt}
-                      className="max-h-[300px] xl:max-h-[340px] max-w-[85%] w-auto object-contain drop-shadow-[0_20px_40px_rgba(15,23,42,0.12)] hover:scale-[1.02] transition-transform duration-500"
-                    />
-                  </div>
-                ))}
+                {displayedServices.map((item, idx) => {
+                  const mappedId =
+                    ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
+                      item.number
+                    ] || 'mobile';
+                  const openDetail = () => {
+                    const targetPath = `/service?id=${mappedId}`;
+                    if (onNavigate) {
+                      onNavigate(targetPath);
+                    } else {
+                      window.location.href = targetPath;
+                    }
+                  };
+
+                  return (
+                    <div
+                      key={item.number}
+                      role="button"
+                      tabIndex={activeIndex === idx ? 0 : -1}
+                      onClick={openDetail}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          openDetail();
+                        }
+                      }}
+                      title={`View ${item.title} details`}
+                      className={`group absolute inset-0 flex items-center justify-center p-3 transition-all duration-700 ease-out cursor-pointer ${
+                        activeIndex === idx
+                          ? 'opacity-100 scale-100 pointer-events-auto'
+                          : 'opacity-0 scale-[0.96] pointer-events-none'
+                      }`}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.alt}
+                        className={`max-h-[300px] xl:max-h-[340px] max-w-[85%] w-auto object-contain drop-shadow-[0_20px_40px_rgba(15,23,42,0.12)] group-hover:scale-[1.03] transition-transform duration-500 ${
+                          item.number === '05' ? 'rounded-2xl border border-[#E2E8F0]' : ''
+                        }`}
+                      />
+                      {item.number === '05' && (
+                        <span className="absolute top-5 left-12 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#E2E8F0] shadow-xs text-[10px] font-bold text-[#0B132B]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                          n8n Workflow Flow
+                        </span>
+                      )}
+                      <span className="absolute bottom-5 right-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E2E8F0] shadow-sm text-[11px] font-bold text-[#0B132B] group-hover:bg-[#0B132B] group-hover:text-white group-hover:border-[#0B132B] transition-colors">
+                        <span>View Details</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -255,6 +312,7 @@ export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildPr
                 <div
                   key={item.number}
                   ref={(el) => (serviceRefs.current[idx] = el)}
+                  data-animate="fade-up"
                   className="scroll-mt-32"
                 >
                   {/* Top Header Badge: Icon in pill + Number & horizontal rule */}
@@ -282,13 +340,50 @@ export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildPr
                   </p>
 
                   {/* Mobile-Only Image Preview */}
-                  <div className="lg:hidden mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] p-5 flex items-center justify-center">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      const mappedId =
+                        ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
+                          item.number
+                        ] || 'mobile';
+                      const targetPath = `/service?id=${mappedId}`;
+                      if (onNavigate) {
+                        onNavigate(targetPath);
+                      } else {
+                        window.location.href = targetPath;
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const mappedId =
+                          ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
+                            item.number
+                          ] || 'mobile';
+                        const targetPath = `/service?id=${mappedId}`;
+                        if (onNavigate) {
+                          onNavigate(targetPath);
+                        } else {
+                          window.location.href = targetPath;
+                        }
+                      }
+                    }}
+                    className="lg:hidden relative group cursor-pointer mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] hover:border-[#00C4FF]/50 p-5 flex items-center justify-center transition-all"
+                  >
                     <img
                       src={item.image}
                       alt={item.alt}
-                      className="max-h-[240px] w-auto object-contain drop-shadow-md"
+                      className={`max-h-[240px] w-auto object-contain drop-shadow-md group-hover:scale-[1.02] transition-transform duration-300 ${
+                        item.number === '05' ? 'rounded-xl border border-[#E2E8F0]' : ''
+                      }`}
                       loading="lazy"
                     />
+                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] shadow-xs">
+                      <span>Details</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </span>
                   </div>
 
                   {/* Features List */}
@@ -311,7 +406,21 @@ export default function WhatWeBuild({ limit, isFullPage = false }: WhatWeBuildPr
                   {/* Link CTA */}
                   <div className="pt-1">
                     <a
-                      href={item.ctaLink}
+                      href={`/service?id=${
+                        ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
+                          item.number
+                        ] || 'mobile'
+                      }`}
+                      onClick={(e) => {
+                        const mappedId =
+                          ({ '01': 'mobile', '02': 'web', '03': 'saas', '04': 'custom', '05': 'ai' } as Record<string, string>)[
+                            item.number
+                          ] || 'mobile';
+                        if (onNavigate) {
+                          e.preventDefault();
+                          onNavigate(`/service?id=${mappedId}`);
+                        }
+                      }}
                       className="inline-flex items-center gap-2 text-[13.5px] sm:text-[14px] font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors group"
                     >
                       <span>{item.ctaText}</span>

@@ -88,7 +88,7 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* ========================================================= */}
       {/* IN-DEPTH DETAILED SERVICES EXPANSION                      */}
       {/* ========================================================= */}
-      <WhatWeBuild isFullPage={true} />
+      <WhatWeBuild isFullPage={true} onNavigate={onNavigate} />
 
       {/* ========================================================= */}
       {/* EXTENDED CAPABILITIES MATRIX                              */}
@@ -109,11 +109,38 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-20 sm:mb-24">
           {CAPABILITY_AREAS.map((cap, idx) => {
             const Icon = cap.icon;
+            const serviceIds = ['mobile', 'web', 'saas', 'custom', 'ai', 'cloud'];
+            const targetServiceId = serviceIds[idx] || 'mobile';
+            const openCapabilityService = () => {
+              const targetPath = `/service?id=${targetServiceId}`;
+              if (onNavigate) {
+                onNavigate(targetPath);
+              } else {
+                window.location.href = targetPath;
+              }
+            };
             return (
               <div
                 key={idx}
-                className="rounded-3xl bg-white border border-[#E2E8F0] p-7 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] hover:border-[#00C4FF]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                role="button"
+                tabIndex={0}
+                onClick={openCapabilityService}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openCapabilityService();
+                  }
+                }}
+                className="group cursor-pointer rounded-3xl bg-white border border-[#E2E8F0] p-7 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] hover:border-[#00C4FF]/55 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,136,204,0.08)] transition-all duration-300 flex flex-col justify-between"
               >
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F5F9]">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#0088CC]">
+                    0{idx + 1} · Service Details
+                  </span>
+                  <span className="text-xs font-bold text-[#64748B] group-hover:text-[#0088CC] transition-colors">
+                    Explore →
+                  </span>
+                </div>
                 <div>
                   <div className="w-12 h-12 rounded-2xl bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-6 shadow-2xs">
                     <Icon className="w-6 h-6 stroke-[2]" />
