@@ -131,13 +131,13 @@ export default function FAQ() {
                   Questions
                 </span>
               </h2>
-              <p className="mt-3.5 text-[14.5px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed max-w-md">
+              <p className="mt-3.5 text-[14.5px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed lg:max-w-md">
                 Clear answers about our engineering workflow, tech stack, launch timelines, and 100% source ownership.
               </p>
             </div>
 
             {/* Search Input */}
-            <div className="relative max-w-md">
+            <div className="relative lg:max-w-md">
               <Search className="w-4 h-4 text-[#94A3B8] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
@@ -150,7 +150,7 @@ export default function FAQ() {
             </div>
 
             {/* Topic Filter Pills */}
-            <div className="flex flex-wrap gap-2 max-w-md">
+            <div className="flex flex-wrap gap-2 lg:max-w-md">
               {CATEGORIES.map((category) => {
                 const isSelected = selectedCategory === category;
                 return (
@@ -177,7 +177,7 @@ export default function FAQ() {
             </div>
 
             {/* Direct Engineering CTA Card */}
-            <div className="rounded-3xl bg-gradient-to-br from-[#0B132B] to-[#132145] p-6 text-white shadow-[0_20px_45px_rgba(11,19,43,0.14)] max-w-md relative overflow-hidden">
+            <div className="rounded-3xl bg-gradient-to-br from-[#0B132B] to-[#132145] p-6 text-white shadow-[0_20px_45px_rgba(11,19,43,0.14)] lg:max-w-md relative overflow-hidden">
               <div
                 aria-hidden="true"
                 className="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-[#00C4FF]/20 blur-2xl pointer-events-none"
@@ -252,7 +252,7 @@ export default function FAQ() {
                       <button
                         type="button"
                         onClick={() => toggleFAQ(faq.id)}
-                        className="w-full text-left px-5 py-4.5 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-hidden group"
+                        className="w-full text-left px-4 py-4 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between gap-3 sm:gap-4 cursor-pointer focus:outline-hidden group"
                         aria-expanded={isOpen}
                       >
                         <div className="flex items-start gap-3.5 sm:gap-4 pr-2">
@@ -302,7 +302,7 @@ export default function FAQ() {
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <div className="px-5 pb-5 sm:px-6 sm:pb-6 pl-[62px] sm:pl-[72px]">
+                          <div className="px-4 pb-5 sm:px-6 sm:pb-6 sm:pl-[72px]">
                             <div className="pt-3 border-t border-[#E2E8F0]/75 text-[13.5px] sm:text-[14.5px] text-[#64748B] leading-relaxed">
                               {faq.answer}
                             </div>

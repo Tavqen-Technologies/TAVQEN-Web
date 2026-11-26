@@ -139,7 +139,7 @@ export default function ServiceDetailPage({ serviceId, onNavigate }: ServiceDeta
 
               {/* Metrics + Actions */}
               <div className="space-y-6">
-                <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-5 border-t border-[#E2E8F0]">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-5 border-t border-[#E2E8F0]">
                   {service.metrics.map((metric) => (
                     <div
                       key={metric.label}
@@ -185,7 +185,7 @@ export default function ServiceDetailPage({ serviceId, onNavigate }: ServiceDeta
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-[240px] sm:h-[310px] object-cover"
+                  className="w-full aspect-video object-contain bg-white"
                 />
                 <div className="px-4 py-3 bg-white border-t border-[#E2E8F0] flex items-center justify-between gap-2">
                   <span className="text-xs font-bold text-[#0B132B] truncate">
@@ -331,7 +331,7 @@ export default function ServiceDetailPage({ serviceId, onNavigate }: ServiceDeta
 
         {/* Related Services */}
         <section>
-          <div className="flex items-center justify-between gap-4 mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#0B132B]">
               Explore Related Services
             </h2>

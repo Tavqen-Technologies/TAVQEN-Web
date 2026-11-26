@@ -282,10 +282,10 @@ export default function Footer({ onNavigate }: FooterProps) {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="mt-16 pt-8 border-t border-[#E2E8F0] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
-          <p>© {currentYear} TAVQEN Technologies Private Limited. All rights reserved.</p>
+        <div className="mt-14 sm:mt-16 pt-8 border-t border-[#E2E8F0] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
+          <p className="text-center md:text-left">© {currentYear} TAVQEN Technologies Private Limited. All rights reserved.</p>
 
-          <div className="flex items-center gap-6 font-medium">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-medium">
             <button
               type="button"
               onClick={() => handleNav('/company')}
