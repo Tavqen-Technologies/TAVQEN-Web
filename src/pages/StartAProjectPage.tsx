@@ -233,7 +233,7 @@ export default function StartAProjectPage({ onNavigate }: StartAProjectPageProps
                         <select
                           value={formData.budget}
                           onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                          className="w-full appearance-none px-4 py-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0B132B] focus:outline-hidden focus:border-[#00C4FF] focus:bg-white focus:ring-3 focus:ring-[#00C4FF]/10 transition-all cursor-pointer"
+                          className="w-full appearance-none pl-4 pr-10 py-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0B132B] focus:outline-hidden focus:border-[#00C4FF] focus:bg-white focus:ring-3 focus:ring-[#00C4FF]/10 transition-all cursor-pointer truncate"
                         >
                           {BUDGET_OPTIONS.map((opt) => (
                             <option key={opt} value={opt}>
@@ -320,13 +320,13 @@ export default function StartAProjectPage({ onNavigate }: StartAProjectPageProps
                   <div className="w-10 h-10 rounded-full bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center flex-shrink-0 shadow-2xs">
                     <Mail className="w-4 h-4 stroke-[2.2]" />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <span className="block text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">
                       Email
                     </span>
                     <a
                       href="mailto:tavqentechnologies@gmail.com"
-                      className="text-sm font-semibold text-[#0B132B] hover:text-[#0088CC] transition-colors"
+                      className="text-sm font-semibold text-[#0B132B] hover:text-[#0088CC] transition-colors break-all"
                     >
                       tavqentechnologies@gmail.com
                     </a>

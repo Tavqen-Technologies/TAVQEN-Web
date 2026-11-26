@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import tavqenLogo from '../assits/Tavqen-logo.png';
 
 interface NavbarProps {
@@ -17,10 +17,10 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+      const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollY / docHeight)) : 0;
 
       setScrollProgress(progress);
-      setIsScrolled(scrollY > 20);
+      setIsScrolled(scrollY > 80);
 
       // Dynamic Section Detection mapped to menu links when on home page
       if (currentRoute === 'home') {
@@ -55,7 +55,19 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentRoute]);
 
-  // NAVBAR MENU ITEMS
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [currentRoute]);
+
   const navLinks = [
     { name: 'Company', path: '/company', id: 'company' },
     { name: 'Services', path: '/services', id: 'services' },
@@ -75,142 +87,182 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
   };
 
   return (
-    <header className="fixed top-3.5 sm:top-5 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none">
-      {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1180px]) */}
+    <>
+      {/* TOP EDGE SCROLL PROGRESS BAR (Matches 123digi ScrollProgress) */}
       <div
-        style={{
-          transform: isScrolled ? 'translateY(3px)' : 'translateY(0px)',
-        }}
-        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-5 py-2.5 sm:px-7 sm:py-3 flex items-center justify-between border relative overflow-hidden ${
+        aria-hidden="true"
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] bg-[#0B132B]/[0.05] pointer-events-none"
+      >
+        <span
+          className="block h-full origin-left bg-gradient-to-r from-[#00D4FF] to-[#0088CC] transition-transform duration-150 ease-out"
+          style={{ transform: `scaleX(${scrollProgress})` }}
+        />
+      </div>
+
+      {/* FULL-WIDTH FIXED EDITORIAL HEADER WITH FROSTED GLASS ON SCROLL */}
+      <header
+        style={
           isScrolled
-            ? 'bg-white/95 backdrop-blur-xl border-black/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.08)]'
-            : 'bg-white/90 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
+            ? {
+                backdropFilter: 'blur(14px) saturate(140%)',
+                WebkitBackdropFilter: 'blur(14px) saturate(140%)',
+              }
+            : undefined
+        }
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/75 shadow-[0_8px_30px_rgba(11,19,43,0.06)]'
+            : 'bg-transparent'
         }`}
       >
-        {/* Subtle Ambient Glowing Progress Track along Bottom Edge */}
-        <div className="absolute bottom-0 left-6 right-6 h-[2px] bg-black/[0.04] rounded-full overflow-hidden pointer-events-none">
-          <div
-            className="h-full bg-gradient-to-r from-[#00D4FF] via-[#0088CC] to-[#00D4FF] transition-all duration-150 ease-out shadow-[0_0_8px_rgba(0,196,255,0.8)]"
-            style={{ width: `${scrollProgress}%` }}
-          />
-        </div>
-
-        {/* LEFT: Logo */}
-        <div className="flex items-center">
+        <div
+          className={`mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10 transition-colors duration-300 ${
+            isScrolled ? 'border-b border-[#0B132B]/10' : 'border-b border-transparent'
+          }`}
+        >
+          {/* LEFT: Logo */}
           <button
             type="button"
             onClick={() => handleNav('/home')}
-            className="flex items-center group cursor-pointer select-none border-none bg-transparent p-0"
+            className="group flex items-center gap-3 cursor-pointer border-none bg-transparent p-0 shrink-0"
+            aria-label="TAVQEN home"
           >
             <img
               src={tavqenLogo}
               alt="TAVQEN"
-              className="h-6 sm:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
+              className="h-7 md:h-8 lg:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
             />
           </button>
-        </div>
 
-        {/* CENTER: Navigation Links with Dynamic Active Indicator */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-          {navLinks.map((link) => {
-            const isActive =
-              currentRoute === link.id ||
-              (currentRoute === 'service-detail' && link.id === 'services') ||
-              (currentRoute === 'product-detail' && link.id === 'products') ||
-              (currentRoute === 'home' && activeSection === link.id);
-
-            return (
-              <button
-                key={link.name}
-                type="button"
-                onClick={() => handleNav(link.path)}
-                className={`text-[13.5px] transition-colors relative py-1 select-none cursor-pointer border-none bg-transparent ${
-                  isActive
-                    ? 'font-semibold text-[#0088CC]'
-                    : 'font-normal text-[#121212]/80 hover:text-[#121212]'
-                }`}
-              >
-                {link.name}
-
-                {/* Smooth Glowing Cyan Active Line */}
-                {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-gradient-to-r from-[#00D4FF] to-[#0088CC] rounded-full shadow-[0_0_8px_rgba(0,196,255,0.8)]" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* RIGHT: Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* Start a project Pill CTA */}
-          <button
-            type="button"
-            onClick={() => handleNav('/start-a-project')}
-            className={`inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
-              currentRoute === 'start-a-project'
-                ? 'bg-gradient-to-r from-[#0088CC] to-[#00C4FF] ring-2 ring-[#00C4FF]'
-                : 'bg-gradient-to-r from-[#00D4FF] to-[#0088CC]'
-            }`}
-          >
-            Start a Project
-          </button>
-
-          {/* Mobile Menu Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-gray-700 hover:text-black hover:bg-gray-100 transition-colors focus:outline-hidden cursor-pointer"
-            aria-label="Toggle navigation menu"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* MOBILE DROPDOWN MODAL */}
-      {isMobileMenuOpen && (
-        <div className="pointer-events-auto absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-2xl p-5 md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex flex-col gap-2">
+          {/* CENTER: Uppercase Tracked Links with Animated Underline Slide */}
+          <nav className="hidden md:flex items-center gap-4 lg:gap-7 xl:gap-8">
             {navLinks.map((link) => {
               const isActive =
-                currentRoute === link.id || (currentRoute === 'home' && activeSection === link.id);
+                currentRoute === link.id ||
+                (currentRoute === 'service-detail' && link.id === 'services') ||
+                (currentRoute === 'product-detail' && link.id === 'products') ||
+                (currentRoute === 'home' && activeSection === link.id);
 
               return (
                 <button
                   key={link.name}
                   type="button"
                   onClick={() => handleNav(link.path)}
-                  className={`w-full px-3 py-2.5 rounded-xl text-sm transition-colors flex items-center justify-between text-left cursor-pointer border-none ${
+                  className={`group relative text-[10.5px] lg:text-[12px] uppercase tracking-[0.12em] lg:tracking-[0.2em] whitespace-nowrap transition-colors duration-300 py-1 cursor-pointer border-none bg-transparent ${
                     isActive
-                      ? 'bg-[#E0F7FF] text-[#0088CC] font-semibold'
-                      : 'bg-transparent text-gray-700 hover:text-black hover:bg-gray-100 font-medium'
+                      ? 'font-bold text-[#0B132B]'
+                      : 'font-medium text-[#0B132B]/65 hover:text-[#0B132B]'
                   }`}
                 >
-                  <span>{link.name}</span>
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
-                  )}
+                  {link.name}
+                  <span
+                    className={`absolute -bottom-1.5 left-0 h-[1.5px] w-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] transition-transform duration-300 origin-left ${
+                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`}
+                  />
                 </button>
               );
             })}
+          </nav>
 
-            <div className="pt-3 border-t border-gray-100 mt-1 flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={() => handleNav('/start-a-project')}
-                className="w-full flex items-center justify-center py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-sm font-semibold shadow-xs cursor-pointer"
-              >
-                <span>Start a Project</span>
-              </button>
-            </div>
+          {/* RIGHT: Glass Outline-to-Signal Pill CTA + Mobile Hamburger */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => handleNav('/start-a-project')}
+              className={`group relative hidden sm:inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 lg:px-6 lg:py-3 text-[10.5px] lg:text-[11px] uppercase tracking-[0.14em] lg:tracking-[0.2em] font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer ${
+                currentRoute === 'start-a-project'
+                  ? 'border-[#0088CC] bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white shadow-[0_8px_24px_rgba(0,196,255,0.28)]'
+                  : 'border-[#0B132B]/20 bg-white/60 text-[#0B132B] backdrop-blur-sm hover:border-[#00C4FF] hover:bg-gradient-to-r hover:from-[#00D4FF] hover:to-[#0088CC] hover:text-white hover:shadow-[0_8px_24px_rgba(0,196,255,0.28)]'
+              }`}
+            >
+              <span>Start Your Project</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </button>
+
+            {/* 2-Line Editorial Hamburger Trigger (Matches 123digi mobile menu button) */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-full border border-[#0B132B]/20 bg-white/80 backdrop-blur-sm text-[#0B132B] md:hidden cursor-pointer shrink-0 transition-colors hover:border-[#00C4FF]"
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <span className="sr-only">Menu</span>
+              <span
+                className={`absolute h-[1.5px] w-4 bg-[#0B132B] transition-transform duration-300 ${
+                  isMobileMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1'
+                }`}
+              />
+              <span
+                className={`absolute h-[1.5px] w-4 bg-[#0B132B] transition-transform duration-300 ${
+                  isMobileMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* MOBILE FULL-VIEWPORT DRAWER OVERLAY */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 pb-8 px-6 md:hidden flex flex-col justify-between animate-in fade-in duration-200 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="flex flex-col divide-y divide-[#E2E8F0] border-y border-[#E2E8F0]">
+            {navLinks.map((link, idx) => {
+              const isActive =
+                currentRoute === link.id ||
+                (currentRoute === 'service-detail' && link.id === 'services') ||
+                (currentRoute === 'product-detail' && link.id === 'products') ||
+                (currentRoute === 'home' && activeSection === link.id);
+
+              return (
+                <button
+                  key={link.name}
+                  type="button"
+                  onClick={() => handleNav(link.path)}
+                  className="w-full py-5 flex items-center justify-between text-left cursor-pointer border-none bg-transparent group"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-xs font-bold text-[#0088CC]">
+                      0{idx + 1}
+                    </span>
+                    <span
+                      className={`text-xl font-bold tracking-tight transition-colors ${
+                        isActive ? 'text-[#0088CC]' : 'text-[#0B132B] group-hover:text-[#0088CC]'
+                      }`}
+                    >
+                      {link.name}
+                    </span>
+                  </div>
+                  <ArrowRight
+                    className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
+                      isActive ? 'text-[#0088CC]' : 'text-[#94A3B8]'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="pt-8 space-y-4">
+            <button
+              type="button"
+              onClick={() => handleNav('/start-a-project')}
+              className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs font-bold uppercase tracking-[0.2em] shadow-[0_10px_28px_rgba(0,196,255,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Start Your Project</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <p className="text-center font-mono text-[11px] uppercase tracking-widest text-[#64748B]">
+              TAVQEN Technologies · Software &amp; Product Studio
+            </p>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

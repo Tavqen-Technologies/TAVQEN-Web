@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Smartphone, Monitor, Layers, Cpu, Bot, Check, ArrowRight } from 'lucide-react';
 
-import mobileImg from '../assits/mobile.avif';
-import websiteImg from '../assits/website.avif';
-import saasImg from '../assits/saas product.avif';
-import customImg from '../assits/Custom.avif';
+import mobileImg from '../assits/pdf-showcase/showcase-1.png';
+import websiteImg from '../assits/pdf-showcase/showcase-2.png';
+import saasImg from '../assits/pdf-showcase/showcase-3.png';
+import customImg from '../assits/pdf-showcase/showcase-4.png';
 import aiImg from '../assits/ai-n8n-workflow.jpg';
 
 interface ServiceItem {
@@ -160,20 +160,9 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
     <section
       id="services"
       className={`relative bg-[#F8FAFC] border-t border-[#E2E8F0] ${
-        isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
+        isFullPage ? 'py-14 sm:py-20' : 'py-20 sm:py-24 lg:py-28'
       }`}
     >
-      {/* Back to Home Breadcrumb for Full Page View */}
-      {isFullPage && (
-        <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors"
-          >
-            <span>← Back to Home</span>
-          </a>
-        </div>
-      )}
 
       {/* SECTION HEADING */}
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 text-center" data-animate="fade-up">
@@ -198,7 +187,7 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
           {/* LEFT COLUMN: STICKY INTERACTIVE VISUAL CARD               */}
           {/* ========================================================= */}
           <div className="hidden lg:block lg:col-span-5 xl:col-span-6 sticky top-28 xl:top-32">
-            <div className="relative w-full h-[430px] xl:h-[470px] rounded-[28px] bg-gradient-to-br from-[#F5F3FF]/80 via-[#F0F9FF]/90 to-[#E0F7FF]/60 border border-[#E2E8F0] shadow-[0_16px_45px_rgba(15,23,42,0.05)] overflow-hidden flex items-center justify-center p-6 transition-all duration-500">
+            <div className="relative w-full h-[360px] xl:h-[420px] rounded-[28px] bg-gradient-to-br from-[#F5F3FF]/80 via-[#F0F9FF]/90 to-[#E0F7FF]/60 border border-[#E2E8F0] shadow-[0_16px_45px_rgba(15,23,42,0.05)] overflow-hidden flex items-center justify-center p-6 transition-all duration-500">
               {/* Subtle Futuristic Background Grid Pattern */}
               <div
                 className="absolute inset-0 pointer-events-none opacity-40 -z-10"
@@ -281,17 +270,15 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
                       <img
                         src={item.image}
                         alt={item.alt}
-                        className={`max-h-[300px] xl:max-h-[340px] max-w-[85%] w-auto object-contain drop-shadow-[0_20px_40px_rgba(15,23,42,0.12)] group-hover:scale-[1.03] transition-transform duration-500 ${
-                          item.number === '05' ? 'rounded-2xl border border-[#E2E8F0]' : ''
-                        }`}
+                        className="max-h-[240px] xl:max-h-[290px] max-w-[88%] w-auto object-contain rounded-2xl border border-[#E2E8F0] shadow-[0_20px_40px_rgba(15,23,42,0.12)] group-hover:scale-[1.03] transition-transform duration-500 bg-white"
                       />
                       {item.number === '05' && (
-                        <span className="absolute top-5 left-12 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#E2E8F0] shadow-xs text-[10px] font-bold text-[#0B132B]">
+                        <span className="absolute top-3.5 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#E2E8F0] shadow-xs text-[10px] font-bold text-[#0B132B]">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                           n8n Workflow Flow
                         </span>
                       )}
-                      <span className="absolute bottom-5 right-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E2E8F0] shadow-sm text-[11px] font-bold text-[#0B132B] group-hover:bg-[#0B132B] group-hover:text-white group-hover:border-[#0B132B] transition-colors">
+                      <span className="absolute bottom-3.5 right-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E2E8F0] shadow-sm text-[11px] font-bold text-[#0B132B] group-hover:bg-[#0B132B] group-hover:text-white group-hover:border-[#0B132B] transition-colors">
                         <span>View Details</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
@@ -370,20 +357,23 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
                         }
                       }
                     }}
-                    className="lg:hidden relative group cursor-pointer mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] hover:border-[#00C4FF]/50 p-5 flex items-center justify-center transition-all"
+                    className="lg:hidden group cursor-pointer mb-6 rounded-2xl bg-gradient-to-br from-[#F5F3FF] to-[#E0F7FF] border border-[#E2E8F0] hover:border-[#00C4FF]/50 p-3.5 sm:p-5 flex flex-col items-center gap-3 transition-all"
                   >
                     <img
                       src={item.image}
                       alt={item.alt}
-                      className={`max-h-[240px] w-auto object-contain drop-shadow-md group-hover:scale-[1.02] transition-transform duration-300 ${
-                        item.number === '05' ? 'rounded-xl border border-[#E2E8F0]' : ''
-                      }`}
+                      className="w-full max-h-[230px] object-contain rounded-xl border border-[#E2E8F0] bg-white shadow-sm group-hover:scale-[1.02] transition-transform duration-300"
                       loading="lazy"
                     />
-                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] shadow-xs">
-                      <span>Details</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </span>
+                    <div className="w-full flex items-center justify-between px-1">
+                      <span className="text-[11px] font-semibold text-[#64748B]">
+                        {item.title}
+                      </span>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] shadow-xs">
+                        <span>Details</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
 
                   {/* Features List */}

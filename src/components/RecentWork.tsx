@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, FileText, Sparkles, Users } from 'lucide-react';
 
-import product1 from '../assits/products/product1.webp';
+import tavqenPdfImg from '../assits/pdf-showcase/showcase-5.png';
 import product3 from '../assits/products/product3.webp';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,7 +39,7 @@ const WORK_ITEMS: ProjectItem[] = [
       'A fast document platform engineered for smart 300 DPI scanning, OCR extraction, e-signing, batch merging, and AES-256 encrypted cloud vault sync.',
     impact: '300 DPI Smart OCR',
     tags: ['Mobile App', 'Smart OCR', 'Cloud Vault'],
-    image: product1,
+    image: tavqenPdfImg,
     alt: 'TAVQEN PDF Showcase',
     icon: FileText,
     glowGradient:
@@ -296,28 +296,28 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
 
                       <div className="relative z-10">
                         {/* Card Header Row: Icon + Uppercase Eyebrow + Large Faded Index */}
-                        <div className="flex items-start justify-between gap-4 mb-4">
-                          <div className="flex items-center gap-3 pt-1">
+                        <div className="flex items-start justify-between gap-3 mb-4">
+                          <div className="flex items-center gap-2.5 sm:gap-3 pt-1 min-w-0 flex-1">
                             <div
                               className={`w-9 h-9 rounded-xl border flex items-center justify-center flex-shrink-0 shadow-2xs transition-transform duration-300 group-hover:scale-105 ${project.iconStyle}`}
                             >
                               <Icon className="w-4 h-4 stroke-[2]" />
                             </div>
                             <span
-                              className={`font-mono text-[10.5px] sm:text-[11px] font-bold uppercase tracking-[0.12em] leading-tight ${project.eyebrowColor}`}
+                              className={`font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] leading-tight ${project.eyebrowColor}`}
                             >
                               {project.eyebrow}
                             </span>
                           </div>
 
                           {/* Giant Watermark Number (01, 02, 03, 04) */}
-                          <span className="font-mono text-4xl sm:text-5xl font-black tracking-tighter text-[#0B132B]/[0.05] group-hover:text-[#0088CC]/[0.13] transition-colors duration-500 leading-none select-none">
+                          <span className="font-mono text-2xl sm:text-5xl font-black tracking-tighter text-[#0B132B]/[0.06] group-hover:text-[#0088CC]/[0.13] transition-colors duration-500 leading-none select-none shrink-0">
                             {project.number}
                           </span>
                         </div>
 
                         {/* Project Title */}
-                        <h3 className="text-xl sm:text-[22px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors duration-300">
+                        <h3 className="text-lg sm:text-[22px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors duration-300">
                           {project.title}
                         </h3>
 
@@ -326,12 +326,12 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                           {project.description}
                         </p>
 
-                        {/* Compact Project Preview Visual */}
-                        <div className="mt-5 relative h-[175px] sm:h-[200px] rounded-[18px] overflow-hidden border border-black/[0.06] bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
+                        {/* Aspect-Preserving Project Showcase Visual */}
+                        <div className="mt-5 relative aspect-[16/10] w-full rounded-[18px] overflow-hidden border border-black/[0.06] bg-[#F8FAFC] shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
                           <img
                             src={project.image}
                             alt={project.alt}
-                            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                            className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                             loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

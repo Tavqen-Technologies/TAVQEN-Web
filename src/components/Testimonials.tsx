@@ -110,10 +110,10 @@ function getHandMetrics() {
   }
   const w = window.innerWidth;
   if (w < 640) {
-    return { stepX: 18, stepRot: 4.5, frontRot: 3, arcY: 2.5, sweepX: 165 };
+    return { stepX: 10, stepRot: 2.8, frontRot: 2, arcY: 2, sweepX: 130 };
   }
   if (w < 1024) {
-    return { stepX: 30, stepRot: 5.5, frontRot: 3.5, arcY: 3.5, sweepX: 210 };
+    return { stepX: 22, stepRot: 4.5, frontRot: 3, arcY: 3, sweepX: 190 };
   }
   return { stepX: 38, stepRot: 6.2, frontRot: 4, arcY: 4, sweepX: 255 };
 }
@@ -377,7 +377,7 @@ export default function Testimonials() {
         {/* ========================================================= */}
         {/* SECTION HEADER (Clean, matching TAVQEN typography)        */}
         {/* ========================================================= */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-18" data-animate="fade-up">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16" data-animate="fade-up">
           <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
             Client Testimonials
           </span>
@@ -396,9 +396,9 @@ export default function Testimonials() {
           ref={handRef}
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}
-          className="relative flex items-center justify-center min-h-[375px] sm:min-h-[400px] select-none touch-pan-y"
+          className="relative flex items-center justify-center min-h-[370px] sm:min-h-[400px] select-none touch-pan-y"
         >
-          <div className="relative w-[260px] sm:w-[430px] md:w-[495px] h-[345px] sm:h-[360px] translate-x-[34px] sm:translate-x-[58px] md:translate-x-[74px]">
+          <div className="relative w-[252px] sm:w-[410px] md:w-[495px] h-[350px] sm:h-[360px] translate-x-[14px] sm:translate-x-[36px] md:translate-x-[74px]">
             {TESTIMONIALS.map((item, idx) => {
               const isFront = idx === currentIndex;
 
@@ -457,27 +457,27 @@ export default function Testimonials() {
                     </div>
 
                     {/* Quote Body */}
-                    <div className="my-auto py-2 pl-2 sm:pl-3">
-                      <p className="text-[14.5px] sm:text-[17px] md:text-[18.5px] font-medium text-[#0B132B] tracking-tight leading-relaxed">
+                    <div className="my-auto py-1.5 sm:py-2 pl-1 sm:pl-3">
+                      <p className="text-[13.5px] sm:text-[17px] md:text-[18.5px] font-medium text-[#0B132B] tracking-tight leading-relaxed">
                         {item.quote}
                       </p>
                     </div>
 
                     {/* Footer: Client Photo/Avatar + Name & Platform */}
-                    <div className="pt-4 border-t border-dashed border-[#E2E8F0] flex items-center justify-between gap-3 pl-2 sm:pl-3">
-                      <div className="flex items-center gap-3 min-w-0">
+                    <div className="pt-3 sm:pt-4 border-t border-dashed border-[#E2E8F0] flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-3 pl-1 sm:pl-3">
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                         <ClientAvatar name={item.author} src={item.avatar} />
-                        <div className="min-w-0">
-                          <h4 className="text-[14px] sm:text-[15.5px] font-bold text-[#0B132B] leading-tight truncate">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-[13.5px] sm:text-[15.5px] font-bold text-[#0B132B] leading-tight truncate">
                             {item.author}
                           </h4>
-                          <p className="text-[11.5px] sm:text-[12.5px] text-[#64748B] mt-0.5 font-normal truncate">
+                          <p className="text-[11px] sm:text-[12.5px] text-[#64748B] mt-0.5 font-normal truncate">
                             {item.role}
                           </p>
                         </div>
                       </div>
 
-                      <span className="px-2.5 py-1 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[10.5px] font-semibold text-[#0088CC] whitespace-nowrap flex-shrink-0">
+                      <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[9.5px] sm:text-[10.5px] font-semibold text-[#0088CC] whitespace-nowrap flex-shrink-0">
                         {item.platform}
                       </span>
                     </div>

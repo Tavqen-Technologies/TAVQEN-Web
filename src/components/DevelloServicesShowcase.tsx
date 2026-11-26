@@ -197,7 +197,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                 {/* ----------------------------------------------------- */}
                 {/* VERTICAL TABS LIST (Clean TAVQEN styling)             */}
                 {/* ----------------------------------------------------- */}
-                <div className="md:col-span-5 flex flex-col gap-2.5">
+                <div className="md:col-span-5 flex flex-col gap-2">
                   {TABS.map((tab, idx) => {
                     const isActive = activeTabIdx === idx;
                     const Icon = tab.icon;
@@ -207,26 +207,26 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveTabIdx(idx)}
-                        className={`w-full text-left px-4 py-3 sm:py-3.5 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer relative overflow-hidden ${
+                        className={`w-full text-left px-3 sm:px-3.5 py-2.5 sm:py-3 rounded-2xl transition-all duration-300 flex items-center justify-between gap-2 group cursor-pointer relative overflow-hidden ${
                           isActive
-                            ? 'bg-white shadow-[0_8px_25px_rgba(0,196,255,0.12)] border-2 border-[#00C4FF]/50 text-[#0B132B] scale-[1.02]'
+                            ? 'bg-white shadow-[0_8px_25px_rgba(0,196,255,0.12)] border-2 border-[#00C4FF]/50 text-[#0B132B] lg:scale-[1.01]'
                             : 'bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0]/70 text-[#64748B] hover:text-[#0B132B]'
                         }`}
                       >
                         {/* Tab Content: Icon + Title */}
-                        <div className="flex items-center gap-3 relative z-10">
+                        <div className="flex items-center gap-2.5 relative z-10 min-w-0">
                           <div
-                            className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${
+                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
                               isActive
                                 ? 'bg-[#E0F7FF] text-[#0088CC]'
                                 : 'bg-white border border-[#E2E8F0] text-[#64748B] group-hover:text-[#0B132B]'
                             }`}
                           >
-                            <Icon className="w-4 h-4 stroke-[2]" />
+                            <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                           </div>
 
                           <span
-                            className={`text-xs sm:text-[13px] transition-colors leading-tight ${
+                            className={`text-xs sm:text-[13px] transition-colors leading-tight truncate ${
                               isActive ? 'font-bold text-[#0B132B]' : 'font-medium'
                             }`}
                           >
@@ -309,7 +309,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
 
                         {/* Large Featured Card (TAVQEN Cyan Gradient) */}
-                        <div className="w-full h-18 rounded-2xl bg-gradient-to-r from-[#00D4FF] via-[#00A3E0] to-[#0088CC] p-3 flex flex-col justify-center space-y-1.5 shadow-sm mb-2">
+                        <div className="w-full h-16 rounded-2xl bg-gradient-to-r from-[#00D4FF] via-[#00A3E0] to-[#0088CC] p-3 flex flex-col justify-center space-y-1.5 shadow-sm mb-2">
                           <div className="w-16 h-2 bg-white/90 rounded-full" />
                           <div className="w-10 h-1.5 bg-white/60 rounded-full" />
                         </div>
@@ -331,8 +331,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Card Top-Right: Notification Pill (Exact screenshot match) */}
-                      <div className="absolute top-4 right-1 sm:right-3 px-3 py-2 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_12px_30px_rgba(15,23,42,0.1)] flex items-center gap-2 z-20 animate-in slide-in-from-right-4 duration-500">
+                      {/* Floating Card Top-Right: Notification Pill */}
+                      <div className="hidden sm:flex absolute top-3 right-2.5 px-2.5 py-1.5 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_12px_30px_rgba(15,23,42,0.1)] items-center gap-2 z-20 animate-in slide-in-from-right-4 duration-500">
                         <div className="w-6 h-6 rounded-lg bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center">
                           <Bell className="w-3.5 h-3.5 stroke-[2.5]" />
                         </div>
@@ -342,8 +342,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Card Bottom-Left: 5 Stars Review Badge (Exact screenshot match) */}
-                      <div className="absolute bottom-6 left-1 sm:left-3 px-3.5 py-2 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_12px_30px_rgba(15,23,42,0.1)] flex items-center gap-1 z-20 animate-in slide-in-from-left-4 duration-500">
+                      {/* Floating Card Bottom-Left: 5 Stars Review Badge */}
+                      <div className="hidden sm:flex absolute bottom-4 left-2.5 px-3 py-1.5 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_12px_30px_rgba(15,23,42,0.1)] items-center gap-1 z-20 animate-in slide-in-from-left-4 duration-500">
                         <span className="text-amber-400 text-xs tracking-widest font-black select-none">
                           ★★★★★
                         </span>
@@ -356,8 +356,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {/* ================================================= */}
                   {activeTabIdx === 1 && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-400 py-3">
-                      {/* Vector Browser Window (Exact screenshot match) */}
-                      <div className="w-[260px] sm:w-[290px] h-[230px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
+                      {/* Vector Browser Window */}
+                      <div className="w-full max-w-[290px] h-[225px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
                         {/* Browser Top Bar with 3 Window Dots */}
                         <div className="flex items-center gap-1.5 pb-2.5 border-b border-[#E2E8F0] mb-2">
                           <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
@@ -421,7 +421,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {activeTabIdx === 2 && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-400 py-3">
                       {/* Vector Design Artboard */}
-                      <div className="w-[260px] sm:w-[290px] h-[230px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden relative">
+                      <div className="w-full max-w-[290px] h-[225px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden relative">
                         {/* Toolbar Header */}
                         <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0]">
                           <div className="flex items-center gap-1.5">
@@ -470,7 +470,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {activeTabIdx === 3 && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-400 py-3">
                       {/* Clean White Dashboard Card */}
-                      <div className="w-[260px] sm:w-[290px] h-[230px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
+                      <div className="w-full max-w-[290px] h-[225px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
                         {/* Top Indicator Row */}
                         <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0]">
                           <div className="flex items-center gap-2">
@@ -523,7 +523,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {activeTabIdx === 4 && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-400 py-3">
                       {/* Vector Architecture Console */}
-                      <div className="w-[260px] sm:w-[290px] h-[230px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
+                      <div className="w-full max-w-[290px] h-[225px] sm:h-[250px] rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.1)] p-3 sm:p-4 flex flex-col justify-between overflow-hidden">
                         <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0]">
                           <span className="text-[11px] font-bold text-[#0B132B]">Cloud Architecture</span>
                           <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[9px] font-bold font-mono">
@@ -581,8 +581,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </span>
                         </div>
 
-                        {/* Animated n8n Node Graph Canvas */}
-                        <div className="relative h-[185px] rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] overflow-hidden p-2.5">
+                        {/* Animated n8n Node Graph Canvas (Percentage-Based Responsive Positioning) */}
+                        <div className="relative h-[185px] rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] overflow-hidden p-2">
                           <div
                             className="absolute inset-0 opacity-45 pointer-events-none"
                             style={{
@@ -594,6 +594,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           {/* SVG Bezier Wires with Animated Data Packets */}
                           <svg
                             viewBox="0 0 300 175"
+                            preserveAspectRatio="none"
                             className="absolute inset-0 w-full h-full pointer-events-none"
                             fill="none"
                           >
@@ -643,47 +644,47 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </svg>
 
                           {/* Node 1: Webhook Trigger */}
-                          <div className="absolute left-2.5 top-[38px] w-[58px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
-                            <div className="w-5 h-5 mx-auto rounded-md bg-[#EA4B71]/10 text-[#EA4B71] flex items-center justify-center mb-1 text-[10px] font-bold">
+                          <div className="absolute left-[3%] top-[22%] w-[21%] min-w-[46px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1 sm:p-1.5 text-center z-10">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 mx-auto rounded-md bg-[#EA4B71]/10 text-[#EA4B71] flex items-center justify-center mb-0.5 text-[9px] font-bold">
                               ⚡
                             </div>
-                            <p className="text-[8.5px] font-bold text-[#0B132B] leading-tight">Webhook</p>
-                            <span className="block text-[7px] text-emerald-600 font-mono">Trigger</span>
+                            <p className="text-[7.5px] sm:text-[8.5px] font-bold text-[#0B132B] leading-tight truncate">Webhook</p>
+                            <span className="block text-[6.5px] text-emerald-600 font-mono">Trigger</span>
                           </div>
 
                           {/* Node 2: AI Agent Hub */}
-                          <div className="absolute left-[110px] top-[34px] w-[82px] rounded-xl bg-white border-2 border-[#00C4FF] shadow-md p-2 text-center z-10">
-                            <div className="w-6 h-6 mx-auto rounded-lg bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-1">
-                              <Bot className="w-3.5 h-3.5" />
+                          <div className="absolute left-1/2 -translate-x-1/2 top-[19%] w-[28%] min-w-[58px] rounded-xl bg-white border-2 border-[#00C4FF] shadow-md p-1.5 sm:p-2 text-center z-10">
+                            <div className="w-5 h-5 sm:w-6 sm:h-6 mx-auto rounded-lg bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
+                              <Bot className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                             </div>
-                            <p className="text-[9.5px] font-extrabold text-[#0B132B] leading-tight">AI Agent</p>
-                            <span className="block text-[7.5px] text-[#0088CC] font-mono">Orchestrator</span>
+                            <p className="text-[8.5px] sm:text-[9.5px] font-extrabold text-[#0B132B] leading-tight truncate">AI Agent</p>
+                            <span className="block text-[6.5px] sm:text-[7.5px] text-[#0088CC] font-mono truncate">Orchestrator</span>
                           </div>
 
                           {/* Node 3A: CRM Sync */}
-                          <div className="absolute right-2.5 top-[18px] w-[62px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
-                            <div className="w-4 h-4 mx-auto rounded bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
+                          <div className="absolute right-[3%] top-[10%] w-[22%] min-w-[46px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1 sm:p-1.5 text-center z-10">
+                            <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 mx-auto rounded bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
                               <Check className="w-2.5 h-2.5" />
                             </div>
-                            <p className="text-[8.5px] font-bold text-[#0B132B]">CRM Sync</p>
+                            <p className="text-[7.5px] sm:text-[8.5px] font-bold text-[#0B132B] truncate">CRM Sync</p>
                           </div>
 
                           {/* Node 3B: Slack / API */}
-                          <div className="absolute right-2.5 top-[72px] w-[62px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1.5 text-center z-10">
-                            <div className="w-4 h-4 mx-auto rounded bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
+                          <div className="absolute right-[3%] top-[42%] w-[22%] min-w-[46px] rounded-xl bg-white border border-[#E2E8F0] shadow-xs p-1 sm:p-1.5 text-center z-10">
+                            <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 mx-auto rounded bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
                               <Sparkles className="w-2.5 h-2.5" />
                             </div>
-                            <p className="text-[8.5px] font-bold text-[#0B132B]">Slack Alert</p>
+                            <p className="text-[7.5px] sm:text-[8.5px] font-bold text-[#0B132B] truncate">Slack</p>
                           </div>
 
                           {/* Sub-nodes Bottom */}
-                          <div className="absolute left-[84px] bottom-2.5 px-2 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
+                          <div className="absolute left-[22%] bottom-2.5 px-2 py-0.5 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#00C4FF]" />
-                            <span className="text-[8px] font-bold text-[#0B132B]">LLM</span>
+                            <span className="text-[7.5px] sm:text-[8px] font-bold text-[#0B132B]">LLM</span>
                           </div>
-                          <div className="absolute left-[160px] bottom-2.5 px-2 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
+                          <div className="absolute right-[22%] bottom-2.5 px-2 py-0.5 rounded-full bg-white border border-[#E2E8F0] shadow-xs flex items-center gap-1 z-10">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            <span className="text-[8px] font-bold text-[#0B132B]">RAG DB</span>
+                            <span className="text-[7.5px] sm:text-[8px] font-bold text-[#0B132B]">RAG DB</span>
                           </div>
                         </div>
 
