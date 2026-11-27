@@ -1,12 +1,22 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight, FileText, Play, Users, ArrowRight } from 'lucide-react';
 
-import pdfImg from '../assits/products/product1.webp';
-import playerImg from '../assits/products/product2.webp';
-import gramsetuImg from '../assits/products/product3.webp';
-import mobileImg from '../assits/mobile.avif';
-import websiteImg from '../assits/website.avif';
-import saasImg from '../assits/saas product.avif';
+// Real product images from TavqenPdf and tavqenVplayer
+import pdfHome from '../assits/TavqenPdf/home.jpg';
+import pdfAllTools from '../assits/TavqenPdf/allTools.jpg';
+import pdfConversations from '../assits/TavqenPdf/conversations.jpg';
+import pdfAllPages from '../assits/TavqenPdf/allpages.jpg';
+import pdfMyFiles from '../assits/TavqenPdf/my files.jpg';
+import pdfLight from '../assits/TavqenPdf/light.jpg';
+
+import vplayerHome from '../assits/tavqenVplayer/home.jpg';
+import vplayerAllPages from '../assits/tavqenVplayer/allpages.jpg';
+import vplayerLibrary from '../assits/tavqenVplayer/libaray.jpg';
+import vplayerAddTitle from '../assits/tavqenVplayer/addtittle.jpg';
+import vplayerLight from '../assits/tavqenVplayer/light.jpg';
+import vplayerSearch from '../assits/tavqenVplayer/search.jpg';
+
+import product3 from '../assits/products/product3.jpg';
 
 interface PhoneCard {
   line1: string;
@@ -23,132 +33,131 @@ interface ProductShowcase {
   description: string;
   iconBg: string;
   iconColor: string;
-  icon: any;
+  icon: typeof FileText;
   appStoreUrl: string;
   playStoreUrl: string;
   phones: PhoneCard[];
 }
 
 const PRODUCTS: ProductShowcase[] = [
- {
-  id: 'tavqen-pdf',
-  name: 'TAVQEN PDF',
-  category: 'Mobile App · Productivity',
-  description:
-    'A powerful document solution built to make scanning, editing, converting, signing, and managing PDFs faster and easier — all from one seamless platform.',
-  iconBg: 'bg-gradient-to-br from-[#9BE3DF] to-[#0088CC]',
-  iconColor: 'text-white',
-  icon: FileText,
-  appStoreUrl: '#contact',
-  playStoreUrl: '#contact',
-  phones: [
-    {
-      line1: 'AI-Powered',
-      line2: 'Document Scanner',
-      badge: 'Smart OCR',
-      titleColor: 'text-[#0088CC]',
-      image: mobileImg,
-    },
-    {
-      line1: 'High Quality',
-      line2: 'PDF Export',
-      badge: '300 DPI',
-      titleColor: 'text-[#0B132B]',
-      image: pdfImg,
-    },
-    {
-      line1: 'Smart Sign',
-      line2: '& Form Filling',
-      badge: 'e-Sign Ready',
-      titleColor: 'text-[#0088CC]',
-      image: websiteImg,
-    },
-    {
-      line1: 'Secure Cloud',
-      line2: 'Document Vault',
-      badge: 'Encrypted',
-      titleColor: 'text-[#0B132B]',
-      image: saasImg,
-    },
-    {
-      line1: 'Batch PDF',
-      line2: 'Split & Merge',
-      badge: 'Fast Processing',
-      titleColor: 'text-[#0088CC]',
-      image: pdfImg,
-    },
-    {
-      line1: 'Smart Text',
-      line2: 'Extraction',
-      badge: 'OCR Powered',
-      titleColor: 'text-[#0B132B]',
-      image: mobileImg,
-    },
-  ],
-},
-
-{
-  id: 'tavqen-v-player',
-  name: 'TAVQEN V Player',
-  category: 'Mobile App · Entertainment',
-  description:
-    'A modern video player built for smooth, reliable playback with broad format support, smart controls, subtitle support, and a seamless viewing experience.',
-  iconBg: 'bg-gradient-to-br from-[#FFE4ED] via-[#FDA4AF] to-[#E11D48]',
-  iconColor: 'text-white',
-  icon: Play,
-  appStoreUrl: '#contact',
-  playStoreUrl: '#contact',
-  phones: [
-    {
-      line1: 'Ultra HD',
-      line2: '4K / 8K Playback',
-      badge: 'High Quality',
-      titleColor: 'text-[#E11D48]',
-      image: playerImg,
-    },
-    {
-      line1: 'Universal',
-      line2: 'Video Support',
-      badge: 'Multi Format',
-      titleColor: 'text-[#0B132B]',
-      image: mobileImg,
-    },
-    {
-      line1: 'Smart Subtitle',
-      line2: 'Sync',
-      badge: 'Auto Match',
-      titleColor: 'text-[#E11D48]',
-      image: playerImg,
-    },
-    {
-      line1: 'Smooth Gesture',
-      line2: 'Controls',
-      badge: 'Touch Ready',
-      titleColor: 'text-[#0B132B]',
-      image: websiteImg,
-    },
-    {
-      line1: 'Picture in Picture',
-      line2: 'Background Play',
-      badge: 'PiP Ready',
-      titleColor: 'text-[#E11D48]',
-      image: playerImg,
-    },
-    {
-      line1: 'Immersive',
-      line2: 'Audio Experience',
-      badge: 'Audio Controls',
-      titleColor: 'text-[#0B132B]',
-      image: mobileImg,
-    },
-  ],
-},
+  {
+    id: 'tavqen-pdf',
+    name: 'TAVQEN PDF',
+    category: 'Mobile App · Productivity & OCR',
+    description:
+      'All-in-one document suite engineered for 300 DPI smart scanning, AI OCR extraction, PDF conversions, e-signatures, and encrypted file management.',
+    iconBg: 'bg-gradient-to-br from-[#9BE3DF] to-[#0088CC]',
+    iconColor: 'text-white',
+    icon: FileText,
+    appStoreUrl: '#contact',
+    playStoreUrl: '#contact',
+    phones: [
+      {
+        line1: 'AI Scanner',
+        line2: '300 DPI Export',
+        badge: 'Smart Scan',
+        titleColor: 'text-[#0088CC]',
+        image: pdfHome,
+      },
+      {
+        line1: '30+ Tools',
+        line2: 'Merge & Split',
+        badge: 'All Tools',
+        titleColor: 'text-[#0B132B]',
+        image: pdfAllTools,
+      },
+      {
+        line1: 'Smart Convert',
+        line2: 'Multi-Format OCR',
+        badge: 'AI Converter',
+        titleColor: 'text-[#0088CC]',
+        image: pdfConversations,
+      },
+      {
+        line1: 'Page Manager',
+        line2: 'Reorder & Edit',
+        badge: 'All Pages',
+        titleColor: 'text-[#0B132B]',
+        image: pdfAllPages,
+      },
+      {
+        line1: 'Cloud Vault',
+        line2: 'Secure Storage',
+        badge: 'My Files',
+        titleColor: 'text-[#0088CC]',
+        image: pdfMyFiles,
+      },
+      {
+        line1: 'Clean Reader',
+        line2: 'Smooth Viewing',
+        badge: 'HD View',
+        titleColor: 'text-[#0B132B]',
+        image: pdfLight,
+      },
+    ],
+  },
+  {
+    id: 'tavqen-v-player',
+    name: 'TAVQEN V Player',
+    category: 'Mobile App · Media & Entertainment',
+    description:
+      'High-performance media player engineered for ultra-smooth 4K playback, universal codec support, smart subtitle sync, and gesture-driven controls.',
+    iconBg: 'bg-gradient-to-br from-[#FFE4ED] via-[#FDA4AF] to-[#E11D48]',
+    iconColor: 'text-white',
+    icon: Play,
+    appStoreUrl: '#contact',
+    playStoreUrl: '#contact',
+    phones: [
+      {
+        line1: 'Ultra HD',
+        line2: '4K Playback',
+        badge: '4K Player',
+        titleColor: 'text-[#E11D48]',
+        image: vplayerHome,
+      },
+      {
+        line1: 'Media Browser',
+        line2: 'Smart Playlist',
+        badge: 'All Videos',
+        titleColor: 'text-[#0B132B]',
+        image: vplayerAllPages,
+      },
+      {
+        line1: 'Folder Explorer',
+        line2: 'Fast Indexing',
+        badge: 'Media Library',
+        titleColor: 'text-[#E11D48]',
+        image: vplayerLibrary,
+      },
+      {
+        line1: 'Smart Subtitles',
+        line2: 'Audio Sync',
+        badge: 'Subtitle Engine',
+        titleColor: 'text-[#0B132B]',
+        image: vplayerAddTitle,
+      },
+      {
+        line1: 'Cinema View',
+        line2: 'Gesture Control',
+        badge: 'HD Playback',
+        titleColor: 'text-[#E11D48]',
+        image: vplayerLight,
+      },
+      {
+        line1: 'Instant Search',
+        line2: 'Quick Filter',
+        badge: 'Universal Search',
+        titleColor: 'text-[#0B132B]',
+        image: vplayerSearch,
+      },
+    ],
+  },
   {
     id: 'gramsetu',
     name: 'GramSetu',
     category: 'Mobile App · Civic Community',
     description:
-      'A digital platform connecting villages and citizens through accessible local governance and community services.',
+      'A digital platform connecting villages and citizens through accessible local governance, offline sync, and real-time community services.',
     iconBg: 'bg-gradient-to-br from-[#38BDF8] via-[#0284C7] to-[#0369A1]',
     iconColor: 'text-white',
     icon: Users,
@@ -160,42 +169,42 @@ const PRODUCTS: ProductShowcase[] = [
         line2: 'Live Grievance',
         badge: 'Real-time Action',
         titleColor: 'text-[#0284C7]',
-        image: gramsetuImg,
+        image: product3,
       },
       {
         line1: 'Panchayat Data',
         line2: '100% Digital',
         badge: 'Verified Records',
         titleColor: 'text-[#0B132B]',
-        image: websiteImg,
+        image: product3,
       },
       {
         line1: 'Welfare Schemes',
         line2: 'Direct Access',
         badge: 'Direct Benefit',
         titleColor: 'text-[#0284C7]',
-        image: gramsetuImg,
+        image: product3,
       },
       {
         line1: 'Voice First',
         line2: 'Local Dialects',
         badge: 'Accessible UI',
         titleColor: 'text-[#0B132B]',
-        image: mobileImg,
+        image: product3,
       },
       {
         line1: 'Offline Mode',
         line2: 'Zero Signal Sync',
         badge: 'Works Anywhere',
         titleColor: 'text-[#0284C7]',
-        image: gramsetuImg,
+        image: product3,
       },
       {
         line1: 'Civic Alerts',
         line2: 'Broadcast Feed',
         badge: 'Live SMS & Push',
         titleColor: 'text-[#0B132B]',
-        image: saasImg,
+        image: product3,
       },
     ],
   },
@@ -245,7 +254,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
           <div>
             {isFullPage && (
               <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
-                SaaS & Consumer Products
+                SaaS &amp; Consumer Products
               </span>
             )}
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B132B] leading-[1.15]">
@@ -264,7 +273,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
         </div>
 
         {/* ========================================================= */}
-        {/* PRODUCT ROWS (Matching the screenshot app-gallery format) */}
+        {/* PRODUCT ROWS (App-gallery format with compact cards)      */}
         {/* ========================================================= */}
         <div className="space-y-12 sm:space-y-16">
           {displayedProducts.map((product) => {
@@ -370,7 +379,7 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
                 </div>
 
                 {/* ---------------------------------------------------- */}
-                {/* RIGHT GALLERY COLUMN: Tall Phone Screen Cards        */}
+                {/* RIGHT GALLERY COLUMN: Compact Phone Screen Cards     */}
                 {/* ---------------------------------------------------- */}
                 <div className="flex-1 w-full overflow-hidden relative">
                   <div
@@ -384,45 +393,36 @@ export default function OurProducts({ limit, isFullPage = false }: OurProductsPr
                         className="w-[130px] sm:w-[145px] md:w-[155px] lg:w-[165px] flex-shrink-0 flex flex-col items-center"
                       >
                         {/* Top 2-Line Tagline Title (Centered above phone) */}
-                        <div className="h-8 flex flex-col items-center justify-center text-center px-1 mb-1.5">
+                        <div className="h-8 flex flex-col items-center justify-center text-center px-1 mb-2">
                           <span
-                            className={`text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
+                            className={`text-[11px] sm:text-[11.5px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
                           >
                             {phone.line1}
                           </span>
                           <span
-                            className={`text-[11px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
+                            className={`text-[11px] sm:text-[11.5px] font-bold tracking-tight leading-tight ${phone.titleColor}`}
                           >
                             {phone.line2}
                           </span>
                         </div>
 
-                        {/* iPhone Mockup Frame (Matching screenshot proportions) */}
-                        <div className="w-full h-[255px] sm:h-[280px] md:h-[300px] rounded-[22px] sm:rounded-[25px] p-1.5 bg-[#FAF9F6] border border-black/10 shadow-[0_8px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_35px_rgba(0,196,255,0.16)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative group cursor-pointer">
-                          {/* Inner Screen with phone bezel */}
-                          <div className="w-full h-full rounded-[18px] sm:rounded-[20px] overflow-hidden bg-white border-[2px] border-[#18181b] relative flex flex-col">
-                            {/* Dynamic Island Notch */}
-                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-7 h-2 bg-black rounded-full z-20" />
+                        {/* Compact Phone Mockup Frame */}
+                        <div className="w-full h-[240px] sm:h-[260px] md:h-[275px] rounded-2xl sm:rounded-[22px] p-2 bg-[#F8FAFC] border border-[#E2E8F0] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,196,255,0.14)] hover:border-[#00C4FF]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative group cursor-pointer">
+                          {/* Inner Screen Container */}
+                          <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-white border border-[#E2E8F0]/80 relative flex items-center justify-center p-1.5 sm:p-2">
+                            <img
+                              src={phone.image}
+                              alt={phone.line1}
+                              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                              loading="lazy"
+                            />
 
-                            {/* Screen Mockup Image */}
-                            <div className="w-full h-full relative overflow-hidden bg-gray-50">
-                              <img
-                                src={phone.image}
-                                alt={phone.line1}
-                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.05]"
-                                loading="lazy"
-                              />
-
-                              {/* Bottom Floating Pill Metric */}
-                              <div className="absolute bottom-2 left-1.5 right-1.5 bg-white/95 backdrop-blur-md rounded-lg py-0.5 px-1.5 border border-black/5 shadow-2xs text-center">
-                                <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#0B132B]">
-                                  {phone.badge}
-                                </span>
-                              </div>
+                            {/* Bottom Floating Pill Metric */}
+                            <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs rounded-md py-0.5 px-1.5 border border-black/5 shadow-2xs text-center pointer-events-none">
+                              <span className="text-[8px] sm:text-[8.5px] font-extrabold uppercase tracking-wider text-[#0B132B]">
+                                {phone.badge}
+                              </span>
                             </div>
-
-                            {/* Home indicator bar */}
-                            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-black/40 rounded-full z-20" />
                           </div>
                         </div>
                       </div>

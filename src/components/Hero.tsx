@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+import product1 from '../assits/products/product1.jpg';
+import product2 from '../assits/products/product2.jpg';
+import product3 from '../assits/products/product3.jpg';
+import product4 from '../assits/products/product4.jpg';
 
 const PRODUCT_IMAGES_ROW_1 = [
   { id: 'prod-1', src: product1, alt: 'Tavqen Product 1' },
@@ -70,8 +70,8 @@ export default function Hero() {
 
   {/* Headline */}
   <h1 className="hero-stagger text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
-    Building digital experiences,
-    <br className="hidden sm:inline" /> shaping what&apos;s next.
+  Building digital products
+    <br className="hidden sm:inline" />delivering powerful services.
   </h1>
 
   {/* Subtitle */}
@@ -82,7 +82,7 @@ export default function Hero() {
   </p>
 
   {/* CTA */}
-  <div className="hero-stagger mt-7 sm:mt-8 flex justify-center">
+  <div className="hero-stagger mt-7 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
     <a
       href="/start-a-project"
       className="
@@ -103,11 +103,42 @@ export default function Hero() {
     >
       <span>Start a Project</span>
     </a>
+    <a
+      href="#work"
+      onClick={(e) => {
+        e.preventDefault();
+        const target = document.getElementById('work') || document.getElementById('products');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.location.hash = '#work';
+        }
+      }}
+      className="
+        inline-flex items-center justify-center
+        px-6 sm:px-7
+        py-2.5 sm:py-3
+        rounded-full
+        bg-white/80 backdrop-blur-xs
+        text-[#0B132B]
+        text-xs sm:text-[13.5px]
+        font-medium
+        border border-black/[0.08]
+        shadow-[0_4px_16px_rgba(0,0,0,0.04)]
+        hover:bg-white hover:text-[#0088CC] hover:border-[#0088CC]/40
+        hover:shadow-[0_8px_24px_rgba(0,196,255,0.12)]
+        hover:scale-[1.02]
+        active:scale-95
+        transition-all
+      "
+    >
+      <span>Explore Our Work</span>
+    </a>
   </div>
 
 </div>
       {/* CONTINUOUSLY SLIDING PRODUCT IMAGES SHOWCASE */}
-      <div className="mt-14 sm:mt-18 w-full relative">
+      <div className="mt-12 sm:mt-16 w-full relative">
         {/* Soft edge mask so cards fade seamlessly */}
         <div className="mask-radial-edges w-full overflow-hidden py-3 space-y-4 sm:space-y-5">
           {/* TRACK 1: Sliding Left */}
@@ -119,12 +150,12 @@ export default function Hero() {
             ].map((product, idx) => (
               <div
                 key={`${product.id}-${idx}`}
-                className="w-[290px] sm:w-[380px] md:w-[440px] h-[190px] sm:h-[250px] md:h-[280px] flex-shrink-0 bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-black/[0.07] shadow-[0_6px_25px_rgba(0,0,0,0.04)] hover:shadow-[0_14px_35px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+                className="w-[260px] sm:w-[330px] md:w-[380px] h-[165px] sm:h-[210px] md:h-[240px] flex-shrink-0 bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-black/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,196,255,0.1)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex items-center justify-center p-2.5 sm:p-3"
               >
                 <img
                   src={product.src}
                   alt={product.alt}
-                  className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl sm:rounded-2xl group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
                 />
               </div>
