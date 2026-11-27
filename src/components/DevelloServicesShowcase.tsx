@@ -109,17 +109,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
       />
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Breadcrumb */}
-        <div className="mb-6 sm:mb-8">
-          <button
-            type="button"
-            onClick={() => handleNav('/home')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-          >
-            <span>← Back to Home</span>
-          </button>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* ========================================================= */}
           {/* LEFT SIDE: HEADING, SUBTITLE & CTAs (Exact Devello layout) */}

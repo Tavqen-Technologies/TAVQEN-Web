@@ -81,7 +81,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         style={{
           transform: isScrolled ? 'translateY(3px)' : 'translateY(0px)',
         }}
-        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-5 py-2.5 sm:px-7 sm:py-3 flex items-center justify-between border relative overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-4 sm:px-5 lg:px-7 py-2.5 sm:py-3 flex items-center justify-between gap-2 border relative overflow-hidden ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-xl border-black/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.08)]'
             : 'bg-white/90 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
@@ -96,7 +96,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         </div>
 
         {/* LEFT: Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center shrink-0">
           <button
             type="button"
             onClick={() => handleNav('/home')}
@@ -105,13 +105,13 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
             <img
               src={tavqenLogo}
               alt="TAVQEN"
-              className="h-6 sm:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
+              className="h-6 sm:h-7 lg:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
             />
           </button>
         </div>
 
         {/* CENTER: Navigation Links with Dynamic Active Indicator */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+        <nav className="hidden md:flex items-center gap-3.5 lg:gap-7 xl:gap-8">
           {navLinks.map((link) => {
             const isActive =
               currentRoute === link.id ||
@@ -124,7 +124,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
                 key={link.name}
                 type="button"
                 onClick={() => handleNav(link.path)}
-                className={`text-[13.5px] transition-colors relative py-1 select-none cursor-pointer border-none bg-transparent ${
+                className={`text-[12.5px] lg:text-[13.5px] whitespace-nowrap transition-colors relative py-1 select-none cursor-pointer border-none bg-transparent ${
                   isActive
                     ? 'font-semibold text-[#0088CC]'
                     : 'font-normal text-[#121212]/80 hover:text-[#121212]'
@@ -142,12 +142,12 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         </nav>
 
         {/* RIGHT: Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Start a project Pill CTA */}
           <button
             type="button"
             onClick={() => handleNav('/start-a-project')}
-            className={`inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
+            className={`inline-flex items-center justify-center px-4 sm:px-5 lg:px-7 py-2 sm:py-2.5 lg:py-3 rounded-full text-white text-xs lg:text-[13.5px] font-medium whitespace-nowrap shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
               currentRoute === 'start-a-project'
                 ? 'bg-gradient-to-r from-[#0088CC] to-[#00C4FF] ring-2 ring-[#00C4FF]'
                 : 'bg-gradient-to-r from-[#00D4FF] to-[#0088CC]'

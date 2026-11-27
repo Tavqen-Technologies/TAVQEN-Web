@@ -5,7 +5,7 @@ interface StartAProjectPageProps {
   onNavigate?: (path: string) => void;
 }
 
-export default function StartAProjectPage({ onNavigate }: StartAProjectPageProps) {
+export default function StartAProjectPage(_props: StartAProjectPageProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,15 +17,6 @@ export default function StartAProjectPage({ onNavigate }: StartAProjectPageProps
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0); // First open by default
-
-  const handleNav = (path: string) => {
-    if (onNavigate) {
-      onNavigate(path);
-    } else {
-      window.location.hash = path;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
 
   const SERVICE_OPTIONS = [
     'Mobile app',
@@ -107,17 +98,6 @@ export default function StartAProjectPage({ onNavigate }: StartAProjectPageProps
 
         {/* Global Container */}
         <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Breadcrumb Back Link */}
-          <div className="mb-6 sm:mb-8">
-            <button
-              type="button"
-              onClick={() => handleNav('/home')}
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-            >
-              <span>← Back to Home</span>
-            </button>
-          </div>
-
           <div className="max-w-3xl">
             {/* Eyebrow Label with horizontal line */}
             <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
