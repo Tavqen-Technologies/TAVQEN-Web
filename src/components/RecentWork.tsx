@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, FileText, Sparkles, Users } from 'lucide-react';
-
-import product1 from '../assits/products/product1.webp';
-import product3 from '../assits/products/product3.webp';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { TAVQEN_PRODUCTS } from '../data/productsData';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +16,7 @@ interface ProjectItem {
   tags: string[];
   image: string;
   alt: string;
-  icon: typeof FileText;
+  icon: (typeof TAVQEN_PRODUCTS)[number]['icon'];
   glowGradient: string;
   accentBorderHover: string;
   iconStyle: string;
@@ -29,19 +27,8 @@ interface RecentWorkProps {
   onNavigate?: (path: string) => void;
 }
 
-const WORK_ITEMS: ProjectItem[] = [
+const CARD_ACCENTS = [
   {
-    number: '01',
-    id: 'tavqen-pdf',
-    eyebrow: 'Mobile App · Productivity',
-    title: 'TAVQEN PDF — AI Document & OCR Platform',
-    description:
-      'A fast document platform engineered for smart 300 DPI scanning, OCR extraction, e-signing, batch merging, and AES-256 encrypted cloud vault sync.',
-    impact: '300 DPI Smart OCR',
-    tags: ['Mobile App', 'Smart OCR', 'Cloud Vault'],
-    image: product1,
-    alt: 'TAVQEN PDF Showcase',
-    icon: FileText,
     glowGradient:
       'radial-gradient(circle at 85% 90%, rgba(0, 196, 255, 0.22) 0%, rgba(155, 227, 223, 0.14) 38%, transparent 72%)',
     accentBorderHover: 'hover:border-[#00C4FF]/60',
@@ -49,24 +36,37 @@ const WORK_ITEMS: ProjectItem[] = [
     eyebrowColor: 'text-[#0088CC]',
   },
   {
-    number: '02',
-    id: 'gramsetu',
-    eyebrow: 'Web & Mobile · Civic Tech',
-    title: 'GramSetu — Digital Governance & Citizen Portal',
-    description:
-      'A resilient digital platform connecting villages and citizens with live grievance tracking, direct welfare scheme access, and offline-first data sync.',
-    impact: '100% Digital Records',
-    tags: ['Web Platform', 'Civic Tech', 'Offline Sync'],
-    image: product3,
-    alt: 'GramSetu Platform Showcase',
-    icon: Users,
     glowGradient:
       'radial-gradient(circle at 85% 90%, rgba(0, 136, 204, 0.20) 0%, rgba(56, 189, 248, 0.14) 38%, transparent 72%)',
     accentBorderHover: 'hover:border-[#0088CC]/55',
     iconStyle: 'bg-[#F0F9FF] text-[#0284C7] border-[#38BDF8]/30',
     eyebrowColor: 'text-[#0284C7]',
   },
+  {
+    glowGradient:
+      'radial-gradient(circle at 85% 90%, rgba(14, 165, 233, 0.18) 0%, rgba(155, 227, 223, 0.14) 38%, transparent 72%)',
+    accentBorderHover: 'hover:border-[#00C4FF]/55',
+    iconStyle: 'bg-[#E0F7FF] text-[#0088CC] border-[#00C4FF]/25',
+    eyebrowColor: 'text-[#0088CC]',
+  },
 ];
+
+const WORK_ITEMS: ProjectItem[] = TAVQEN_PRODUCTS.map((product, idx) => {
+  const accent = CARD_ACCENTS[idx % CARD_ACCENTS.length];
+  return {
+    number: `0${idx + 1}`,
+    id: product.id,
+    eyebrow: `${product.platforms[0] ?? 'Product'} · ${product.categoryLabel}`,
+    title: `${product.name} — ${product.tagline}`,
+    description: product.overview,
+    impact: `${product.status} · ${product.stats[0]?.value ?? product.version}`,
+    tags: product.features.slice(0, 3).map((f) => f.title),
+    image: product.image,
+    alt: product.alt,
+    icon: product.icon,
+    ...accent,
+  };
+});
 
 export default function RecentWork({ onNavigate }: RecentWorkProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -154,10 +154,10 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
             scale: 1,
             duration: 0.8,
             ease: 'power3.out',
-            clearProps: 'transform',
+            clearProps: 'transform,opacity',
             scrollTrigger: {
               trigger: card,
-              start: 'top 84%',
+              start: 'top 86%',
               once: true,
             },
           }
@@ -166,7 +166,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
         // Activate timeline milestone dot as user scrolls past each row
         ScrollTrigger.create({
           trigger: card,
-          start: 'top 68%',
+          start: 'top 70%',
           onEnter: () => {
             setActiveSteps((prev) => (prev.includes(idx) ? prev : [...prev, idx]));
           },
@@ -179,7 +179,14 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
       });
     }, section);
 
-    return () => ctx.revert();
+    const refreshRaf = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 220);
+
+    return () => {
+      window.cancelAnimationFrame(refreshRaf);
+      window.clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -213,7 +220,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
             </span>
           </h2>
           <p className="work-header-item mt-3.5 sm:mt-4 text-[14px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed">
-            Real digital products, web platforms, and mobile experiences engineered by TAVQEN for measurable business impact.
+            Real software products developed in-house by TAVQEN Technology for everyday documents, local video playback, and focused creative tools.
           </p>
         </div>
 
@@ -236,7 +243,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
           />
 
           {/* Timeline Milestones */}
-          <div className="space-y-10 sm:space-y-14 md:space-y-6">
+          <div className="space-y-10 sm:space-y-14 md:space-y-10">
             {WORK_ITEMS.map((project, idx) => {
               const Icon = project.icon;
               const isLeft = idx % 2 === 0;
@@ -246,7 +253,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                 <div
                   key={project.id}
                   className={`relative grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 ${
-                    idx > 0 ? 'md:-mt-8 lg:-mt-12' : ''
+                    idx > 0 ? 'md:-mt-4 lg:-mt-6' : ''
                   }`}
                 >
                   {/* Milestone Dot on Center / Mobile-Left Track */}
@@ -304,14 +311,14 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                               <Icon className="w-4 h-4 stroke-[2]" />
                             </div>
                             <span
-                              className={`font-mono text-[10.5px] sm:text-[11px] font-bold uppercase tracking-[0.12em] leading-tight ${project.eyebrowColor}`}
+                              className={`text-[10.5px] sm:text-[11px] font-bold uppercase tracking-[0.12em] leading-tight ${project.eyebrowColor}`}
                             >
                               {project.eyebrow}
                             </span>
                           </div>
 
-                          {/* Giant Watermark Number (01, 02, 03, 04) */}
-                          <span className="font-mono text-4xl sm:text-5xl font-black tracking-tighter text-[#0B132B]/[0.05] group-hover:text-[#0088CC]/[0.13] transition-colors duration-500 leading-none select-none">
+                          {/* Giant Watermark Number (01, 02, 03) */}
+                          <span className="text-4xl sm:text-5xl font-black tracking-tighter tabular-nums text-[#0B132B]/[0.05] group-hover:text-[#0088CC]/[0.13] transition-colors duration-500 leading-none select-none">
                             {project.number}
                           </span>
                         </div>
@@ -336,15 +343,15 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                          {/* Floating Impact Badge */}
+                          {/* Floating Status / Metric Badge */}
                           <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-xs">
-                            <span className="text-[11px] font-bold font-mono text-[#0B132B]">
+                            <span className="text-[11px] font-bold text-[#0B132B]">
                               {project.impact}
                             </span>
                           </div>
                         </div>
 
-                        {/* Footer: Tags + Case Study Action */}
+                        {/* Footer: Tags + Action */}
                         <div className="mt-5 pt-4 border-t border-[#E2E8F0]/80 flex flex-wrap items-center justify-between gap-3">
                           <div className="flex flex-wrap gap-1.5">
                             {project.tags.map((tag, tIdx) => (
@@ -358,7 +365,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                           </div>
 
                           <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0088CC] group-hover:text-[#00C4FF] transition-colors">
-                            <span>Case Study</span>
+                            <span>View Build</span>
                             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                           </span>
                         </div>
@@ -380,11 +387,11 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
             onClick={() => handleNav('/our-work')}
             className="inline-flex items-center gap-2.5 px-7 sm:px-8 py-3 sm:py-3.5 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-xs sm:text-[13.5px] font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:border-[#0088CC] hover:text-[#0088CC] hover:shadow-[0_10px_28px_rgba(0,196,255,0.16)] hover:scale-[1.02] active:scale-95 transition-all duration-300 group cursor-pointer"
           >
-            <span>Explore All Case Studies</span>
+            <span>Explore Our Work</span>
             <ArrowRight className="w-4 h-4 text-[#0088CC] transition-transform duration-300 group-hover:translate-x-1" />
           </button>
           <p className="mt-2.5 text-xs text-[#94A3B8]">
-            Dive deeper into challenges, architecture, and measurable outcomes
+            Inspect all {WORK_ITEMS.length} TAVQEN products, workflows, and product notes
           </p>
         </div>
       </div>

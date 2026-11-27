@@ -1,39 +1,54 @@
 import {
-  CheckCircle2,
   FileText,
-  Lock,
+  Image as ImageIcon,
   Play,
-  Shield,
-  Smartphone,
-  Sparkles,
-  TrendingUp,
-  Users,
-  Zap,
 } from 'lucide-react';
 
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
+import pdfHero from '../assits/products/pdf-hero.jpg';
+import pdfOverview from '../assits/products/pdf-overview.jpg';
+import pdfHomeDark from '../assits/products/pdf-home-dark.jpg';
+import pdfHomeLight from '../assits/products/pdf-home-light.jpg';
+import pdfAllTools from '../assits/products/pdf-all-tools.jpg';
+import pdfConversion from '../assits/products/pdf-conversion.jpg';
+import pdfSettings from '../assits/products/pdf-settings.jpg';
+import pdfFiles from '../assits/products/pdf-files.jpg';
+import vplayerHero from '../assits/products/vplayer-hero.jpg';
+import vplayerOverview from '../assits/products/vplayer-overview.jpg';
+import vplayerHomeDark from '../assits/products/vplayer-home-dark.jpg';
+import vplayerHomeLight from '../assits/products/vplayer-home-light.jpg';
+import vplayerLibrary from '../assits/products/vplayer-library.jpg';
+import vplayerSearch from '../assits/products/vplayer-search.jpg';
+import vplayerCollections from '../assits/products/vplayer-collections.jpg';
 import product4 from '../assits/products/product4.webp';
-import mobileImg from '../assits/mobile.avif';
-import websiteImg from '../assits/website.avif';
-import saasImg from '../assits/saas product.avif';
+
+export type ProductCategoryKey = 'productivity' | 'media' | 'creative';
+export type ProductStatus = 'Available' | 'Beta' | 'In Development' | 'Planned';
+
+export interface ProductGalleryItem {
+  title: string;
+  subtitle: string;
+  image: string;
+}
 
 export interface ProductDetail {
   id: string;
   name: string;
   tagline: string;
-  category: 'productivity' | 'media' | 'civic';
+  category: ProductCategoryKey;
   categoryLabel: string;
+  status: ProductStatus;
+  version: string;
   flowTitle: string;
   flowDescription: string;
   overview: string;
   image: string;
+  alt: string;
+  gallery?: ProductGalleryItem[];
   icon: typeof FileText;
   badgeColor: string;
   platforms: string[];
   stats: { label: string; value: string }[];
-  features: { title: string; description: string }[];
+  features: { title: string; description: string; benefit: string }[];
   connectedWith: string[];
 }
 
@@ -41,397 +56,170 @@ export const TAVQEN_PRODUCTS: ProductDetail[] = [
   {
     id: 'pdf',
     name: 'TAVQEN PDF',
-    tagline: 'AI Document Intelligence',
+    tagline: 'Complete Mobile PDF Solution',
     category: 'productivity',
-    categoryLabel: 'Productivity & OCR',
-    flowTitle: 'TAVQEN PDF → Cloud Vault',
-    flowDescription: 'Documents scanned on mobile are OCR-extracted and encrypted in real-time.',
+    categoryLabel: 'Documents & Productivity',
+    status: 'Available',
+    version: 'Version 1.0',
+    flowTitle: 'TAVQEN PDF → Document Tools',
+    flowDescription:
+      'Merge PDF, Split PDF, Images to PDF, PDF to Images, Compress PDF, and Convert tools in one workspace.',
     overview:
-      'A high-speed document intelligence suite engineered to make scanning, OCR text extraction, PDF editing, digital signing, and encrypted vault archiving effortless across mobile and web.',
-    image: product1,
+      'TAVQEN PDF helps mobile users organize, convert, compress, and manage PDF files effortlessly—combining Merge PDF, Split PDF, Images to PDF, PDF to Images, Compress PDF, and fast tool search inside one clean app.',
+    image: pdfHero,
+    alt: 'TAVQEN PDF application showcase',
+    gallery: [
+      { title: 'Showcase', subtitle: 'Your complete PDF solution', image: pdfHero },
+      { title: 'Overview', subtitle: 'All screens & tools', image: pdfOverview },
+      { title: 'Home (Dark)', subtitle: 'Quick tool dashboard', image: pdfHomeDark },
+      { title: 'Home (Light)', subtitle: 'Clean light theme', image: pdfHomeLight },
+      { title: 'All Tools', subtitle: '22+ PDF utilities', image: pdfAllTools },
+      { title: 'Images to PDF', subtitle: 'On-device conversion', image: pdfConversion },
+      { title: 'My Files', subtitle: 'Filter & manage PDFs', image: pdfFiles },
+      { title: 'Settings', subtitle: 'Theme, format & quality', image: pdfSettings },
+    ],
     icon: FileText,
     badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['iOS', 'Android', 'Web App'],
+    platforms: ['Android', 'Mobile App'],
     stats: [
-      { label: 'Export Resolution', value: '300 DPI' },
-      { label: 'OCR Scan Speed', value: '0.4s' },
-      { label: 'Encryption', value: 'AES-256' },
+      { label: 'Core Toolkit', value: '22+ Tools' },
+      { label: 'Primary OS', value: 'Android' },
+      { label: 'Status', value: 'Available' },
     ],
     features: [
       {
-        title: 'AI Edge-Detection Scanner',
-        description: 'Automatic perspective correction, glare removal, and crisp monochrome/color enhancement.',
+        title: 'Merge PDF',
+        description: 'Combine multiple PDF files into one structured document before sharing or archiving.',
+        benefit: 'Bring related notes, invoices, or application pages together in one file.',
       },
       {
-        title: 'Multi-Language Smart OCR',
-        description: 'Extract editable, searchable text and tables from scanned pages in sub-second latency.',
+        title: 'Split PDF',
+        description: 'Extract specific page ranges or split multi-page files into smaller documents.',
+        benefit: 'Share only the exact pages needed without sending extra sections.',
       },
       {
-        title: 'Batch Split, Merge & Compress',
-        description: 'Reorganize multi-hundred-page PDFs locally with zero quality degradation.',
+        title: 'Images to PDF & PDF to Images',
+        description: 'Turn camera photos into PDF files or export existing PDF pages out as images.',
+        benefit: 'Prepare receipts, forms, and study notes in whatever file format you need.',
       },
       {
-        title: 'Real-Time Cloud Vault Sync',
-        description: 'Automatically backs up signed and scanned documents into your encrypted workspace.',
+        title: 'Compress PDF & Tool Search',
+        description: 'Reduce document file size cleanly and quickly find tools via the Home search bar.',
+        benefit: 'Upload forms reliably within file-size limits without leaving the app.',
       },
     ],
-    connectedWith: ['vault', 'sign', 'ai'],
+    connectedWith: ['player', 'imagetool'],
   },
   {
     id: 'player',
-    name: 'TAVQEN V Player',
-    tagline: '4K Multimedia Engine',
+    name: 'TAVQEN VPlayer',
+    tagline: 'Private On-Device Video Player',
     category: 'media',
-    categoryLabel: 'Media & Streaming',
-    flowTitle: 'V Player → Media Hub',
-    flowDescription: 'Hardware-accelerated zero-buffering video streaming and custom audio equalizer.',
+    categoryLabel: 'Media & Entertainment',
+    status: 'Available',
+    version: 'Version 1.0',
+    flowTitle: 'VPlayer → Local Library',
+    flowDescription:
+      'Continue Watching, 10s seek controls, playback speed presets, and private on-device folder search.',
     overview:
-      'A modern multimedia player engineered for buttery-smooth 4K and 8K playback across broad codecs, featuring smart subtitle sync, tactile gesture controls, and picture-in-picture mode.',
-    image: product2,
+      'TAVQEN VPlayer focuses on the stories and videos you own—offering Continue Watching auto-resume, customizable playback speed and 10-second seek intervals, dark/system appearance themes, and private search that stays strictly on your device.',
+    image: vplayerHero,
+    alt: 'TAVQEN VPlayer application showcase',
+    gallery: [
+      { title: 'Showcase', subtitle: 'TAVQEN PDF, VPlayer & more', image: vplayerHero },
+      { title: 'Overview', subtitle: 'All video screens', image: vplayerOverview },
+      { title: 'Home (Dark)', subtitle: 'Continue Watching', image: vplayerHomeDark },
+      { title: 'Home (Light)', subtitle: 'Light mode interface', image: vplayerHomeLight },
+      { title: 'Library', subtitle: 'Organize collections', image: vplayerLibrary },
+      { title: 'Search', subtitle: 'Private local search', image: vplayerSearch },
+      { title: 'Add Titles', subtitle: 'Movies & series manager', image: vplayerCollections },
+    ],
     icon: Play,
-    badgeColor: 'text-[#E11D48] bg-[#FFE4ED]',
-    platforms: ['Android', 'iOS', 'Android TV'],
-    stats: [
-      { label: 'Max Resolution', value: '4K / 8K' },
-      { label: 'Crash-Free Rate', value: '99.95%' },
-      { label: 'Playback Modes', value: 'PiP + BG' },
-    ],
-    features: [
-      {
-        title: 'Hardware-Accelerated Decoding',
-        description: 'Leverages native GPU pipelines for lag-free HEVC, AV1, MKV, and MP4 playback.',
-      },
-      {
-        title: 'Smart Subtitle Auto-Sync',
-        description: 'Instant SRT/ASS subtitle matching, styling, and millisecond offset tuning.',
-      },
-      {
-        title: 'Intuitive Gesture Controls',
-        description: 'Swipe smoothly for brightness, volume, frame scrubbing, and playback speed.',
-      },
-      {
-        title: 'Picture-in-Picture & Audio Mode',
-        description: 'Continue watching in a floating window or switch to background audio seamlessly.',
-      },
-    ],
-    connectedWith: ['sync', 'mobile', 'analytics'],
-  },
-  {
-    id: 'gramsetu',
-    name: 'GramSetu',
-    tagline: 'Civic Governance Platform',
-    category: 'civic',
-    categoryLabel: 'Civic & Cloud SaaS',
-    flowTitle: 'GramSetu → Civic Dispatch',
-    flowDescription: 'Geotagged public grievance reports are automatically routed to municipal officers.',
-    overview:
-      'A unified civic governance platform connecting villages, panchayats, and citizens with transparent public records, live grievance resolution, welfare schemes, and offline-first sync.',
-    image: product3,
-    icon: Users,
-    badgeColor: 'text-[#0284C7] bg-[#F0F9FF]',
-    platforms: ['Android', 'Web Portal', 'Offline Sync'],
-    stats: [
-      { label: 'Offline Mode', value: 'Zero Signal' },
-      { label: 'API Latency', value: '62ms' },
-      { label: 'Record Transparency', value: '100%' },
-    ],
-    features: [
-      {
-        title: 'Live Citizen Grievance Portal',
-        description: 'Submit geotagged reports with photo evidence and track resolution milestones live.',
-      },
-      {
-        title: 'Offline-First SQLite Sync',
-        description: 'Captures entries in zero-connectivity regions and syncs automatically once online.',
-      },
-      {
-        title: 'Voice-First Local Dialects',
-        description: 'Accessible interface supporting regional languages and guided audio navigation.',
-      },
-      {
-        title: 'Verified Panchayat Records',
-        description: 'Digitized local budgets, welfare eligibility checks, and broadcast SMS alerts.',
-      },
-    ],
-    connectedWith: ['sync', 'analytics', 'auth'],
-  },
-  {
-    id: 'vault',
-    name: 'Cloud Vault',
-    tagline: 'AES-256 Encrypted Storage',
-    category: 'productivity',
-    categoryLabel: 'Productivity & OCR',
-    flowTitle: 'Cloud Vault → Secure Sync',
-    flowDescription: 'Zero-knowledge client-side encryption protecting confidential enterprise data.',
-    overview:
-      'Zero-knowledge enterprise file vault providing hardware-backed encryption, granular role permissions, version history, and instant cross-product document retrieval.',
-    image: saasImg,
-    icon: Shield,
     badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['Web App', 'Desktop', 'API'],
+    platforms: ['Android', 'Mobile App'],
     stats: [
-      { label: 'Cipher Suite', value: 'AES-256' },
-      { label: 'Durability', value: '99.999%' },
-      { label: 'Audit Trail', value: 'Real-Time' },
+      { label: 'Seek Interval', value: '10 sec' },
+      { label: 'Playback Speed', value: '1.0x+' },
+      { label: 'Library Privacy', value: 'On-Device' },
     ],
     features: [
       {
-        title: 'Client-Side Zero Knowledge',
-        description: 'Files are encrypted before leaving the device with user-controlled key rotation.',
+        title: 'Continue Watching & Auto-Resume',
+        description: 'Pick up unfinished videos smoothly directly from your Home screen.',
+        benefit: 'Return effortlessly to saved clips and lectures without scrubbing for your spot.',
       },
       {
-        title: 'Granular Team Permissions',
-        description: 'Time-limited share links, watermarking, and view-only compliance controls.',
+        title: 'Adjust Playback Speed & Seek Interval',
+        description: 'Configure default playback speed and jump intervals (such as 10s) inside Settings.',
+        benefit: 'Choose a viewing pace and skip precision that matches what you are watching.',
       },
       {
-        title: 'Immutable Version Snapshots',
-        description: 'Restore any prior file revision or audit access history with one click.',
+        title: 'Private Folder & Title Search',
+        description: 'Search local videos by title, file name, or folder with zero cloud uploads.',
+        benefit: 'Locate files quickly while keeping personal videos strictly on your device.',
       },
       {
-        title: 'Native TAVQEN PDF Bridge',
-        description: 'Every scanned or signed document lands directly inside organized encrypted folders.',
+        title: 'Theme Appearance & Companion Tools',
+        description: 'Switch between Dark and System-matching themes with direct access to PDF tools.',
+        benefit: 'Enjoy clean visual comfort across bright and low-light environments.',
       },
     ],
-    connectedWith: ['pdf', 'sign', 'auth'],
+    connectedWith: ['pdf', 'imagetool'],
   },
   {
-    id: 'sign',
-    name: 'Smart Sign',
-    tagline: 'Legally Binding e-Signatures',
-    category: 'productivity',
-    categoryLabel: 'Productivity & OCR',
-    flowTitle: 'Smart Sign → Contract Engine',
-    flowDescription: 'Cryptographically sealed signatures verified with automated audit logs.',
+    id: 'imagetool',
+    name: 'TAVQEN ImageTool',
+    tagline: 'Image Resize & Format Utility',
+    category: 'creative',
+    categoryLabel: 'Creative Tools',
+    status: 'In Development',
+    version: 'In Development',
+    flowTitle: 'ImageTool → Creative Prep',
+    flowDescription:
+      'Focused resize, format conversion, and compression workflows currently in active build.',
     overview:
-      'Streamlined digital signature and contract routing engine designed for rapid approvals, multi-party signing orders, tamper-evident cryptographic seals, and automated reminders.',
-    image: websiteImg,
-    icon: CheckCircle2,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['Web App', 'Mobile', 'REST API'],
-    stats: [
-      { label: 'Turnaround Boost', value: '4.5x Faster' },
-      { label: 'Tamper Seal', value: 'SHA-256' },
-      { label: 'Uptime SLA', value: '99.99%' },
-    ],
-    features: [
-      {
-        title: 'Drag-and-Drop Field Builder',
-        description: 'Place signature, date, initials, and conditional form fields in seconds.',
-      },
-      {
-        title: 'Sequential & Parallel Routing',
-        description: 'Configure multi-signer approval chains with automated status notifications.',
-      },
-      {
-        title: 'Cryptographic Audit Certificate',
-        description: 'Captures timestamp, IP verification, and hash integrity on every completion.',
-      },
-      {
-        title: 'Instant Webhook Triggers',
-        description: 'Automatically trigger invoices, onboarding, or CRM updates upon signing.',
-      },
-    ],
-    connectedWith: ['pdf', 'vault', 'auth'],
-  },
-  {
-    id: 'ai',
-    name: 'AI Synthesizer',
-    tagline: 'Autonomous Document Agent',
-    category: 'productivity',
-    categoryLabel: 'Productivity & OCR',
-    flowTitle: 'AI Synthesizer → Analytics Hub',
-    flowDescription: 'Extracts tabular data, summaries, and action items from complex multi-page files.',
-    overview:
-      'An applied AI document intelligence engine that converts unstructured contracts, invoices, and reports into structured JSON, executive summaries, and actionable insights.',
+      'TAVQEN ImageTool is a focused utility in active development to help users resize, crop, convert formats, and optimize everyday images cleanly on-device without heavy design suites.',
     image: product4,
-    icon: Sparkles,
+    alt: 'TAVQEN ImageTool preview artwork',
+    gallery: [],
+    icon: ImageIcon,
     badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['Cloud API', 'Web Studio'],
+    platforms: ['In Development'],
     stats: [
-      { label: 'Extraction Accuracy', value: '99.2%' },
-      { label: 'Processing Speed', value: '< 1.2s' },
-      { label: 'Output Formats', value: 'JSON / CSV' },
+      { label: 'Operations', value: 'Resize/Convert' },
+      { label: 'Target Formats', value: 'PNG / JPG / WebP' },
+      { label: 'Status', value: 'In Dev' },
     ],
     features: [
       {
-        title: 'Structured Schema Extraction',
-        description: 'Turn invoices, receipts, and forms into clean typed JSON payloads automatically.',
+        title: 'Dimension Resize & Presets',
+        description: 'Resize images to clean pixel dimensions and standard portal ratios.',
+        benefit: 'Prepare photos for forms and websites without opening desktop editors.',
       },
       {
-        title: 'Multi-Document Q&A & Summaries',
-        description: 'Query across hundreds of pages with grounded citations and clause highlights.',
+        title: 'Format Conversion',
+        description: 'Convert cleanly between common image formats such as PNG, JPG, and WebP.',
+        benefit: 'Match strict upload requirements in seconds.',
       },
       {
-        title: 'Anomaly & Clause Flagging',
-        description: 'Spot missing fields, renewal traps, and mismatched totals before sign-off.',
-      },
-      {
-        title: 'Direct Pipeline Integration',
-        description: 'Feeds extracted metrics straight into Analytics Hub and FastAPI Sync.',
+        title: 'Balanced File Compression',
+        description: 'Shrink image file sizes while keeping text and visual details readable.',
+        benefit: 'Avoid failed submissions caused by oversized camera photos.',
       },
     ],
-    connectedWith: ['pdf', 'analytics', 'sync'],
-  },
-  {
-    id: 'sync',
-    name: 'FastAPI Sync',
-    tagline: 'Real-Time Edge Pipelines',
-    category: 'civic',
-    categoryLabel: 'Civic & Cloud SaaS',
-    flowTitle: 'FastAPI Sync → Distributed Redis',
-    flowDescription: 'High-throughput bi-directional synchronization with sub-50ms edge delivery.',
-    overview:
-      'High-concurrency API and real-time synchronization backbone built on Python FastAPI, Redis streams, and edge caching to keep every TAVQEN product synchronized in milliseconds.',
-    image: saasImg,
-    icon: Zap,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['Docker', 'AWS', 'Cloudflare'],
-    stats: [
-      { label: 'Edge Latency', value: '< 50ms' },
-      { label: 'Throughput', value: '25K req/s' },
-      { label: 'Availability', value: '99.99%' },
-    ],
-    features: [
-      {
-        title: 'Bi-Directional Delta Sync',
-        description: 'Transfers only changed record diffs to minimize mobile bandwidth usage.',
-      },
-      {
-        title: 'Redis Event Streaming',
-        description: 'Pub/sub event fan-out powering instant dashboards and live push updates.',
-      },
-      {
-        title: 'Strict OpenAPI Contracts',
-        description: 'Auto-generated Pydantic schemas and TypeScript clients with zero drift.',
-      },
-      {
-        title: 'Zero-Downtime Rolling Deploys',
-        description: 'Containerized blue-green deployments with automatic health rollbacks.',
-      },
-    ],
-    connectedWith: ['gramsetu', 'analytics', 'auth'],
-  },
-  {
-    id: 'mobile',
-    name: 'Mobile Core',
-    tagline: 'Cross-Platform Framework',
-    category: 'media',
-    categoryLabel: 'Media & Streaming',
-    flowTitle: 'Mobile Core → App Store CI/CD',
-    flowDescription: 'Unified codebase running natively on iOS and Android with 60 FPS performance.',
-    overview:
-      'TAVQEN’s battle-tested mobile foundation combining React Native, TypeScript, native Swift/Kotlin modules, and automated OTA release pipelines for rapid app engineering.',
-    image: mobileImg,
-    icon: Smartphone,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['iOS', 'Android', 'Expo EAS'],
-    stats: [
-      { label: 'Frame Rate', value: '60 FPS' },
-      { label: 'Code Sharing', value: '92%' },
-      { label: 'OTA Rollouts', value: '< 5 min' },
-    ],
-    features: [
-      {
-        title: 'Native Gesture & Motion Core',
-        description: 'Fluid 60fps transitions and haptics tuned for iOS and Android ergonomics.',
-      },
-      {
-        title: 'Biometric & Passkey Ready',
-        description: 'Built-in FaceID, TouchID, and Android keystore security primitives.',
-      },
-      {
-        title: 'Offline Queue & Cache Engine',
-        description: 'Graceful network recovery with background task scheduling.',
-      },
-      {
-        title: 'Automated Store Pipelines',
-        description: 'One-click TestFlight and Play Console builds with crash telemetry.',
-      },
-    ],
-    connectedWith: ['pdf', 'player', 'auth'],
-  },
-  {
-    id: 'analytics',
-    name: 'Analytics Hub',
-    tagline: 'Real-Time Telemetry',
-    category: 'civic',
-    categoryLabel: 'Civic & Cloud SaaS',
-    flowTitle: 'Analytics Hub → Executive Dashboards',
-    flowDescription: 'Aggregates usage funnels, retention cohorts, and revenue metrics across products.',
-    overview:
-      'Unified product telemetry and executive analytics platform tracking conversion funnels, retention cohorts, SLA uptime, and feature adoption in real time.',
-    image: websiteImg,
-    icon: TrendingUp,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['Web App', 'SDK', 'SQL Export'],
-    stats: [
-      { label: 'Query Speed', value: '< 80ms' },
-      { label: 'Retention', value: 'Live Cohorts' },
-      { label: 'Data Privacy', value: 'GDPR Ready' },
-    ],
-    features: [
-      {
-        title: 'Real-Time Funnel Explorer',
-        description: 'Pinpoint exact drop-off steps across web onboarding and mobile flows.',
-      },
-      {
-        title: 'Automated Cohort Retention',
-        description: 'Measure D1, D7, and D30 engagement automatically across product releases.',
-      },
-      {
-        title: 'Custom KPI Alerting',
-        description: 'Instant Slack and email alerts when latency or conversion shifts.',
-      },
-      {
-        title: 'Cross-Product Identity Stitching',
-        description: 'Connects user journeys across web, mobile, and billing seamlessly.',
-      },
-    ],
-    connectedWith: ['ai', 'sync', 'gramsetu'],
-  },
-  {
-    id: 'auth',
-    name: 'Enterprise SSO',
-    tagline: 'Zero-Trust Access Control',
-    category: 'productivity',
-    categoryLabel: 'Productivity & OCR',
-    flowTitle: 'Enterprise SSO → Centralized Gateway',
-    flowDescription: 'Single sign-on authentication with multi-factor biometric verification.',
-    overview:
-      'Centralized identity and role-based access gateway uniting SAML 2.0, OAuth/OIDC, passkeys, and audit logging across every TAVQEN product and partner workspace.',
-    image: product4,
-    icon: Lock,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['SAML 2.0', 'OIDC', 'Passkeys'],
-    stats: [
-      { label: 'Auth Latency', value: '28ms' },
-      { label: 'Protocols', value: 'SAML + OIDC' },
-      { label: 'Security', value: 'Zero-Trust' },
-    ],
-    features: [
-      {
-        title: 'One-Click Enterprise SSO',
-        description: 'Connect Okta, Azure AD, and Google Workspace in under five minutes.',
-      },
-      {
-        title: 'Fine-Grained RBAC Policies',
-        description: 'Control workspace, folder, and API scopes per team and environment.',
-      },
-      {
-        title: 'Hardware Key & Biometric MFA',
-        description: 'WebAuthn passkey and TOTP enforcement for sensitive admin actions.',
-      },
-      {
-        title: 'Unified Session Management',
-        description: 'Sign in once to access TAVQEN PDF, Cloud Vault, Smart Sign, and Analytics.',
-      },
-    ],
-    connectedWith: ['vault', 'sign', 'gramsetu'],
+    connectedWith: ['pdf', 'player'],
   },
 ];
 
 export function getProductById(id?: string | null): ProductDetail {
   if (!id) return TAVQEN_PRODUCTS[0];
-  return TAVQEN_PRODUCTS.find((p) => p.id === id) || TAVQEN_PRODUCTS[0];
+  const lower = id.trim().toLowerCase();
+  const aliasMap: Record<string, string> = {
+    'tavqen-pdf': 'pdf',
+    'tavqen-vplayer': 'player',
+    'tavqen-v-player': 'player',
+    'tavqen-imagetool': 'imagetool',
+  };
+  const target = aliasMap[lower] || lower;
+  return TAVQEN_PRODUCTS.find((p) => p.id === target) || TAVQEN_PRODUCTS[0];
 }
-
