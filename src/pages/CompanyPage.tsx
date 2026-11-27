@@ -277,17 +277,6 @@ export default function CompanyPage({ onNavigate }: CompanyPageProps) {
     <div className="pt-28 sm:pt-36 pb-20 sm:pb-28">
       {/* GLOBAL CONTAINER */}
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Breadcrumb */}
-        <div className="mb-6 sm:mb-8">
-          <button
-            type="button"
-            onClick={() => handleNav('/home')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-          >
-            <span>← Back to Home</span>
-          </button>
-        </div>
-
         {/* ========================================================= */}
         {/* HERO SECTION                                              */}
         {/* ========================================================= */}

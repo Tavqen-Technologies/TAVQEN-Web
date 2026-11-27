@@ -227,31 +227,31 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/products')}
+                  onClick={() => handleNav('/product?id=pdf')}
                   className="w-full text-[#64748B] hover:text-[#0088CC] transition-colors flex items-center justify-between cursor-pointer"
                 >
                   <span>TAVQEN PDF</span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-[#E0F7FF] text-[#0088CC]">App</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-sm bg-[#E0F7FF] text-[#0088CC]">App</span>
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/products')}
+                  onClick={() => handleNav('/product?id=player')}
                   className="w-full text-[#64748B] hover:text-[#0088CC] transition-colors flex items-center justify-between cursor-pointer"
                 >
-                  <span>TAVQEN Stream Player</span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-[#FFE4ED] text-[#E11D48]">App</span>
+                  <span>TAVQEN VPlayer</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-sm bg-[#E0F7FF] text-[#0088CC]">App</span>
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/products')}
+                  onClick={() => handleNav('/product?id=imagetool')}
                   className="w-full text-[#64748B] hover:text-[#0088CC] transition-colors flex items-center justify-between cursor-pointer"
                 >
-                  <span>GramSetu</span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-[#F0F9FF] text-[#0284C7]">Civic</span>
+                  <span>TAVQEN ImageTool</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-sm bg-[#F0F9FF] text-[#0284C7]">In Dev</span>
                 </button>
               </li>
               <li>

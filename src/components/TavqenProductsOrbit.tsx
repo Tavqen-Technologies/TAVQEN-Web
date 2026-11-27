@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { ArrowRight, ArrowDown, Play, Pause } from 'lucide-react';
 import tavqenLogo from '../assits/Tavqen-logo.png';
-import { TAVQEN_PRODUCTS, type ProductDetail } from '../data/productsData';
+import { TAVQEN_PRODUCTS, type ProductCategoryKey, type ProductDetail } from '../data/productsData';
 
 interface TavqenProductsOrbitProps {
   onNavigate?: (path: string) => void;
 }
 
-type HeroCategory = 'all' | 'productivity' | 'media' | 'civic';
+type HeroCategory = 'all' | ProductCategoryKey;
 
 export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitProps) {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -15,12 +15,11 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
   const [categoryFilter, setCategoryFilter] = useState<HeroCategory>('all');
   const [orbitRadius, setOrbitRadius] = useState(185);
 
-  // Keep orbit radius responsive so nodes never overflow on 340px mobile screens
   useEffect(() => {
     const updateRadius = () => {
       const w = window.innerWidth;
-      if (w < 640) setOrbitRadius(130);
-      else if (w < 768) setOrbitRadius(168);
+      if (w < 640) setOrbitRadius(108);
+      else if (w < 768) setOrbitRadius(164);
       else setOrbitRadius(186);
     };
     updateRadius();
@@ -28,7 +27,6 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
     return () => window.removeEventListener('resize', updateRadius);
   }, []);
 
-  // Auto-cycle through products every 3.8s if playing
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -45,7 +43,7 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
     () => ({
       productivity: TAVQEN_PRODUCTS.filter((p) => p.category === 'productivity').length,
       media: TAVQEN_PRODUCTS.filter((p) => p.category === 'media').length,
-      civic: TAVQEN_PRODUCTS.filter((p) => p.category === 'civic').length,
+      creative: TAVQEN_PRODUCTS.filter((p) => p.category === 'creative').length,
     }),
     []
   );
@@ -71,24 +69,15 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
   };
 
   return (
-    <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 bg-[#F8FAFC] overflow-hidden">
-      {/* CSS Keyframe Style for Smooth GPU-Accelerated Orbit */}
+    <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 bg-[#F8FAFC] overflow-x-clip">
       <style>{`
         @keyframes orbit-spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
         @keyframes orbit-counter-spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(-360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
         }
         .orbit-track {
           animation: orbit-spin 55s linear infinite;
@@ -101,9 +90,9 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
         }
       `}</style>
 
-      {/* Subtle Cyan Ambient Radial Lighting (TAVQEN theme) */}
       <div
-        className="absolute top-1/3 right-1/4 -translate-y-1/2 w-[850px] h-[550px] pointer-events-none opacity-25 -z-10"
+        aria-hidden="true"
+        className="absolute top-1/3 right-1/4 -translate-y-1/2 w-full max-w-[850px] h-[550px] pointer-events-none opacity-25 -z-10"
         style={{
           background:
             'radial-gradient(ellipse, rgba(0, 196, 255, 0.2) 0%, rgba(0, 136, 204, 0.08) 50%, transparent 70%)',
@@ -111,65 +100,68 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
       />
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Breadcrumb */}
-        <div className="mb-5 sm:mb-6">
-          <button
-            type="button"
-            onClick={() => handleNav('/home')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-          >
-            <span>← Back to Home</span>
-          </button>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* ========================================================= */}
-          {/* LEFT COLUMN: HERO INFORMATION & PRODUCT CATEGORIES        */}
+          {/* LEFT COLUMN: HERO COPY & VERIFIED PRODUCT CATEGORIES      */}
           {/* ========================================================= */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="flex items-center gap-2.5 mb-3.5 sm:mb-4">
-              <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#0088CC]">
-                TAVQEN PRODUCT SYSTEM
+          <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 w-fit mb-3.5 sm:mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
+              <span className="text-[11px] font-bold tracking-widest uppercase text-[#0088CC]">
+                TAVQEN PRODUCTS
               </span>
-              <span className="w-8 h-[1.5px] bg-[#00C4FF]/60" />
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#0B132B] tracking-tight leading-[1.15] mb-4">
-              Connected products for every step of the work.
+            <h1 className="text-[28px] sm:text-[40px] lg:text-[48px] font-semibold text-[#0B132B] tracking-[-0.028em] leading-[1.12] sm:leading-[1.1] mb-3.5 sm:mb-4">
+              Software Products{' '}
+              <span className="block mt-1">
+                Built for{' '}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-[#00C4FF] via-[#0099E5] to-[#0088CC] bg-clip-text text-transparent font-bold">
+                    Everyday Needs
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-[#00D4FF]/85 via-[#0088CC]/60 to-transparent"
+                  />
+                </span>
+              </span>
             </h1>
 
-            <p className="text-[14.5px] sm:text-[15.5px] text-[#64748B] leading-[1.7] mb-7 font-normal">
-              A cohesive suite of proprietary B2B SaaS and consumer mobile platforms engineered for document intelligence, media streaming, and civic operations. Click any product below to explore it in detail.
+            <p className="text-[13.5px] sm:text-[15.5px] lg:text-[16px] text-[#475569] leading-[1.65] sm:leading-[1.7] mb-6 sm:mb-7 font-normal max-w-lg">
+              Practical software crafted by{' '}
+              <span className="font-semibold text-[#0B132B]">TAVQEN Technology</span>
+              —from everyday PDF document workflows and private on-device video playback to focused creative utilities.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 mb-8">
+            <div className="flex flex-wrap items-center gap-3 mb-7 sm:mb-8">
               <button
                 type="button"
                 onClick={scrollToProducts}
-                className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-semibold shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_12px_32px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-sm font-semibold shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_12px_32px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
               >
-                <span>Explore products</span>
+                <span>Explore Products</span>
                 <ArrowDown className="w-4 h-4" />
               </button>
 
               <button
                 type="button"
-                onClick={() => openProductPage(TAVQEN_PRODUCTS[0])}
-                className="inline-flex items-center px-6 py-3 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-xs sm:text-sm font-semibold hover:border-[#0088CC] hover:text-[#0088CC] shadow-2xs hover:scale-[1.02] active:scale-95 transition-all cursor-pointer group"
+                onClick={() => handleNav('/start-a-project')}
+                className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-xs sm:text-sm font-semibold hover:border-[#0088CC] hover:text-[#0088CC] shadow-2xs hover:scale-[1.02] active:scale-95 transition-all cursor-pointer group"
               >
-                <span>View flagship product</span>
+                <span>Contact TAVQEN</span>
                 <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-0.5" />
               </button>
             </div>
 
             {/* Interactive Category Filter Pills */}
-            <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-[#E2E8F0]">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-4 border-t border-[#E2E8F0]">
               {[
-                { id: 'all' as const, label: 'All Suite', count: TAVQEN_PRODUCTS.length },
-                { id: 'productivity' as const, label: 'Productivity & OCR', count: categoryCounts.productivity },
-                { id: 'media' as const, label: 'Media & Streaming', count: categoryCounts.media },
-                { id: 'civic' as const, label: 'Civic & Cloud SaaS', count: categoryCounts.civic },
+                { id: 'all' as const, label: 'All Products', count: TAVQEN_PRODUCTS.length },
+                { id: 'productivity' as const, label: 'Documents & Productivity', count: categoryCounts.productivity },
+                { id: 'media' as const, label: 'Media & Entertainment', count: categoryCounts.media },
+                { id: 'creative' as const, label: 'Creative Tools', count: categoryCounts.creative },
               ].map((cat) => {
                 const isCatActive = categoryFilter === cat.id;
                 return (
@@ -183,17 +175,15 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
                         if (firstMatchIdx >= 0) setActiveIdx(firstMatchIdx);
                       }
                     }}
-                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
-                      isCatActive
-                        ? 'bg-[#0B132B] border-[#0B132B] text-white shadow-xs'
-                        : 'bg-white border-[#E2E8F0] text-[#0B132B] hover:border-[#00C4FF]'
-                    }`}
+                    className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full border text-[11px] sm:text-xs font-semibold transition-all cursor-pointer ${isCatActive
+                      ? 'bg-[#0B132B] border-[#0B132B] text-white shadow-xs'
+                      : 'bg-white border-[#E2E8F0] text-[#0B132B] hover:border-[#00C4FF]'
+                      }`}
                   >
                     <span>{cat.label}</span>
                     <span
-                      className={`w-4 h-4 rounded-full font-mono text-[10px] flex items-center justify-center font-bold ${
-                        isCatActive ? 'bg-[#00D4FF] text-[#0B132B]' : 'bg-[#E0F7FF] text-[#0088CC]'
-                      }`}
+                      className={`w-4 h-4 rounded-full text-[10px] tabular-nums flex items-center justify-center font-bold ${isCatActive ? 'bg-[#00D4FF] text-[#0B132B]' : 'bg-[#E0F7FF] text-[#0088CC]'
+                        }`}
                     >
                       {cat.count}
                     </span>
@@ -204,50 +194,44 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
           </div>
 
           {/* ========================================================= */}
-          {/* RIGHT COLUMN: ANIMATED ORBITAL PRODUCT COSMOS              */}
+          {/* RIGHT COLUMN: ANIMATED ORBITAL PRODUCT COSMOS (UNCHANGED UI) */}
           {/* ========================================================= */}
-          <div className="lg:col-span-7 flex flex-col items-center">
+          <div className="lg:col-span-7 flex flex-col items-center min-w-0">
             <div
-              className="relative w-[330px] h-[330px] sm:w-[430px] sm:h-[430px] md:w-[470px] md:h-[470px] flex items-center justify-center"
+              className="relative w-[272px] h-[272px] sm:w-[400px] sm:h-[400px] md:w-[450px] md:h-[450px] flex items-center justify-center"
               onMouseEnter={() => setIsPlaying(false)}
               onMouseLeave={() => setIsPlaying(true)}
             >
-              {/* Outer Glow Halo */}
               <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-[#00D4FF]/15 via-[#0088CC]/5 to-transparent pointer-events-none" />
-
-              {/* Orbital Ring Path Line */}
-              <div className="absolute inset-8 sm:inset-10 md:inset-12 rounded-full border border-dashed border-[#00C4FF]/35 pointer-events-none" />
-
-              {/* Secondary Inner Orbital Ring */}
-              <div className="absolute inset-20 sm:inset-24 md:inset-28 rounded-full border border-[#E2E8F0] pointer-events-none" />
+              <div className="absolute inset-6 sm:inset-10 md:inset-12 rounded-full border border-dashed border-[#00C4FF]/35 pointer-events-none" />
+              <div className="absolute inset-16 sm:inset-24 md:inset-28 rounded-full border border-[#E2E8F0] pointer-events-none" />
 
               {/* CENTER HUB */}
-              <div className="relative z-30 w-36 h-28 sm:w-44 sm:h-32 md:w-48 md:h-36 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-[#00C4FF]/40 shadow-[0_16px_45px_rgba(0,196,255,0.18)] p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:scale-105 transition-transform duration-300">
+              <div className="relative z-30 w-32 min-h-[104px] sm:w-44 sm:h-32 md:w-48 md:h-36 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-[#00C4FF]/40 shadow-[0_16px_45px_rgba(0,196,255,0.18)] p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:scale-105 transition-transform duration-300">
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#00D4FF]/25 to-[#0088CC]/20 rounded-3xl blur-xl -z-10 group-hover:opacity-100 transition-opacity" />
 
-                <div className="flex items-center gap-2 mb-1.5">
+                <div className="flex items-center gap-2 mb-1">
                   <img
                     src={tavqenLogo}
                     alt="TAVQEN"
-                    className="h-6 sm:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
+                    className="h-5 sm:h-7 w-auto object-contain hover:opacity-90 transition-opacity"
                   />
                 </div>
 
-                <span className="text-[11px] sm:text-xs font-mono font-medium text-[#64748B]">
-                  10 products · shared data
+                <span className="text-[10px] sm:text-xs font-medium text-[#64748B] leading-tight">
+                  {TAVQEN_PRODUCTS.length} catalogued products
                 </span>
 
-                <div className="mt-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[10px] text-[#0088CC] font-mono font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC] animate-pulse" />
-                  <span>Real-time Sync</span>
+                <div className="mt-1.5 flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[9px] sm:text-[10px] text-[#0088CC] font-semibold whitespace-nowrap">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
+                  <span>Product Suite</span>
                 </div>
               </div>
 
               {/* ORBITING NODES */}
               <div
-                className={`absolute inset-0 flex items-center justify-center orbit-track ${
-                  !isPlaying ? 'orbit-paused' : ''
-                }`}
+                className={`absolute inset-0 flex items-center justify-center orbit-track ${!isPlaying ? 'orbit-paused' : ''
+                  }`}
               >
                 {TAVQEN_PRODUCTS.map((prod, idx) => {
                   const Icon = prod.icon;
@@ -272,14 +256,13 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
                           type="button"
                           onClick={() => openProductPage(prod)}
                           onMouseEnter={() => setActiveIdx(idx)}
-                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer shadow-md relative group ${
-                            isSelected
-                              ? 'bg-white border-2 border-[#00C4FF] text-[#0088CC] shadow-[0_0_25px_rgba(0,196,255,0.45)] scale-120 z-30 ring-4 ring-[#00C4FF]/15'
-                              : matchesCat
+                          className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer shadow-md relative group ${isSelected
+                            ? 'bg-white border-2 border-[#00C4FF] text-[#0088CC] shadow-[0_0_25px_rgba(0,196,255,0.45)] scale-120 z-30 ring-4 ring-[#00C4FF]/15'
+                            : matchesCat
                               ? 'bg-white border border-[#E2E8F0] text-[#0B132B] hover:border-[#00C4FF] hover:text-[#0088CC] hover:scale-110 shadow-sm'
                               : 'bg-white/60 border border-[#E2E8F0]/60 text-[#94A3B8] opacity-55 hover:opacity-100'
-                          }`}
-                          aria-label={`Open ${prod.name} page`}
+                            }`}
+                          aria-label={`View ${prod.name}`}
                         >
                           <Icon className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
 
@@ -307,17 +290,17 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
                   <activeProduct.icon className="w-5 h-5 stroke-[2]" />
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs sm:text-sm font-bold text-[#0B132B] group-hover:text-[#0088CC] transition-colors">
-                      {activeProduct.flowTitle}
+                      {activeProduct.name}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] font-semibold">
-                      Live
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] font-semibold">
+                      {activeProduct.status}
                     </span>
                   </div>
                   <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed font-normal">
-                    {activeProduct.flowDescription}
+                    {activeProduct.tagline}
                   </p>
                 </div>
               </button>
@@ -328,7 +311,7 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
                   onClick={() => openProductPage(activeProduct)}
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs font-semibold shadow-xs hover:scale-[1.03] transition-all cursor-pointer"
                 >
-                  <span>Details</span>
+                  <span>View Product</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 

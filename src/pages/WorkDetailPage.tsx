@@ -1,60 +1,48 @@
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
+import { TAVQEN_PRODUCTS } from '../data/productsData';
 
 const ALL_PROJECTS = {
   col1: [
     {
-      id: 'busypixel',
-      title: 'BusyPixel — Modern Influencer Marketing Platform',
-      category: 'Web Application · Marketing',
-      description: 'A creator management ecosystem',
-      tags: ['UI/UX', 'Web Dev', 'Marketing'],
-      image: product1,
-      alt: 'BusyPixel Monitor',
-      link: '#project',
+      id: TAVQEN_PRODUCTS[0].id,
+      title: `${TAVQEN_PRODUCTS[0].name} — ${TAVQEN_PRODUCTS[0].tagline}`,
+      category: TAVQEN_PRODUCTS[0].categoryLabel,
+      description: TAVQEN_PRODUCTS[0].overview,
+      tags: TAVQEN_PRODUCTS[0].features.slice(0, 3).map((f) => f.title),
+      image: TAVQEN_PRODUCTS[0].image,
+      alt: TAVQEN_PRODUCTS[0].alt,
+      link: `/product?id=${TAVQEN_PRODUCTS[0].id}`,
     },
     {
-      id: 'alpha',
-      title: 'Alpha — Smarter Learning Experience',
-      category: 'Mobile App · EdTech',
-      description: 'Mobile learning app',
-      tags: ['UI/UX', 'Mobile App', 'Product Design'],
-      image: product3,
-      alt: 'Alpha Mobile',
-      link: '#project',
+      id: TAVQEN_PRODUCTS[1].id,
+      title: `${TAVQEN_PRODUCTS[1].name} — ${TAVQEN_PRODUCTS[1].tagline}`,
+      category: TAVQEN_PRODUCTS[1].categoryLabel,
+      description: TAVQEN_PRODUCTS[1].overview,
+      tags: TAVQEN_PRODUCTS[1].features.slice(0, 3).map((f) => f.title),
+      image: TAVQEN_PRODUCTS[1].image,
+      alt: TAVQEN_PRODUCTS[1].alt,
+      link: `/product?id=${TAVQEN_PRODUCTS[1].id}`,
     },
   ],
   col2: [
     {
-      id: 'noisy-them',
-      title: 'Noisy Them',
-      category: 'SaaS Platform',
-      description: 'Creator platform',
-      tags: ['Branding', 'UI/UX'],
-      image: product4,
-      alt: 'Noisy Laptop',
-      link: '#project',
-    },
-    {
-      id: 'frootreet',
-      title: 'Frootreet',
-      category: 'Web E-commerce',
-      description: 'Playful e-commerce site',
-      tags: ['Branding', 'Web Design'],
-      image: product2,
-      alt: 'Frootreet',
-      link: '#project',
+      id: TAVQEN_PRODUCTS[2].id,
+      title: `${TAVQEN_PRODUCTS[2].name} — ${TAVQEN_PRODUCTS[2].tagline}`,
+      category: TAVQEN_PRODUCTS[2].categoryLabel,
+      description: TAVQEN_PRODUCTS[2].overview,
+      tags: TAVQEN_PRODUCTS[2].features.slice(0, 3).map((f) => f.title),
+      image: TAVQEN_PRODUCTS[2].image,
+      alt: TAVQEN_PRODUCTS[2].alt,
+      link: `/product?id=${TAVQEN_PRODUCTS[2].id}`,
     },
   ],
 };
 
 export default function WorkDetailPage({ projectId }: { projectId?: string }) {
-  const id = projectId || 'busypixel';
+  const id = projectId || TAVQEN_PRODUCTS[0].id;
   const project =
     ALL_PROJECTS.col1.find((p) => p.id === id) ||
-    ALL_PROJECTS.col2.find((p) => p.id === id);
+    ALL_PROJECTS.col2.find((p) => p.id === id) ||
+    ALL_PROJECTS.col1[0];
 
   if (!project) {
     return (
@@ -69,15 +57,6 @@ export default function WorkDetailPage({ projectId }: { projectId?: string }) {
   return (
     <section className="bg-[#F8FAFC] border-t border-[#E2E8F0] relative min-h-screen py-24 sm:py-28 lg:py-32">
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-6 sm:mb-8">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-          >
-            <span>← Back to Home</span>
-          </a>
-        </div>
-
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-18">
           <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
             Portfolio & Case Studies

@@ -163,18 +163,6 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
         isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
       }`}
     >
-      {/* Back to Home Breadcrumb for Full Page View */}
-      {isFullPage && (
-        <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors"
-          >
-            <span>← Back to Home</span>
-          </a>
-        </div>
-      )}
-
       {/* SECTION HEADING */}
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 text-center" data-animate="fade-up">
         {isFullPage && (

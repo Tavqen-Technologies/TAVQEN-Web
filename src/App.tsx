@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   initSmoothWheelScroll,
   registerGlobalScrollAnimations,
-  smoothScrollTo,
+  scrollToTopInstant,
 } from './utils/smoothScroll';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -57,7 +57,7 @@ export default function App() {
     const handleLocationChange = () => {
       const active = parseCurrentRoute();
       setRoute(active);
-      smoothScrollTo(0, 0.7);
+      scrollToTopInstant();
     };
 
     handleLocationChange();
@@ -89,15 +89,14 @@ export default function App() {
     const routePart = clean.split('?')[0];
     const newRoute = parseCurrentRouteFromString(routePart);
 
-    setRoute(newRoute);
-
     if (window.history.pushState) {
       window.history.pushState(null, '', '/' + clean);
     } else {
       window.location.hash = clean;
     }
 
-    smoothScrollTo(0, 0.75);
+    setRoute(newRoute);
+    scrollToTopInstant();
   };
 
   const parseCurrentRouteFromString = (target: string): AppRoute => {
@@ -122,7 +121,7 @@ export default function App() {
           <>
             <Hero />
             <WhatWeBuild limit={2} onNavigate={navigateTo} />
-            <OurProducts limit={2} />
+            <OurProducts limit={2} onNavigate={navigateTo} />
             <RecentWork onNavigate={navigateTo} />
             <WhyTavqen />
             <HowTavqen />

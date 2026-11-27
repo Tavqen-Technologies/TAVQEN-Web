@@ -4,6 +4,20 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+const SCROLL_RESET_EVENT = 'tavqen:scroll-reset';
+
+/**
+ * Immediately resets scroll to top across native scroll, GSAP ScrollTo tweens,
+ * and the custom desktop wheel smoother so route changes always open at the top.
+ */
+export function scrollToTopInstant() {
+  if (typeof window === 'undefined') return;
+  gsap.killTweensOf(window);
+  window.dispatchEvent(new CustomEvent(SCROLL_RESET_EVENT));
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  ScrollTrigger.update();
+}
+
 /**
  * Smoothly scrolls to a numeric Y offset or selector using GSAP ScrollToPlugin.
  */
@@ -132,16 +146,24 @@ export function initSmoothWheelScroll(): () => void {
     }
   };
 
+  const onScrollReset = () => {
+    stopAnimation();
+    currentY = 0;
+    targetY = 0;
+  };
+
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('keydown', onKeyDown, { passive: true });
   window.addEventListener('pointerdown', onPointerDown, { passive: true });
   window.addEventListener('scroll', onNativeScroll, { passive: true });
+  window.addEventListener(SCROLL_RESET_EVENT, onScrollReset);
 
   return () => {
     window.removeEventListener('wheel', onWheel);
     window.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('scroll', onNativeScroll);
+    window.removeEventListener(SCROLL_RESET_EVENT, onScrollReset);
     if (rafId) window.cancelAnimationFrame(rafId);
   };
 }

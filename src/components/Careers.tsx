@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  ArrowLeft,
   ArrowRight,
   Briefcase,
   CheckCircle2,
@@ -169,7 +168,7 @@ const PERKS = [
   },
 ];
 
-export default function Careers({ isFullPage = false, onNavigate }: CareersProps) {
+export default function Careers({ isFullPage = false }: CareersProps) {
   const [department, setDepartment] = useState<RoleDepartment>('all');
   const [selectedRoleId, setSelectedRoleId] = useState<string>(OPEN_ROLES[0].id);
   const [isApplying, setIsApplying] = useState(false);
@@ -184,15 +183,6 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const detailPanelRef = useRef<HTMLDivElement | null>(null);
-
-  const handleNav = (path: string) => {
-    if (onNavigate) {
-      onNavigate(path);
-    } else {
-      window.location.hash = path;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
 
   const filteredRoles = useMemo(
     () =>
@@ -306,20 +296,6 @@ export default function Careers({ isFullPage = false, onNavigate }: CareersProps
       />
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Breadcrumb when on /careers page */}
-        {isFullPage && (
-          <div className="mb-6 sm:mb-8">
-            <button
-              type="button"
-              onClick={() => handleNav('/home')}
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors cursor-pointer"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Home</span>
-            </button>
-          </div>
-        )}
-
         {/* ========================================================= */}
         {/* SECTION HEADER                                            */}
         {/* ========================================================= */}
