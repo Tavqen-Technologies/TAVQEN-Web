@@ -173,16 +173,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/services')}
-                  className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
-                >
-                  Web Application Development
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={() => handleNav('/services')}
+                  onClick={() => handleNav('/service?id=mobile-app-development')}
                   className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
                 >
                   Mobile App Development (iOS & Android)
@@ -191,28 +182,37 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/services')}
+                  onClick={() => handleNav('/service?id=website-development')}
                   className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
                 >
-                  SaaS Platform Engineering
+                  Website Development & Web Apps
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/services')}
+                  onClick={() => handleNav('/service?id=ai-solutions')}
                   className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
                 >
-                  Custom Software Architecture
+                  AI Solutions & Automation
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => handleNav('/services')}
+                  onClick={() => handleNav('/service?id=custom-software')}
                   className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
                 >
-                  UI/UX & Design Systems
+                  Custom Software Development
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleNav('/service?id=game-development')}
+                  className="text-[#64748B] hover:text-[#0088CC] transition-colors cursor-pointer text-left"
+                >
+                  Game Development & Interactive 3D
                 </button>
               </li>
             </ul>

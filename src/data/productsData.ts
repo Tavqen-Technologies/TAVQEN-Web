@@ -1,6 +1,5 @@
 import {
   FileText,
-  Image as ImageIcon,
   Play,
 } from 'lucide-react';
 
@@ -19,7 +18,7 @@ import vplayerHomeLight from '../assits/products/vplayer-home-light.jpg';
 import vplayerLibrary from '../assits/products/vplayer-library.jpg';
 import vplayerSearch from '../assits/products/vplayer-search.jpg';
 import vplayerCollections from '../assits/products/vplayer-collections.jpg';
-import product4 from '../assits/products/product4.webp';
+// import product4 from '../assits/products/product4.webp';
 
 export type ProductCategoryKey = 'productivity' | 'media' | 'creative';
 export type ProductStatus = 'Available' | 'Beta' | 'In Development' | 'Planned';
@@ -165,49 +164,6 @@ export const TAVQEN_PRODUCTS: ProductDetail[] = [
       },
     ],
     connectedWith: ['pdf', 'imagetool'],
-  },
-  {
-    id: 'imagetool',
-    name: 'TAVQEN ImageTool',
-    tagline: 'Image Resize & Format Utility',
-    category: 'creative',
-    categoryLabel: 'Creative Tools',
-    status: 'In Development',
-    version: 'In Development',
-    flowTitle: 'ImageTool → Creative Prep',
-    flowDescription:
-      'Focused resize, format conversion, and compression workflows currently in active build.',
-    overview:
-      'TAVQEN ImageTool is a focused utility in active development to help users resize, crop, convert formats, and optimize everyday images cleanly on-device without heavy design suites.',
-    image: product4,
-    alt: 'TAVQEN ImageTool preview artwork',
-    gallery: [],
-    icon: ImageIcon,
-    badgeColor: 'text-[#0088CC] bg-[#E0F7FF]',
-    platforms: ['In Development'],
-    stats: [
-      { label: 'Operations', value: 'Resize/Convert' },
-      { label: 'Target Formats', value: 'PNG / JPG / WebP' },
-      { label: 'Status', value: 'In Dev' },
-    ],
-    features: [
-      {
-        title: 'Dimension Resize & Presets',
-        description: 'Resize images to clean pixel dimensions and standard portal ratios.',
-        benefit: 'Prepare photos for forms and websites without opening desktop editors.',
-      },
-      {
-        title: 'Format Conversion',
-        description: 'Convert cleanly between common image formats such as PNG, JPG, and WebP.',
-        benefit: 'Match strict upload requirements in seconds.',
-      },
-      {
-        title: 'Balanced File Compression',
-        description: 'Shrink image file sizes while keeping text and visual details readable.',
-        benefit: 'Avoid failed submissions caused by oversized camera photos.',
-      },
-    ],
-    connectedWith: ['pdf', 'player'],
   },
 ];
 

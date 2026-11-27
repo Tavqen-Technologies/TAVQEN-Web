@@ -10,7 +10,7 @@ interface NavbarProps {
 export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState('company');
+  const [activeSection, setActiveSection] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -33,14 +33,16 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
           { id: 'services', menuId: 'services' },
         ];
 
-        let current = 'company';
-        for (const item of sectionElements) {
-          const el = document.getElementById(item.id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= window.innerHeight * 0.45) {
-              current = item.menuId;
-              break;
+        let current = '';
+        if (scrollY > 250) {
+          for (const item of sectionElements) {
+            const el = document.getElementById(item.id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= window.innerHeight * 0.45) {
+                current = item.menuId;
+                break;
+              }
             }
           }
         }
@@ -61,7 +63,6 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
     { name: 'Services', path: '/services', id: 'services' },
     { name: 'SaaS Products', path: '/products', id: 'products' },
     { name: 'Our Work', path: '/our-work', id: 'work' },
-    { name: 'Careers', path: '/careers', id: 'careers' },
   ];
 
   const handleNav = (path: string) => {
@@ -75,13 +76,13 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
   };
 
   return (
-    <header className="fixed top-3.5 sm:top-5 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none">
+    <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pointer-events-none">
       {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1180px]) */}
       <div
         style={{
           transform: isScrolled ? 'translateY(3px)' : 'translateY(0px)',
         }}
-        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-4 sm:px-5 lg:px-7 py-2.5 sm:py-3 flex items-center justify-between gap-2 border relative overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-400 ease-out px-3.5 sm:px-6 md:px-7 py-2 sm:py-3 flex items-center justify-between border relative overflow-hidden ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-xl border-black/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.08)]'
             : 'bg-white/90 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
@@ -96,7 +97,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         </div>
 
         {/* LEFT: Logo */}
-        <div className="flex items-center shrink-0">
+        <div className="flex items-center">
           <button
             type="button"
             onClick={() => handleNav('/home')}
@@ -105,13 +106,13 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
             <img
               src={tavqenLogo}
               alt="TAVQEN"
-              className="h-6 sm:h-7 lg:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
+              className="h-6 sm:h-7.5 w-auto object-contain hover:opacity-90 transition-opacity"
             />
           </button>
         </div>
 
         {/* CENTER: Navigation Links with Dynamic Active Indicator */}
-        <nav className="hidden md:flex items-center gap-3.5 lg:gap-7 xl:gap-8">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => {
             const isActive =
               currentRoute === link.id ||
@@ -124,7 +125,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
                 key={link.name}
                 type="button"
                 onClick={() => handleNav(link.path)}
-                className={`text-[12.5px] lg:text-[13.5px] whitespace-nowrap transition-colors relative py-1 select-none cursor-pointer border-none bg-transparent ${
+                className={`text-[13.5px] transition-colors relative py-1 select-none cursor-pointer border-none bg-transparent ${
                   isActive
                     ? 'font-semibold text-[#0088CC]'
                     : 'font-normal text-[#121212]/80 hover:text-[#121212]'
@@ -142,12 +143,12 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
         </nav>
 
         {/* RIGHT: Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-          {/* Start a project Pill CTA */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Start a project Pill CTA (visible on sm+; mobile menu has its own full-width CTA) */}
           <button
             type="button"
             onClick={() => handleNav('/start-a-project')}
-            className={`inline-flex items-center justify-center px-4 sm:px-5 lg:px-7 py-2 sm:py-2.5 lg:py-3 rounded-full text-white text-xs lg:text-[13.5px] font-medium whitespace-nowrap shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
+            className={`hidden sm:inline-flex items-center justify-center px-5 md:px-7 py-2 sm:py-2.5 md:py-3 rounded-full text-white text-xs sm:text-[13px] md:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer ${
               currentRoute === 'start-a-project'
                 ? 'bg-gradient-to-r from-[#0088CC] to-[#00C4FF] ring-2 ring-[#00C4FF]'
                 : 'bg-gradient-to-r from-[#00D4FF] to-[#0088CC]'
@@ -160,7 +161,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-gray-700 hover:text-black hover:bg-gray-100 transition-colors focus:outline-hidden cursor-pointer"
+            className="md:hidden p-2 rounded-full text-gray-700 hover:text-black hover:bg-gray-100 transition-colors focus:outline-hidden cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {isMobileMenuOpen ? (
@@ -174,7 +175,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
 
       {/* MOBILE DROPDOWN MODAL */}
       {isMobileMenuOpen && (
-        <div className="pointer-events-auto absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-2xl p-5 md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="pointer-events-auto absolute top-16 left-3 right-3 sm:left-4 sm:right-4 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-2xl p-4 sm:p-5 md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col gap-2">
             {navLinks.map((link) => {
               const isActive =

@@ -18,14 +18,14 @@ export interface HomeProps {
 export default function Home({ onNavigate }: HomeProps) {
   return (
     <>
-      <HeroSection />
+      <HeroSection onNavigate={onNavigate} />
       <ServicesSection limit={2} onNavigate={onNavigate} />
-      <ProductsSection limit={2} />
+      <ProductsSection limit={2} onNavigate={onNavigate} />
       <OurWork onNavigate={onNavigate} />
-      <WhyChooseUs />
+      <WhyChooseUs onNavigate={onNavigate} />
       <AboutSection />
       <TestimonialsSection />
-      <FAQSection />
+      <FAQSection onNavigate={onNavigate} />
     </>
   );
 }

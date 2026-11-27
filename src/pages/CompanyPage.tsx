@@ -471,7 +471,7 @@ export default function CompanyPage({ onNavigate }: CompanyPageProps) {
             </div>
 
             {/* 4 Interactive Architecture Pipeline Nodes (L1 -> L2 -> L3 -> L4) */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-8 relative">
+            <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-8 relative">
               {TECH_STACK.map((group, idx) => {
                 const Icon = group.icon;
                 const isActive = idx === activeStackIdx;

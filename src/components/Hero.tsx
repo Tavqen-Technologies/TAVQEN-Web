@@ -12,7 +12,11 @@ const PRODUCT_IMAGES_ROW_1 = [
   { id: 'prod-4', src: product4, alt: 'Tavqen Product 4' },
 ];
 
-export default function Hero() {
+interface HeroProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function Hero({ onNavigate }: HeroProps = {}) {
   const heroRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -69,23 +73,31 @@ export default function Hero() {
      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
 
   {/* Headline */}
-  <h1 className="hero-stagger text-4xl sm:text-6xl md:text-[68px] lg:text-[76px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
+  <h1 className="hero-stagger text-[30px] xs:text-[36px] sm:text-5xl md:text-[64px] lg:text-[70px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
   Building digital products
-    <br className="hidden sm:inline" />delivering powerful services.
+    <br className="hidden sm:inline" /> delivering powerful services.
   </h1>
 
   {/* Subtitle */}
-  <p className="hero-stagger mt-5 sm:mt-6 text-[15px] sm:text-[16.5px] text-[#64748B] max-w-[600px] mx-auto font-normal leading-relaxed">
+  <p className="hero-stagger mt-4 sm:mt-6 text-[14px] sm:text-[16.5px] text-[#64748B] max-w-[600px] px-2 sm:px-0 mx-auto font-normal leading-relaxed">
     TAVQEN Technologies is a digital technology company building modern
     websites, software products, and scalable solutions that help
     businesses grow and move forward.
   </p>
 
   {/* CTA */}
-  <div className="hero-stagger mt-7 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-    <a
-      href="/start-a-project"
+  <div className="hero-stagger mt-7 sm:mt-8 flex flex-col xs:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
+    <button
+      type="button"
+      onClick={() => {
+        if (onNavigate) {
+          onNavigate('/start-a-project');
+        } else {
+          window.location.hash = '/start-a-project';
+        }
+      }}
       className="
+        w-full xs:w-auto
         inline-flex items-center justify-center
         px-6 sm:px-7
         py-2.5 sm:py-3
@@ -99,22 +111,25 @@ export default function Hero() {
         hover:scale-[1.02]
         active:scale-95
         transition-all
+        cursor-pointer
       "
     >
       <span>Start a Project</span>
-    </a>
-    <a
-      href="#work"
-      onClick={(e) => {
-        e.preventDefault();
+    </button>
+    <button
+      type="button"
+      onClick={() => {
         const target = document.getElementById('work') || document.getElementById('products');
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (onNavigate) {
+          onNavigate('/our-work');
         } else {
-          window.location.hash = '#work';
+          window.location.hash = '/our-work';
         }
       }}
       className="
+        w-full xs:w-auto
         inline-flex items-center justify-center
         px-6 sm:px-7
         py-2.5 sm:py-3
@@ -130,10 +145,11 @@ export default function Hero() {
         hover:scale-[1.02]
         active:scale-95
         transition-all
+        cursor-pointer
       "
     >
       <span>Explore Our Work</span>
-    </a>
+    </button>
   </div>
 
 </div>

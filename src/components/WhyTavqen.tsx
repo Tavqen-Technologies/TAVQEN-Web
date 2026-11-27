@@ -1,346 +1,373 @@
-import { useState, useEffect, useRef } from 'react';
-import { Check, ArrowRight } from 'lucide-react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import {
+  Layers,
+  Cpu,
+  Lightbulb,
+  UserCheck,
+  Users,
+  RefreshCw,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+} from 'lucide-react';
 
-import product1 from '../assits/products/product1.webp';
-import product2 from '../assits/products/product2.webp';
-import product3 from '../assits/products/product3.webp';
-import product4 from '../assits/products/product4.webp';
-import saasImg from '../assits/saas product.avif';
-
-interface ValueStep {
+interface StrengthPillar {
   number: string;
   tag: string;
   title: string;
   description: string;
   bullets: string[];
-  image: string;
-  alt: string;
+  icon: any;
 }
 
-const STEPS: ValueStep[] = [
+const PILLARS: StrengthPillar[] = [
   {
     number: '01',
-    tag: 'PRODUCT MINDSET',
-    title: 'Problem First, Not Feature First',
+    tag: 'CORE PRINCIPLE',
+    title: 'Product-First Mindset',
     description:
-      'We start by understanding the real business problem before choosing any technology solution. This helps us build something useful, focused, and worth the investment without unnecessary feature bloat.',
+      'We prioritize core product value, practical workflows, and real-world utility over vanity features or unnecessary bloat.',
     bullets: [
-      'Focus on business ROI and tangible metrics',
-      'Continuous user feedback loops from prototype to scale',
-      'Eliminating complexity in favor of high-leverage outcomes',
+      'Problem-first approach to every feature',
+      'Eliminating unnecessary feature bloat',
+      'Engineered for long-term product viability',
     ],
-    image: product1,
-    alt: 'Product Strategy & Problem Solving Workshop',
+    icon: Layers,
   },
   {
     number: '02',
-    tag: 'MODERN TECHNOLOGY',
-    title: 'Production-Grade Architecture',
+    tag: 'PRODUCTION-GRADE',
+    title: 'Modern Technology',
     description:
-      'We use modern tools, frameworks, and engineering practices to create reliable, blazing-fast, and secure digital platforms that handle real traffic with zero drama.',
+      'Built with production-proven tools like React, TypeScript, Next.js, and scalable APIs for fast load speeds and security.',
     bullets: [
-      'Type-safe React, TypeScript & scalable API backends',
-      'Zero-downtime CI/CD deployment pipelines',
-      'Cloud-native security standards & automated backups',
+      'Type-safe, modular code architecture',
+      'Fast load speeds and responsive interfaces',
+      'Cloud-native deployment and automated backups',
     ],
-    image: saasImg,
-    alt: 'Modern Cloud Architecture & High Performance Code',
+    icon: Cpu,
   },
   {
     number: '03',
-    tag: 'USER FIRST',
-    title: 'Simple, Intuitive & User-Centric',
+    tag: 'INNOVATIVE SOLUTIONS',
+    title: 'Creative Thinking',
     description:
-      'We keep the experience simple, intuitive, and focused on the people who use the product every day. Interfaces so thoughtful and clear that they require zero training.',
+      'We find pragmatic, out-of-the-box solutions to complex technical challenges, tailored directly to your business goals.',
     bullets: [
-      'Fast, snappy interactions with sub-100ms response targets',
-      'Accessibility & responsive layout across every device',
-      'Ergonomic flows that turn new visitors into loyal power users',
+      'Pragmatic system design & architecture',
+      'Tailored technical problem solving',
+      'Adaptable, scalable digital solutions',
     ],
-    image: product3,
-    alt: 'Human-Centered Ergonomic UX Design',
+    icon: Lightbulb,
   },
   {
     number: '04',
-    tag: 'BUILT TO SCALE',
-    title: 'Engineered from Day One for Growth',
+    tag: 'INTUITIVE UX',
+    title: 'User-Focused Approach',
     description:
-      'We build with performance, maintainability, clean documentation, and future growth in mind. Systems that stay rock-solid as your customer base multiplies tenfold.',
+      'Every interface is designed for real humans—clean, accessible, and intuitive, reducing friction and learning curves for end users.',
     bullets: [
-      'Modular micro-service & component architecture',
-      'Elastic cloud database caching and query optimization',
-      'SLA-ready stability with active monitoring and alerts',
+      'Simple, ergonomic, and clear user flows',
+      'Consistent experience across all devices',
+      'Accessible layouts and readable typography',
     ],
-    image: product2,
-    alt: 'Scalable Enterprise Digital Platforms',
+    icon: UserCheck,
   },
   {
     number: '05',
-    tag: 'ONE TEAM',
-    title: 'We Work As One Team With You',
+    tag: 'DIRECT PARTNERSHIP',
+    title: 'Collaborative Teamwork',
     description:
-      'From idea and roadmap to development and ongoing improvement, we work as one unified team with our clients. Direct communication, transparent updates, and shared commitment.',
+      'We work as an extension of your own team with transparent communication, direct developer access, and regular milestone demos.',
     bullets: [
-      'Shared Slack/Discord channels with real engineers',
-      'Weekly demo sprints and roadmap visibility',
-      'True partnership aligned with your long-term success',
+      'Direct, responsive developer access',
+      'Regular progress updates and roadmap visibility',
+      'True partnership aligned with your success',
     ],
-    image: product4,
-    alt: 'Collaborative Team Engineering Culture',
+    icon: Users,
+  },
+  {
+    number: '06',
+    tag: 'ONGOING ITERATION',
+    title: 'Continuous Improvement',
+    description:
+      'We continuously refine techniques, update security standards, and optimize code performance as technologies evolve.',
+    bullets: [
+      'Proactive code tuning and security audits',
+      'Iterative enhancements and smooth scaling',
+      'Dependable ongoing technical support',
+    ],
+    icon: RefreshCw,
   },
 ];
 
-export default function WhyTavqen() {
+interface WhyTavqenProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function WhyTavqen({ onNavigate }: WhyTavqenProps = {}) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
 
-  // Smooth scroll listener tracking continuous scroll progression
-  useEffect(() => {
-    let ticking = false;
+  // Smooth scroll to a specific card index
+  const scrollToCard = useCallback((index: number) => {
+    const container = sliderRef.current;
+    if (!container) return;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const section = sectionRef.current;
-          if (!section) {
-            ticking = false;
-            return;
-          }
-
-          const rect = section.getBoundingClientRect();
-          const sectionHeight = section.offsetHeight;
-          const windowHeight = window.innerHeight;
-
-          // Scrollable range through this section
-          const totalScrollableDistance = sectionHeight - windowHeight;
-          if (totalScrollableDistance <= 0) {
-            ticking = false;
-            return;
-          }
-
-          const scrollOffset = -rect.top;
-          const progress = Math.max(0, Math.min(1, scrollOffset / totalScrollableDistance));
-          setScrollProgress(progress);
-
-          // Calculate active step with smooth thresholds
-          const stepIndex = Math.min(
-            STEPS.length - 1,
-            Math.floor(progress * STEPS.length)
-          );
-
-          setActiveIndex(stepIndex);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial position check
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    const cards = container.querySelectorAll<HTMLElement>('[data-card]');
+    if (cards[index]) {
+      const card = cards[index];
+      const scrollLeft = card.offsetLeft - container.offsetLeft;
+      container.scrollTo({
+        left: scrollLeft,
+        behavior: 'smooth',
+      });
+      setActiveIndex(index);
+    }
   }, []);
 
-  // Smooth jump to specific step when clicking a step button
-  const jumpToStep = (index: number) => {
-    const section = sectionRef.current;
-    if (!section) return;
+  // Slide to next card with looping
+  const handleNext = useCallback(() => {
+    const nextIdx = (activeIndex + 1) % PILLARS.length;
+    scrollToCard(nextIdx);
+  }, [activeIndex, scrollToCard]);
 
-    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-    const sectionHeight = section.offsetHeight;
-    const windowHeight = window.innerHeight;
-    const totalScrollableDistance = sectionHeight - windowHeight;
+  // Slide to previous card
+  const handlePrev = useCallback(() => {
+    const prevIdx = (activeIndex - 1 + PILLARS.length) % PILLARS.length;
+    scrollToCard(prevIdx);
+  }, [activeIndex, scrollToCard]);
 
-    // Scroll to the midpoint of the selected step segment for stable centering
-    const targetProgress = (index + 0.5) / STEPS.length;
-    const targetScrollY = sectionTop + targetProgress * totalScrollableDistance;
+  // Automatic horizontal sliding carousel (smoothly cycles every 3.8s, pauses on hover)
+  useEffect(() => {
+    if (isPaused) return;
 
-    window.scrollTo({
-      top: targetScrollY,
-      behavior: 'smooth',
+    const interval = setInterval(() => {
+      handleNext();
+    }, 3800);
+
+    return () => clearInterval(interval);
+  }, [isPaused, handleNext]);
+
+  // Sync active index when user manually swipes / scrolls
+  const handleScrollSync = () => {
+    const container = sliderRef.current;
+    if (!container) return;
+
+    const cards = container.querySelectorAll<HTMLElement>('[data-card]');
+    const scrollLeft = container.scrollLeft;
+
+    let closestIdx = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardLeft = card.offsetLeft - container.offsetLeft;
+      const distance = Math.abs(cardLeft - scrollLeft);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIdx = idx;
+      }
     });
+
+    setActiveIndex(closestIdx);
   };
 
   return (
     <section
-      ref={sectionRef}
       id="why"
-      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] min-h-[420vh]"
+      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] py-10 sm:py-14 overflow-hidden"
     >
-      {/* ========================================================= */}
-      {/* STICKY CONTAINER: Stays in viewport as user scrolls        */}
-      {/* ========================================================= */}
-      <div className="sticky top-16 sm:top-20 py-8 sm:py-12 overflow-hidden flex flex-col justify-center">
-        {/* Subtle ambient lighting */}
+      {/* Subtle Cyan Ambient Radial Lighting */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[260px] pointer-events-none opacity-20 -z-10"
+        style={{
+          background:
+            'radial-gradient(ellipse, rgba(0, 196, 255, 0.14) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="w-full max-w-[1040px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ========================================================= */}
+        {/* SECTION HEADER                                            */}
+        {/* ========================================================= */}
+        <div className="max-w-xl mx-auto text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E0F7FF]/90 border border-[#00C4FF]/30 text-[#0088CC] text-[10px] font-mono font-semibold tracking-wider uppercase mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
+            <span>Why Choose Us</span>
+          </div>
+
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight text-[#0B132B] leading-[1.2]">
+            Why{' '}
+            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
+              TAVQEN?
+            </span>
+          </h2>
+
+          <p className="mt-2 text-[11.5px] sm:text-[12.5px] text-[#64748B] font-normal leading-relaxed max-w-lg mx-auto">
+            We build our own digital products and develop practical technology solutions for businesses. Our focus is on creativity, collaboration, modern technologies, and continuous improvement.
+          </p>
+        </div>
+
+        {/* ========================================================= */}
+        {/* 3-CARD HORIZONTAL SLIDING CAROUSEL (DESKTOP: EXACTLY 3)   */}
+        {/* ========================================================= */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] pointer-events-none opacity-25 -z-10"
-          style={{
-            background:
-              'radial-gradient(ellipse, rgba(0, 196, 255, 0.16) 0%, transparent 70%)',
-          }}
-        />
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Scrollable Track: Exactly 3 cards visible on Desktop (lg), 2 on Tablet (sm/md), 1 on Mobile */}
+          <div
+            ref={sliderRef}
+            onScroll={handleScrollSync}
+            className="flex gap-3.5 overflow-x-auto scroll-smooth py-1.5 px-0.5 scrollbar-none snap-x snap-mandatory"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {PILLARS.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              const isActive = activeIndex === idx;
 
-        <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* ===================================================== */}
-          {/* TOP SECTION HEADER (Two-tone matching screenshot)      */}
-          {/* ===================================================== */}
-          <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B132B] leading-[1.12]">
-              Why{' '}
-              <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-                TAVQEN?
-              </span>
-            </h2>
-            <p className="mt-3 text-[14px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto">
-              We combine technology, creativity, and a product-first mindset to build digital experiences that are made to matter.
-            </p>
-          </div>
-
-          {/* ===================================================== */}
-          {/* HORIZONTAL PROCESS BAR (Matching screenshot track)     */}
-          {/* ===================================================== */}
-          <div className="max-w-3xl mx-auto mb-8 sm:mb-12">
-            <div className="flex items-center justify-between relative px-2 sm:px-4">
-              {STEPS.map((step, idx) => {
-                const isActive = activeIndex === idx;
-                const isPassed = activeIndex > idx;
-
-                // Continuous smooth liquid progress for the connecting line
-                const numLines = STEPS.length - 1;
-                const lineStart = idx / numLines;
-                const lineProgress = Math.max(
-                  0,
-                  Math.min(1, (scrollProgress - lineStart) * numLines)
-                );
-
-                return (
-                  <div key={step.number} className="flex-1 flex items-center">
-                    {/* Squircle Step Button */}
-                    <button
-                      type="button"
-                      onClick={() => jumpToStep(idx)}
-                      className={`relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-[18px] sm:rounded-[22px] flex items-center justify-center font-mono font-bold transition-all duration-300 cursor-pointer ${
-                        isActive
-                          ? 'bg-white border-2 border-[#00C4FF] text-[#0088CC] text-base sm:text-lg shadow-[0_0_25px_rgba(0,196,255,0.35)] ring-4 ring-[#00C4FF]/15 scale-105'
-                          : isPassed
-                          ? 'bg-white border border-[#0088CC]/50 text-[#0088CC] text-sm sm:text-base hover:border-[#00C4FF]'
-                          : 'bg-white border border-[#E2E8F0] text-[#94A3B8] text-sm sm:text-base hover:border-gray-400 hover:text-[#0B132B]'
-                      }`}
-                      aria-label={`Jump to why step ${step.number}: ${step.title}`}
-                    >
-                      <span>{step.number}</span>
-                    </button>
-
-                    {/* Connecting line to next step with smooth fluid fill */}
-                    {idx < STEPS.length - 1 && (
-                      <div className="flex-1 h-[2px] mx-1 sm:mx-2 bg-[#E2E8F0] rounded-full overflow-hidden relative">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] transition-all duration-150 ease-out"
-                          style={{ width: `${Math.round(lineProgress * 100)}%` }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* ===================================================== */}
-          {/* MAIN INTERACTIVE DISPLAY CARD WITH SMOOTH TRANSITION  */}
-          {/* ===================================================== */}
-          <div className="w-full rounded-[32px] sm:rounded-[40px] bg-white border border-[#E2E8F0] shadow-[0_24px_70px_rgba(15,23,42,0.06)] p-7 sm:p-10 lg:p-12 relative overflow-hidden transition-all duration-500">
-            {/* Top ambient glowing accent line (matches screenshot top glow) */}
-            <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-[#00C4FF]/70 to-transparent pointer-events-none" />
-
-            {/* Subtle inner ambient card glow */}
-            <div
-              className="absolute -top-24 -left-24 w-80 h-80 pointer-events-none opacity-40 -z-0"
-              style={{
-                background: 'radial-gradient(circle, rgba(0, 196, 255, 0.12) 0%, transparent 70%)',
-              }}
-            />
-
-            {/* Crossfading Step Panels for Silky-Smooth Scroll Progression */}
-            <div className="relative min-h-[380px] sm:min-h-[390px] lg:min-h-[400px]">
-              {STEPS.map((step, idx) => {
-                const isCurrent = activeIndex === idx;
-
-                return (
-                  <div
-                    key={step.number}
-                    className={`transition-all duration-500 ease-out grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
-                      isCurrent
-                        ? 'opacity-100 translate-y-0 scale-100 relative z-10 pointer-events-auto'
-                        : 'opacity-0 translate-y-3 scale-[0.98] absolute inset-0 pointer-events-none'
-                    }`}
-                  >
-                    {/* LEFT COLUMN: Pillar Metadata & Story */}
-                    <div className="lg:col-span-7 flex flex-col justify-center">
-                      {/* Tag pill with pulsating status indicator */}
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E0F7FF]/90 text-[#0088CC] text-[11px] font-bold tracking-widest uppercase mb-4 sm:mb-5 border border-[#00C4FF]/30 w-fit shadow-2xs">
-                        <span className="w-2 h-2 rounded-full bg-[#0088CC] animate-pulse" />
-                        <span>{step.tag}</span>
+              return (
+                <div
+                  key={pillar.number}
+                  data-card
+                  className="w-full sm:w-[calc((100%-0.875rem)/2)] lg:w-[calc((100%-1.75rem)/3)] shrink-0 snap-start rounded-xl bg-white border border-[#E2E8F0] hover:border-[#00C4FF]/50 p-3.5 sm:p-4 shadow-[0_3px_14px_rgba(15,23,42,0.03)] hover:shadow-[0_8px_24px_rgba(0,196,255,0.07)] transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Top Row: Icon + Number & Tag Badge */}
+                    <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-[#F1F5F9]">
+                      <div
+                        className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+                          isActive
+                            ? 'bg-[#E0F7FF] text-[#0088CC]'
+                            : 'bg-[#F8FAFC] border border-[#E2E8F0] text-[#64748B]'
+                        }`}
+                      >
+                        <Icon className="w-3.5 h-3.5 stroke-[2]" />
                       </div>
 
-                      {/* Main Heading */}
-                      <h3 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#0B132B] tracking-[-0.025em] leading-[1.2] mb-4">
-                        {step.title}
-                      </h3>
-
-                      {/* Detailed Description */}
-                      <p className="text-[14.5px] sm:text-[16px] text-[#64748B] leading-[1.7] mb-6 font-normal max-w-xl">
-                        {step.description}
-                      </p>
-
-                      {/* Key Checklist Features */}
-                      <div className="space-y-3 pt-1">
-                        {step.bullets.map((bullet, bIdx) => (
-                          <div key={bIdx} className="flex items-center gap-3">
-                            <div className="w-5 h-5 rounded-full bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                            </div>
-                            <span className="text-[13.5px] sm:text-[14px] font-medium text-[#475569]">
-                              {bullet}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Card Footer: Step Counter & Action CTA */}
-                      <div className="mt-8 pt-5 border-t border-[#E2E8F0]/70 flex items-center justify-between">
-                        <span className="text-xs text-[#94A3B8] font-mono tracking-wider">
-                          Pillar <span className="text-[#0B132B] font-bold">{step.number}</span> of 05
+                      <div className="flex items-center gap-1">
+                        <span className="text-[9.5px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]/70">
+                          {pillar.number} / 0{PILLARS.length}
                         </span>
-                        <a
-                          href="#project"
-                          className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#0088CC] hover:text-[#00C4FF] transition-colors group"
-                        >
-                          <span>Start a Project</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                        </a>
                       </div>
                     </div>
 
-                    {/* RIGHT COLUMN: Realistic Preview Visual */}
-                    <div className="lg:col-span-5 w-full flex items-center justify-center">
-                      <div className="w-full h-[260px] sm:h-[320px] lg:h-[350px] rounded-[24px] sm:rounded-[28px] overflow-hidden border border-black/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.08)] relative bg-[#F1F5F9] group">
-                        <img
-                          src={step.image}
-                          alt={step.alt}
-                          className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-[1.03]"
-                          loading="lazy"
-                        />
+                    {/* Tag pill */}
+                    <span className="inline-block text-[9px] font-mono font-bold tracking-wider uppercase text-[#0088CC] mb-0.5">
+                      {pillar.tag}
+                    </span>
 
-                        {/* Soft ambient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/[0.12] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                      </div>
+                    {/* Title */}
+                    <h3 className="text-[14px] sm:text-[15px] font-semibold text-[#0B132B] tracking-tight mb-1 leading-snug">
+                      {pillar.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-[11px] sm:text-[11.5px] text-[#64748B] leading-relaxed mb-2.5 font-normal">
+                      {pillar.description}
+                    </p>
+
+                    {/* 3 Checklist Features */}
+                    <div className="space-y-1 pt-0.5">
+                      {pillar.bullets.map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex items-center gap-1.5">
+                          <div className="w-3 h-3 rounded-full bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center shrink-0">
+                            <Check className="w-2 h-2 stroke-[2.5]" />
+                          </div>
+                          <span className="text-[10.5px] sm:text-[11px] font-medium text-[#475569] leading-snug">
+                            {bullet}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                );
-              })}
+
+                  {/* Card Bottom Indicator */}
+                  <div className="mt-3 pt-2 border-t border-[#F1F5F9] flex items-center justify-between text-[10px]">
+                    <span
+                      className={`font-semibold transition-colors ${
+                        isActive ? 'text-[#0088CC]' : 'text-[#94A3B8]'
+                      }`}
+                    >
+                      {isActive ? 'Active Strength' : 'Core Pillar'}
+                    </span>
+                    <span
+                      className={`transition-transform duration-200 ${
+                        isActive ? 'translate-x-0.5 text-[#0088CC]' : 'text-[#94A3B8]'
+                      }`}
+                    >
+                      →
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* CAROUSEL PAGINATION DOTS & CONTROLS                       */}
+        {/* ========================================================= */}
+        <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E2E8F0]/70">
+          {/* Pagination Indicators */}
+          <div className="flex items-center gap-1.5">
+            {PILLARS.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => scrollToCard(idx)}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  activeIndex === idx
+                    ? 'w-5 h-1 bg-[#0088CC]'
+                    : 'w-1.5 h-1 bg-[#CBD5E1] hover:bg-[#94A3B8]'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+            <span className="ml-2 text-[10px] text-[#64748B] font-mono hidden sm:inline">
+              Hover to pause sliding
+            </span>
+          </div>
+
+          {/* Navigation Buttons + CTA */}
+          <div className="flex items-center gap-2 ml-auto">
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-7 h-7 rounded-full bg-white border border-[#E2E8F0] hover:border-[#0088CC] hover:text-[#0088CC] text-[#64748B] flex items-center justify-center transition-colors shadow-2xs cursor-pointer"
+                aria-label="Previous strength"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-7 h-7 rounded-full bg-white border border-[#E2E8F0] hover:border-[#0088CC] hover:text-[#0088CC] text-[#64748B] flex items-center justify-center transition-colors shadow-2xs cursor-pointer"
+                aria-label="Next strength"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (onNavigate) {
+                  onNavigate('/start-a-project');
+                } else {
+                  window.location.hash = '/start-a-project';
+                }
+              }}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-[11px] font-semibold shadow-2xs transition-colors cursor-pointer"
+            >
+              <span>Start a Project</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
           </div>
         </div>
       </div>

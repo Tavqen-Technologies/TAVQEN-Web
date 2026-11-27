@@ -144,16 +144,16 @@ export default function HowTavqen() {
       rows.forEach((row, idx) => {
         const medallion = row.querySelector('.serpentine-medallion');
         const textBlock = row.querySelector('.serpentine-text');
-        const fromX = idx % 2 === 0 ? 28 : -28;
+        const fromX = idx % 2 === 0 ? 22 : -22;
 
         if (medallion) {
           gsap.fromTo(
             medallion,
-            { opacity: 0, scale: 0.75 },
+            { opacity: 0, scale: 0.8 },
             {
               opacity: 1,
               scale: 1,
-              duration: 0.7,
+              duration: 0.65,
               ease: 'back.out(1.4)',
               clearProps: 'transform',
               scrollTrigger: {
@@ -172,8 +172,8 @@ export default function HowTavqen() {
             {
               opacity: 1,
               x: 0,
-              duration: 0.7,
-              delay: 0.08,
+              duration: 0.65,
+              delay: 0.06,
               ease: 'power3.out',
               clearProps: 'transform',
               scrollTrigger: {
@@ -191,11 +191,11 @@ export default function HowTavqen() {
       mobileCards.forEach((card) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
+            duration: 0.6,
             ease: 'power3.out',
             clearProps: 'transform',
             scrollTrigger: {
@@ -215,29 +215,29 @@ export default function HowTavqen() {
     <section
       ref={sectionRef}
       id="how"
-      className="py-20 sm:py-24 lg:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0] relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-18 bg-[#F8FAFC] border-t border-[#E2E8F0] relative overflow-hidden"
     >
       {/* Subtle organic light accent */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[420px] pointer-events-none opacity-30 -z-10"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[340px] pointer-events-none opacity-25 -z-10"
         style={{
           background:
-            'radial-gradient(ellipse, rgba(0, 196, 255, 0.14) 0%, rgba(155, 227, 223, 0.12) 45%, transparent 70%)',
+            'radial-gradient(ellipse, rgba(0, 196, 255, 0.12) 0%, rgba(155, 227, 223, 0.10) 45%, transparent 70%)',
         }}
       />
 
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
         {/* SECTION HEADER                                            */}
         {/* ========================================================= */}
-        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-20" data-animate="fade-up">
-          <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
+        <div className="max-w-2xl mx-auto text-center mb-8 sm:mb-12" data-animate="fade-up">
+          <span className="inline-block px-3 py-0.5 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[11px] font-semibold uppercase tracking-wider mb-2.5">
             Our Approach
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B132B] leading-[1.15]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] leading-[1.18]">
             How TAVQEN
           </h2>
-          <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed">
+          <p className="mt-2.5 text-[12.5px] sm:text-[13.5px] text-[#64748B] font-normal leading-relaxed">
             We turn ideas into practical digital products through a clear, collaborative, and technology-driven approach.
           </p>
         </div>
@@ -247,7 +247,7 @@ export default function HowTavqen() {
         {/* ========================================================= */}
         <div
           ref={desktopStageRef}
-          className="hidden md:block relative w-full max-w-[840px] mx-auto"
+          className="hidden md:block relative w-full max-w-[650px] mx-auto"
           style={{ aspectRatio: `${VB_W} / ${VB_H}` }}
         >
           {/* SVG Serpentine Ribbon + Geometric Bridge Chevrons */}
@@ -263,7 +263,7 @@ export default function HowTavqen() {
               </linearGradient>
 
               <filter id="ribbonShadow" x="-10%" y="-10%" width="120%" height="125%">
-                <feDropShadow dx="0" dy="10" stdDeviation="12" floodColor="#0F172A" floodOpacity="0.06" />
+                <feDropShadow dx="0" dy="8" stdDeviation="10" floodColor="#0F172A" floodOpacity="0.05" />
               </filter>
             </defs>
 
@@ -272,10 +272,10 @@ export default function HowTavqen() {
               d={SERPENTINE_PATH}
               fill="none"
               stroke="#FFFFFF"
-              strokeWidth="138"
+              strokeWidth="126"
               strokeLinecap="round"
               strokeLinejoin="round"
-              opacity="0.72"
+              opacity="0.75"
             />
 
             {/* Base Slate Ribbon Track */}
@@ -283,7 +283,7 @@ export default function HowTavqen() {
               d={SERPENTINE_PATH}
               fill="none"
               stroke="#E2E8F0"
-              strokeWidth="7.5"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
               filter="url(#ribbonShadow)"
@@ -295,12 +295,12 @@ export default function HowTavqen() {
               d={SERPENTINE_PATH}
               fill="none"
               stroke="url(#tavqenSerpentineGrad)"
-              strokeWidth="8"
+              strokeWidth="6.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* Geometric Peak Accents on Horizontal Bridges (matching reference) */}
+            {/* Geometric Peak Accents on Horizontal Bridges */}
             {/* Bridge 1 (upward peaks around x=415, y=178) */}
             <g className="serpentine-peaks">
               <polygon points="365,178 390,144 415,178" fill="#00D4FF" opacity="0.88" />
@@ -342,27 +342,27 @@ export default function HowTavqen() {
                   style={{
                     left: `${(pos.cx / VB_W) * 100}%`,
                     top: `${(pos.cy / VB_H) * 100}%`,
-                    width: '16.8%',
+                    width: '15.5%',
                     aspectRatio: '1 / 1',
                   }}
                 >
                   <div
-                    className={`w-full h-full rounded-full bg-white border-2 flex flex-col items-center justify-center transition-all duration-400 group-hover:scale-105 ${
+                    className={`w-full h-full rounded-full bg-white border-2 flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-105 ${
                       isActive
-                        ? 'border-[#00C4FF]/60 shadow-[0_18px_42px_rgba(0,196,255,0.18),0_4px_12px_rgba(15,23,42,0.06)]'
-                        : 'border-[#E2E8F0] shadow-[0_14px_32px_rgba(15,23,42,0.08)]'
+                        ? 'border-[#00C4FF]/60 shadow-[0_12px_30px_rgba(0,196,255,0.18),0_3px_10px_rgba(15,23,42,0.05)]'
+                        : 'border-[#E2E8F0] shadow-[0_10px_24px_rgba(15,23,42,0.06)]'
                     }`}
                   >
                     <div
-                      className="w-10 h-10 lg:w-12 lg:h-12 rounded-2xl flex items-center justify-center mb-1 transition-transform duration-300 group-hover:scale-110"
+                      className="w-8 h-8 lg:w-9 lg:h-9 rounded-xl flex items-center justify-center mb-0.5 transition-transform duration-300 group-hover:scale-110"
                       style={{
                         backgroundColor: `${step.accentColor}14`,
                         color: step.accentColor,
                       }}
                     >
-                      <Icon className="w-5 h-5 lg:w-6 lg:h-6 stroke-[2]" />
+                      <Icon className="w-4 h-4 lg:w-4.5 lg:h-4.5 stroke-[2]" />
                     </div>
-                    <span className="font-mono text-[10px] lg:text-[11px] font-bold text-[#94A3B8] tracking-wider">
+                    <span className="font-mono text-[9px] lg:text-[10px] font-bold text-[#94A3B8] tracking-wider">
                       STEP {step.number}
                     </span>
                   </div>
@@ -370,7 +370,7 @@ export default function HowTavqen() {
 
                 {/* Alternating Content Block Inside Horizontal Lane */}
                 <div
-                  className={`serpentine-text absolute z-10 -translate-y-1/2 w-[54%] ${
+                  className={`serpentine-text absolute z-10 -translate-y-1/2 w-[55%] ${
                     isLeftMedallion ? 'text-right pr-2' : 'text-left pl-2'
                   }`}
                   style={{
@@ -380,25 +380,25 @@ export default function HowTavqen() {
                   }}
                 >
                   <div
-                    className={`inline-flex items-center gap-2 mb-1.5 ${
+                    className={`inline-flex items-center gap-1.5 mb-1 ${
                       isLeftMedallion ? 'flex-row-reverse' : 'flex-row'
                     }`}
                   >
                     <span
-                      className={`font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${step.badgeBg}`}
+                      className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-full border ${step.badgeBg}`}
                     >
                       {step.number} · Step {idx + 1} of 4
                     </span>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8]">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#94A3B8]">
                       {step.tagline}
                     </span>
                   </div>
 
-                  <h3 className="text-xl lg:text-2xl font-bold text-[#0B132B] tracking-tight group-hover:text-[#0088CC] transition-colors">
+                  <h3 className="text-base lg:text-[19px] font-bold text-[#0B132B] tracking-tight group-hover:text-[#0088CC] transition-colors leading-snug">
                     {step.title}
                   </h3>
 
-                  <p className="mt-1 text-xs lg:text-[13.5px] text-[#64748B] leading-relaxed font-normal max-w-[360px] inline-block">
+                  <p className="mt-1 text-[11px] lg:text-[12px] text-[#64748B] leading-relaxed font-normal max-w-[320px] inline-block">
                     {step.description}
                   </p>
                 </div>
@@ -410,52 +410,52 @@ export default function HowTavqen() {
         {/* ========================================================= */}
         {/* MOBILE VERTICAL STEP FLOW (< md)                          */}
         {/* ========================================================= */}
-        <div className="md:hidden relative pl-6 border-l-2 border-[#00C4FF]/45 space-y-6">
+        <div className="md:hidden relative pl-5 border-l-2 border-[#00C4FF]/45 space-y-4">
           {STEPS.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={step.number}
-                className="how-mobile-card relative rounded-[24px] bg-white border border-[#E2E8F0] p-5 shadow-[0_8px_28px_rgba(15,23,42,0.04)]"
+                className="how-mobile-card relative rounded-[18px] bg-white border border-[#E2E8F0] p-4 shadow-[0_4px_18px_rgba(15,23,42,0.03)]"
               >
                 {/* Connector node */}
-                <span className="absolute -left-[31px] top-7 w-3.5 h-3.5 rounded-full bg-[#00C4FF] border-2 border-white ring-4 ring-[#00C4FF]/15" />
+                <span className="absolute -left-[27px] top-6 w-3 h-3 rounded-full bg-[#00C4FF] border-2 border-white ring-4 ring-[#00C4FF]/15" />
 
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-between gap-2.5 mb-2.5">
+                  <div className="flex items-center gap-2">
                     <div
-                      className="w-10 h-10 rounded-full border border-[#E2E8F0] shadow-xs flex items-center justify-center"
+                      className="w-8 h-8 rounded-full border border-[#E2E8F0] shadow-xs flex items-center justify-center"
                       style={{
                         backgroundColor: `${step.accentColor}14`,
                         color: step.accentColor,
                       }}
                     >
-                      <Icon className="w-4 h-4 stroke-[2]" />
+                      <Icon className="w-3.5 h-3.5 stroke-[2]" />
                     </div>
                     <div>
-                      <span className="text-[10.5px] font-semibold uppercase tracking-wider text-[#94A3B8] block">
+                      <span className="text-[9.5px] font-semibold uppercase tracking-wider text-[#94A3B8] block">
                         {step.tagline}
                       </span>
-                      <h3 className="text-lg font-bold text-[#0B132B] leading-tight">
+                      <h3 className="text-[15px] font-bold text-[#0B132B] leading-tight">
                         {step.title}
                       </h3>
                     </div>
                   </div>
 
                   <span
-                    className={`font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${step.badgeBg}`}
+                    className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-full border ${step.badgeBg}`}
                   >
                     {step.number}
                   </span>
                 </div>
 
-                <p className="text-[13.5px] text-[#64748B] leading-relaxed">
+                <p className="text-[12px] text-[#64748B] leading-relaxed">
                   {step.description}
                 </p>
 
-                <div className="mt-3 pt-3 border-t border-[#E2E8F0]/70 flex items-center justify-between text-[11.5px] font-medium text-[#94A3B8]">
+                <div className="mt-2.5 pt-2 border-t border-[#E2E8F0]/70 flex items-center justify-between text-[10.5px] font-medium text-[#94A3B8]">
                   <span>Step {idx + 1} of 4</span>
-                  <span className="w-2 h-2 rounded-full bg-[#00C4FF]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C4FF]" />
                 </div>
               </div>
             );

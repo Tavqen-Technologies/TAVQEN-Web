@@ -70,7 +70,11 @@ const FAQS: FAQItem[] = [
 
 const CATEGORIES = ['All', 'Capabilities', 'Process', 'Technology', 'Timeline', 'Engagement', 'Support', 'Ownership'];
 
-export default function FAQ() {
+interface FAQProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function FAQ({ onNavigate }: FAQProps = {}) {
   const [openId, setOpenId] = useState<string | null>('faq-1');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [query, setQuery] = useState<string>('');
@@ -95,62 +99,62 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="py-20 sm:py-24 lg:py-28 bg-white relative overflow-x-clip border-t border-[#E2E8F0]"
+      className="py-12 sm:py-16 lg:py-18 bg-white relative overflow-x-clip border-t border-[#E2E8F0]"
     >
       {/* Subtle Architectural Dot & Cyan Ambient Field */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-35"
+        className="absolute inset-0 pointer-events-none opacity-30"
         style={{
           backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
+          backgroundSize: '24px 24px',
         }}
       />
       <div
         aria-hidden="true"
-        className="absolute top-12 right-[-120px] w-[420px] h-[420px] rounded-full pointer-events-none opacity-35 blur-3xl"
+        className="absolute top-12 right-[-100px] w-[360px] h-[360px] rounded-full pointer-events-none opacity-25 blur-3xl"
         style={{
-          background: 'radial-gradient(circle, rgba(0, 196, 255, 0.16) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(0, 196, 255, 0.15) 0%, transparent 70%)',
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <div className="relative z-10 w-full max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* ========================================================= */}
           {/* LEFT STICKY COLUMN: HEADER, TOPICS & DIRECT HELP CARD      */}
           {/* ========================================================= */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6" data-animate="fade-up">
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4 sm:space-y-5" data-animate="fade-up">
             <div>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E0F7FF] text-[#0088CC] text-xs font-bold uppercase tracking-wider mb-4">
-                <Sparkles className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[10.5px] font-bold uppercase tracking-wider mb-2.5">
+                <Sparkles className="w-3 h-3" />
                 Questions &amp; Answers
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#0B132B] leading-[1.12]">
+              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-bold tracking-tight text-[#0B132B] leading-[1.15]">
                 Frequently Asked{' '}
-                <span className="bg-gradient-to-r from-[#00C4FF] to-[#0088CC] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
                   Questions
                 </span>
               </h2>
-              <p className="mt-3.5 text-[14.5px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed max-w-md">
+              <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#64748B] font-normal leading-relaxed max-w-sm">
                 Clear answers about our engineering workflow, tech stack, launch timelines, and 100% source ownership.
               </p>
             </div>
 
             {/* Search Input */}
-            <div className="relative max-w-md">
-              <Search className="w-4 h-4 text-[#94A3B8] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="relative max-w-sm">
+              <Search className="w-3.5 h-3.5 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search timelines, stack, pricing..."
                 aria-label="Search frequently asked questions"
-                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#00C4FF] focus:bg-white focus:outline-hidden text-sm text-[#0B132B] placeholder:text-[#94A3B8] transition-all"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#00C4FF] focus:bg-white focus:outline-hidden text-xs sm:text-[13px] text-[#0B132B] placeholder:text-[#94A3B8] transition-all"
               />
             </div>
 
             {/* Topic Filter Pills */}
-            <div className="flex flex-wrap gap-2 max-w-md">
+            <div className="flex flex-wrap gap-1.5 max-w-sm">
               {CATEGORIES.map((category) => {
                 const isSelected = selectedCategory === category;
                 return (
@@ -164,9 +168,9 @@ export default function FAQ() {
                       );
                       if (firstMatch) setOpenId(firstMatch.id);
                     }}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                    className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#0B132B] text-white border-[#0B132B] shadow-xs'
+                        ? 'bg-[#0B132B] text-white border-[#0B132B] shadow-2xs'
                         : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0] hover:border-[#00C4FF]/60 hover:text-[#0B132B]'
                     }`}
                   >
@@ -177,44 +181,51 @@ export default function FAQ() {
             </div>
 
             {/* Direct Engineering CTA Card */}
-            <div className="rounded-3xl bg-gradient-to-br from-[#0B132B] to-[#132145] p-6 text-white shadow-[0_20px_45px_rgba(11,19,43,0.14)] max-w-md relative overflow-hidden">
+            <div className="rounded-2xl bg-gradient-to-br from-[#0B132B] to-[#132145] p-4 sm:p-5 text-white shadow-[0_16px_36px_rgba(11,19,43,0.12)] max-w-sm relative overflow-hidden">
               <div
                 aria-hidden="true"
-                className="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-[#00C4FF]/20 blur-2xl pointer-events-none"
+                className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-[#00C4FF]/20 blur-xl pointer-events-none"
               />
               <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#00D4FF] mb-2">
-                  <MessageSquare className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#00D4FF] mb-1.5">
+                  <MessageSquare className="w-3 h-3" />
                   Still Exploring?
                 </div>
-                <p className="text-base font-bold leading-snug mb-1.5">
-                  Have a custom technical challenge or scope question?
+                <p className="text-[13.5px] sm:text-14px font-bold leading-snug mb-1">
+                  Have a custom technical challenge?
                 </p>
-                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                <p className="text-[11px] text-slate-300 leading-relaxed mb-3">
                   Get a direct architecture walkthrough and milestone estimate from our engineering leads.
                 </p>
-                <a
-                  href="/start-a-project"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs font-bold shadow-md hover:shadow-[#00C4FF]/35 hover:-translate-y-0.5 transition-all"
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigate) {
+                      onNavigate('/start-a-project');
+                    } else {
+                      window.location.hash = '/start-a-project';
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-[11px] font-bold shadow-xs hover:shadow-[#00C4FF]/30 hover:-translate-y-0.5 transition-all cursor-pointer"
                 >
                   <span>Talk to our engineers</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
               </div>
             </div>
           </div>
 
           {/* ========================================================= */}
-          {/* RIGHT COLUMN: TACTILE ACCORDION DECK                      */}
+          {/* RIGHT COLUMN: COMPACT TACTILE ACCORDION DECK             */}
           {/* ========================================================= */}
           <div className="lg:col-span-7">
-            <div className="rounded-[28px] sm:rounded-[32px] bg-[#F8FAFC]/90 border border-[#E2E8F0] p-2.5 sm:p-4 space-y-2.5 sm:space-y-3 shadow-[0_14px_40px_rgba(15,23,42,0.03)]">
+            <div className="rounded-[20px] sm:rounded-[24px] bg-[#F8FAFC]/90 border border-[#E2E8F0] p-2 sm:p-3 space-y-2 sm:space-y-2.5 shadow-[0_10px_30px_rgba(15,23,42,0.02)]">
               {filteredFaqs.length === 0 ? (
-                <div className="rounded-2xl bg-white border border-[#E2E8F0] p-10 text-center">
-                  <p className="text-sm font-bold text-[#0B132B] mb-1">
+                <div className="rounded-xl bg-white border border-[#E2E8F0] p-8 text-center">
+                  <p className="text-xs sm:text-sm font-bold text-[#0B132B] mb-1">
                     No matching questions found
                   </p>
-                  <p className="text-xs text-[#64748B] mb-4">
+                  <p className="text-[11px] text-[#64748B] mb-3">
                     Try another keyword or reset the topic filter.
                   </p>
                   <button
@@ -224,7 +235,7 @@ export default function FAQ() {
                       setSelectedCategory('All');
                       setOpenId('faq-1');
                     }}
-                    className="px-4 py-2 rounded-full bg-[#E0F7FF] text-[#0088CC] text-xs font-bold hover:bg-[#0088CC] hover:text-white transition-colors cursor-pointer"
+                    className="px-3.5 py-1.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[11px] font-bold hover:bg-[#0088CC] hover:text-white transition-colors cursor-pointer"
                   >
                     Reset Filters
                   </button>
@@ -236,15 +247,15 @@ export default function FAQ() {
                   return (
                     <div
                       key={faq.id}
-                      className={`relative rounded-[20px] sm:rounded-[22px] border transition-all duration-300 overflow-hidden ${
+                      className={`relative rounded-[14px] sm:rounded-[16px] border transition-all duration-300 overflow-hidden ${
                         isOpen
-                          ? 'bg-white border-[#00C4FF]/55 shadow-[0_16px_38px_rgba(0,136,204,0.09)]'
+                          ? 'bg-white border-[#00C4FF]/55 shadow-[0_10px_28px_rgba(0,136,204,0.07)]'
                           : 'bg-white/75 border-[#E2E8F0]/90 hover:bg-white hover:border-[#00C4FF]/35'
                       }`}
                     >
                       {/* Left Active Vertical Accent Bar */}
                       <div
-                        className={`absolute left-0 top-3 bottom-3 w-[3.5px] rounded-r-full bg-gradient-to-b from-[#00D4FF] to-[#0088CC] transition-opacity duration-300 ${
+                        className={`absolute left-0 top-2.5 bottom-2.5 w-[3px] rounded-r-full bg-gradient-to-b from-[#00D4FF] to-[#0088CC] transition-opacity duration-300 ${
                           isOpen ? 'opacity-100' : 'opacity-0'
                         }`}
                       />
@@ -252,12 +263,12 @@ export default function FAQ() {
                       <button
                         type="button"
                         onClick={() => toggleFAQ(faq.id)}
-                        className="w-full text-left px-5 py-4.5 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-hidden group"
+                        className="w-full text-left px-4 py-3 sm:px-5 sm:py-3.5 flex items-start sm:items-center justify-between gap-3 cursor-pointer focus:outline-hidden group"
                         aria-expanded={isOpen}
                       >
-                        <div className="flex items-start gap-3.5 sm:gap-4 pr-2">
+                        <div className="flex items-start gap-3 sm:gap-3.5 pr-1">
                           <span
-                            className={`mt-0.5 sm:mt-0 w-8 h-8 rounded-xl font-mono text-xs font-extrabold flex items-center justify-center flex-shrink-0 transition-colors ${
+                            className={`mt-0.5 sm:mt-0 w-7 h-7 rounded-lg font-mono text-[11px] font-bold flex items-center justify-center flex-shrink-0 transition-colors ${
                               isOpen
                                 ? 'bg-[#E0F7FF] text-[#0088CC]'
                                 : 'bg-[#F1F5F9] text-[#64748B] group-hover:text-[#0B132B]'
@@ -268,14 +279,14 @@ export default function FAQ() {
 
                           <div>
                             <span
-                              className={`inline-block text-[10px] font-mono font-bold uppercase tracking-widest mb-1 transition-colors ${
+                              className={`inline-block text-[9px] font-mono font-bold uppercase tracking-wider mb-0.5 transition-colors ${
                                 isOpen ? 'text-[#0088CC]' : 'text-[#94A3B8]'
                               }`}
                             >
                               {faq.category}
                             </span>
                             <h3
-                              className={`text-[15px] sm:text-[17px] font-bold tracking-tight leading-snug transition-colors ${
+                              className={`text-[13.5px] sm:text-[14.5px] font-bold tracking-tight leading-snug transition-colors ${
                                 isOpen ? 'text-[#0B132B]' : 'text-[#1E293B] group-hover:text-[#0088CC]'
                               }`}
                             >
@@ -285,13 +296,13 @@ export default function FAQ() {
                         </div>
 
                         <div
-                          className={`mt-1 sm:mt-0 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 ${
+                          className={`mt-0.5 sm:mt-0 w-6.5 h-6.5 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 ${
                             isOpen
-                              ? 'bg-[#0B132B] border-[#0B132B] text-white rotate-45 shadow-xs'
+                              ? 'bg-[#0B132B] border-[#0B132B] text-white rotate-45 shadow-2xs'
                               : 'bg-white border-[#E2E8F0] text-[#64748B] group-hover:border-[#00C4FF] group-hover:text-[#0088CC]'
                           }`}
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-3.5 h-3.5" />
                         </div>
                       </button>
 
@@ -302,8 +313,8 @@ export default function FAQ() {
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <div className="px-5 pb-5 sm:px-6 sm:pb-6 pl-[62px] sm:pl-[72px]">
-                            <div className="pt-3 border-t border-[#E2E8F0]/75 text-[13.5px] sm:text-[14.5px] text-[#64748B] leading-relaxed">
+                          <div className="px-4 pb-3.5 sm:px-5 sm:pb-4 pl-4 sm:pl-[58px]">
+                            <div className="pt-2.5 border-t border-[#E2E8F0]/75 text-[12px] sm:text-[12.5px] text-[#64748B] leading-relaxed">
                               {faq.answer}
                             </div>
                           </div>
