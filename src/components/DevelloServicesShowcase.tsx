@@ -1,5 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Smartphone, Monitor, Database, Bot, ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Bell, Check, Gamepad2 } from 'lucide-react';
+import {
+  Smartphone,
+  Monitor,
+  Database,
+  Bot,
+  ArrowRight,
+  CheckCircle2,
+  ShieldCheck,
+  Sparkles,
+  Bell,
+  Check,
+  Gamepad2,
+} from 'lucide-react';
 import SectionHeading from './SectionHeading';
 
 interface DevelloServicesShowcaseProps {
@@ -15,6 +27,7 @@ interface ServiceTab {
   tagline: string;
   floatingBadge: string;
 }
+
 const TABS: ServiceTab[] = [
   {
     id: 'mobile',
@@ -64,7 +77,7 @@ const TABS: ServiceTab[] = [
 ];
 
 export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesShowcaseProps) {
-  const [activeTabIdx, setActiveTabIdx] = useState(0); // Starts on 01 Mobile Application like screenshot 1
+  const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   // Auto-cycle tabs smoothly every 4.8s unless hovered
@@ -90,22 +103,22 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
   };
 
   return (
-    <section className="relative pt-22 xs:pt-26 sm:pt-36 lg:pt-40 pb-10 xs:pb-14 sm:pb-24 bg-[#F8FAFC] overflow-hidden">
+    <section className="relative w-full pt-24 sm:pt-32 lg:pt-40 pb-10 sm:pb-16 lg:pb-24 bg-[#F8FAFC] overflow-x-clip">
       {/* Subtle Cyan Ambient Radial Lighting (Light Theme) */}
       <div
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[850px] h-[550px] pointer-events-none opacity-30 -z-10"
+        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] sm:w-[850px] h-[400px] sm:h-[550px] pointer-events-none opacity-30 -z-10"
         style={{
-          background: 'radial-gradient(ellipse, rgba(0, 196, 255, 0.16) 0%, rgba(0, 136, 204, 0.08) 45%, transparent 70%)',
+          background:
+            'radial-gradient(ellipse, rgba(0, 196, 255, 0.16) 0%, rgba(0, 136, 204, 0.08) 45%, transparent 70%)',
         }}
       />
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-12 items-center">
           {/* ========================================================= */}
           {/* LEFT SIDE: HEADING, SUBTITLE & CTAs                       */}
           {/* ========================================================= */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            {/* Header (Unified SectionHeading System) */}
+          <div className="lg:col-span-5 min-w-0 flex flex-col justify-center">
             <SectionHeading
               align="left"
               as="h1"
@@ -113,48 +126,49 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
               title="We build digital products and software that drive"
               highlight="real growth."
               description="From mobile applications and modern web platforms to AI automations and custom enterprise systems, we partner with founders and teams to build fast, reliable, and user-centric digital experiences."
-              className="mb-4 xs:mb-5 sm:mb-7"
+              className="mb-5 sm:mb-7"
               animate={false}
             />
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={() => handleNav('/start-a-project')}
-                className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-[13px] sm:text-sm font-medium shadow-[0_8px_22px_rgba(0,196,255,0.25)] hover:shadow-[0_12px_28px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-[13px] sm:text-sm font-medium shadow-[0_8px_22px_rgba(0,196,255,0.25)] hover:shadow-[0_12px_28px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
               >
                 <span>Discuss Your Project</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 shrink-0" />
               </button>
 
               <button
                 type="button"
                 onClick={() => handleNav('/our-work')}
-                className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-[13px] sm:text-sm font-medium hover:border-[#0088CC]/40 hover:text-[#0088CC] shadow-2xs hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                className="w-full sm:w-auto justify-center inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white border border-[#E2E8F0] text-[#0B132B] text-[13px] sm:text-sm font-medium hover:border-[#0088CC]/40 hover:text-[#0088CC] shadow-2xs hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
               >
                 <span>Explore Our Work</span>
               </button>
             </div>
           </div>
+
           {/* ========================================================= */}
           {/* RIGHT SIDE: INTERACTIVE WINDOW (TAVQEN LIGHT THEME)       */}
           {/* ========================================================= */}
           <div
-            className="lg:col-span-7 relative"
+            className="lg:col-span-7 min-w-0 relative"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            {/* Outer Window Container - 100% Fixed Dimensions (No Height Jumping) */}
-            <div className="w-full rounded-2xl sm:rounded-[26px] bg-white/95 backdrop-blur-xl border border-[#E2E8F0] shadow-[0_16px_50px_rgba(15,23,42,0.06)] p-3.5 sm:p-5 relative overflow-hidden">
-              {/* Window Header Bar (Mac dots + Dynamic Title + Counter) - Fixed Height */}
-              <div className="flex items-center justify-between pb-3 sm:pb-3.5 mb-3.5 sm:mb-4 border-b border-[#E2E8F0] h-9">
-                {/* Window Dots */}
+            {/* Outer Window Container */}
+            <div className="w-full rounded-2xl sm:rounded-[26px] bg-white/95 backdrop-blur-xl border border-[#E2E8F0] shadow-[0_16px_50px_rgba(15,23,42,0.06)] p-3 sm:p-5 relative overflow-hidden">
+              {/* Window Header Bar */}
+              <div className="flex items-center justify-between pb-3 sm:pb-3.5 mb-3 sm:mb-4 border-b border-[#E2E8F0] min-h-[36px]">
+                {/* Window Dots + Title */}
                 <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#EF4444]/80 shrink-0" />
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#F59E0B]/80 shrink-0" />
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#10B981]/80 shrink-0" />
-                  <span className="ml-2.5 text-xs sm:text-[13px] font-bold text-[#0B132B] tracking-tight truncate transition-colors duration-200">
+                  <span className="ml-2 text-xs sm:text-[13px] font-bold text-[#0B132B] tracking-tight truncate transition-colors duration-200">
                     {activeTab.windowTitle}
                   </span>
                 </div>
@@ -167,10 +181,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
 
               {/* Window Inner Grid: Tabs Column (Left) + Vector Preview Canvas (Right) */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
-                {/* ----------------------------------------------------- */}
-                {/* VERTICAL TABS LIST (Fixed Height matching Canvas)     */}
-                {/* ----------------------------------------------------- */}
-                <div className="md:col-span-5 flex flex-col justify-between gap-1.5 sm:gap-2 h-auto md:h-[300px] sm:md:h-[320px]">
+                {/* VERTICAL TABS LIST */}
+                <div className="md:col-span-5 flex flex-col justify-between gap-1.5 sm:gap-2 h-auto md:h-[320px]">
                   {TABS.map((tab, idx) => {
                     const isActive = activeTabIdx === idx;
                     const Icon = tab.icon;
@@ -186,7 +198,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             : 'bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0]/70 text-[#64748B] hover:text-[#0B132B]'
                         }`}
                       >
-                        {/* Tab Content: Icon + Title */}
                         <div className="flex items-center gap-2.5 relative z-10 min-w-0">
                           <div
                             className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
@@ -207,7 +218,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </span>
                         </div>
 
-                        {/* Step Number on right */}
                         <span
                           className={`text-[11px] font-mono font-bold shrink-0 ml-2 relative z-10 transition-colors ${
                             isActive ? 'text-[#0088CC]' : 'text-[#94A3B8]'
@@ -216,7 +226,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           {tab.number}
                         </span>
 
-                        {/* Active Accent Pill */}
                         {isActive && (
                           <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-gradient-to-b from-[#00D4FF] to-[#0088CC] rounded-r-full" />
                         )}
@@ -225,12 +234,8 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   })}
                 </div>
 
-                {/* ----------------------------------------------------- */}
-                {/* DYNAMIC VECTOR PREVIEW CANVAS (Exact Fixed Height)    */}
-                {/* ----------------------------------------------------- */}
-                <div
-                  className="md:col-span-7 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/40 border border-[#E2E8F0] p-3 sm:p-4 relative overflow-hidden flex items-center justify-center h-[280px] sm:h-[300px] md:h-[300px] sm:md:h-[320px] shadow-inner select-none"
-                >
+                {/* DYNAMIC VECTOR PREVIEW CANVAS */}
+                <div className="md:col-span-7 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/40 border border-[#E2E8F0] p-2.5 sm:p-4 relative overflow-hidden flex items-center justify-center h-[265px] sm:h-[300px] md:h-[320px] shadow-inner select-none">
                   {/* Subtle Grid Dot Pattern Background */}
                   <div
                     className="absolute inset-0 pointer-events-none opacity-25 -z-0"
@@ -245,12 +250,9 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {/* ================================================= */}
                   {activeTab.id === 'mobile' && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-250 py-1">
-                      {/* Compact Vector Smartphone Frame */}
-                      <div className="w-[160px] sm:w-[172px] h-[235px] sm:h-[250px] rounded-[26px] bg-white border-[2.5px] border-[#0B132B] shadow-[0_16px_40px_rgba(15,23,42,0.12)] p-2.5 relative flex flex-col justify-between overflow-hidden">
-                        {/* Top Dynamic Island / Notch */}
+                      <div className="w-[152px] sm:w-[172px] h-[225px] sm:h-[250px] rounded-[26px] bg-white border-[2.5px] border-[#0B132B] shadow-[0_16px_40px_rgba(15,23,42,0.12)] p-2.5 relative flex flex-col justify-between overflow-hidden">
                         <div className="w-14 h-3 bg-[#0B132B] rounded-full mx-auto mb-1 flex items-center justify-center" />
 
-                        {/* App Header: Gradient Avatar + Text Bars */}
                         <div className="flex items-center gap-1.5 mb-1 px-1">
                           <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#00D4FF] to-[#0088CC] shadow-2xs shrink-0" />
                           <div className="space-y-1">
@@ -259,21 +261,18 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </div>
                         </div>
 
-                        {/* Large Featured Card (TAVQEN Cyan Gradient) */}
-                        <div className="w-full h-13 rounded-xl bg-gradient-to-r from-[#00D4FF] via-[#00A3E0] to-[#0088CC] p-2 flex flex-col justify-center space-y-1 shadow-xs mb-1">
+                        <div className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00D4FF] via-[#00A3E0] to-[#0088CC] p-2 flex flex-col justify-center space-y-1 shadow-xs mb-1">
                           <div className="w-12 h-1.5 bg-white/90 rounded-full" />
                           <div className="w-8 h-1 bg-white/60 rounded-full" />
                         </div>
 
-                        {/* 2x2 Content Cards Grid */}
                         <div className="grid grid-cols-2 gap-1.5 mb-1">
-                          <div className="h-7 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]" />
-                          <div className="h-7 rounded-lg bg-[#E0F7FF]/70 border border-[#00C4FF]/25" />
-                          <div className="h-7 rounded-lg bg-[#F0F9FF] border border-[#E2E8F0]" />
-                          <div className="h-7 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]" />
+                          <div className="h-6 sm:h-7 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]" />
+                          <div className="h-6 sm:h-7 rounded-lg bg-[#E0F7FF]/70 border border-[#00C4FF]/25" />
+                          <div className="h-6 sm:h-7 rounded-lg bg-[#F0F9FF] border border-[#E2E8F0]" />
+                          <div className="h-6 sm:h-7 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]" />
                         </div>
 
-                        {/* Bottom Navigation Dock */}
                         <div className="pt-1 border-t border-[#E2E8F0] flex items-center justify-around px-1">
                           <div className="w-4 h-2 rounded-full bg-[#0088CC]" />
                           <div className="w-2 h-2 rounded-full bg-[#CBD5E1]" />
@@ -282,19 +281,17 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Card Top-Right: Notification Pill */}
-                      <div className="absolute top-2 right-1 sm:right-2 px-2.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center gap-1.5 z-20 animate-in slide-in-from-right-3 duration-300">
+                      <div className="absolute top-2 right-1 sm:right-2 px-2 sm:px-2.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center gap-1.5 z-20 animate-in slide-in-from-right-3 duration-300">
                         <div className="w-5 h-5 rounded-md bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center">
                           <Bell className="w-3 h-3 stroke-[2.5]" />
                         </div>
                         <div className="space-y-0.5">
-                          <div className="w-11 h-1.5 bg-[#CBD5E1] rounded-full" />
-                          <div className="w-6 h-1 bg-[#E2E8F0] rounded-full" />
+                          <div className="w-9 sm:w-11 h-1.5 bg-[#CBD5E1] rounded-full" />
+                          <div className="w-5 sm:w-6 h-1 bg-[#E2E8F0] rounded-full" />
                         </div>
                       </div>
 
-                      {/* Floating Card Bottom-Left: 5 Stars Review Badge */}
-                      <div className="absolute bottom-3 left-1 sm:left-2 px-2.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center gap-1 z-20 animate-in slide-in-from-left-3 duration-300">
+                      <div className="absolute bottom-3 left-1 sm:left-2 px-2 sm:px-2.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center gap-1 z-20 animate-in slide-in-from-left-3 duration-300">
                         <span className="text-amber-400 text-[10px] tracking-wider font-black select-none">
                           ★★★★★
                         </span>
@@ -307,9 +304,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {/* ================================================= */}
                   {activeTab.id === 'web' && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-250 py-1">
-                      {/* Compact Vector Browser Window */}
-                      <div className="w-[240px] sm:w-[260px] h-[195px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
-                        {/* Browser Top Bar with 3 Window Dots */}
+                      <div className="w-full max-w-[260px] h-[185px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-[#E2E8F0] mb-2">
                           <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
                           <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
@@ -317,9 +312,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           <span className="w-20 h-1.5 bg-[#F1F5F9] rounded-full ml-1.5" />
                         </div>
 
-                        {/* Browser Dashboard Content Area */}
                         <div className="flex-1 grid grid-cols-12 gap-2.5 items-stretch">
-                          {/* Left Sidebar Menu Lines */}
                           <div className="col-span-3 space-y-1.5 pt-0.5">
                             <div className="w-full h-2 bg-gradient-to-r from-[#00D4FF] to-[#0088CC] rounded" />
                             <div className="w-4/5 h-1.5 bg-[#E2E8F0] rounded" />
@@ -327,16 +320,13 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             <div className="w-4/5 h-1.5 bg-[#E2E8F0] rounded" />
                           </div>
 
-                          {/* Right Content Area: Top 3 Cards + Graph Card */}
                           <div className="col-span-9 flex flex-col justify-between">
-                            {/* Top 3 Pills */}
                             <div className="grid grid-cols-3 gap-1 mb-1.5">
                               <div className="h-5 rounded-md bg-[#E0F7FF] border border-[#00C4FF]/30" />
                               <div className="h-5 rounded-md bg-[#F8FAFC] border border-[#E2E8F0]" />
                               <div className="h-5 rounded-md bg-[#F8FAFC] border border-[#E2E8F0]" />
                             </div>
 
-                            {/* Main Smooth Chart Box */}
                             <div className="flex-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] p-1.5 relative flex items-end">
                               <svg
                                 className="w-full h-full overflow-visible"
@@ -356,7 +346,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Card Bottom-Left: Checkmark Pill */}
                       <div className="absolute bottom-3 left-1 sm:left-2 px-2.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center gap-1.5 z-20 animate-in slide-in-from-left-3 duration-300">
                         <div className="w-4 h-4 rounded-md bg-emerald-100 text-emerald-600 flex items-center justify-center">
                           <Check className="w-2.5 h-2.5 stroke-[3]" />
@@ -372,7 +361,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {activeTab.id === 'ai' && (
                     <div className="relative z-10 w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-250 py-1">
                       <div className="w-full max-w-[285px] bg-white rounded-xl sm:rounded-2xl border border-[#E2E8F0] shadow-md p-2.5 sm:p-3 relative overflow-hidden">
-                        {/* n8n Canvas Header */}
                         <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#E2E8F0]">
                           <div className="flex items-center gap-1.5">
                             <span className="px-1.5 py-0.5 rounded bg-[#EA4B71]/10 text-[#EA4B71] text-[9px] font-black tracking-tight font-mono">
@@ -386,8 +374,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </span>
                         </div>
 
-                        {/* Animated n8n Node Graph Canvas */}
-                        <div className="relative h-[140px] rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] overflow-hidden p-2">
+                        <div className="relative h-[135px] sm:h-[140px] rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] overflow-hidden p-2">
                           <div
                             className="absolute inset-0 opacity-40 pointer-events-none"
                             style={{
@@ -396,7 +383,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             }}
                           />
 
-                          {/* SVG Bezier Wires with Animated Data Packets */}
                           <svg
                             viewBox="0 0 270 145"
                             className="absolute inset-0 w-full h-full pointer-events-none"
@@ -436,16 +422,14 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             </circle>
                           </svg>
 
-                          {/* Node 1: Webhook Trigger */}
-                          <div className="absolute left-1.5 top-[28px] w-[50px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
+                          <div className="absolute left-1.5 top-[28px] w-[48px] sm:w-[50px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
                             <div className="w-4 h-4 mx-auto rounded bg-[#EA4B71]/10 text-[#EA4B71] flex items-center justify-center mb-0.5 text-[9px] font-bold">
                               ⚡
                             </div>
                             <p className="text-[7.5px] font-bold text-[#0B132B]">Trigger</p>
                           </div>
 
-                          {/* Node 2: AI Agent Hub */}
-                          <div className="absolute left-[95px] top-[22px] w-[70px] rounded-lg bg-white border-2 border-[#00C4FF] shadow-xs p-1.5 text-center z-10">
+                          <div className="absolute left-1/2 -translate-x-1/2 top-[22px] w-[68px] sm:w-[70px] rounded-lg bg-white border-2 border-[#00C4FF] shadow-xs p-1.5 text-center z-10">
                             <div className="w-5 h-5 mx-auto rounded-md bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
                               <Bot className="w-3 h-3" />
                             </div>
@@ -453,23 +437,20 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             <span className="block text-[6.5px] text-[#0088CC] font-mono">LLM Brain</span>
                           </div>
 
-                          {/* Node 3A: CRM Sync */}
-                          <div className="absolute right-1.5 top-[12px] w-[54px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
+                          <div className="absolute right-1.5 top-[12px] w-[50px] sm:w-[54px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
                             <div className="w-3.5 h-3.5 mx-auto rounded bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
                               <Check className="w-2 h-2" />
                             </div>
                             <p className="text-[7.5px] font-bold text-[#0B132B]">CRM Sync</p>
                           </div>
 
-                          {/* Node 3B: Slack Alert */}
-                          <div className="absolute right-1.5 top-[58px] w-[54px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
+                          <div className="absolute right-1.5 top-[58px] w-[50px] sm:w-[54px] rounded-lg bg-white border border-[#E2E8F0] shadow-2xs p-1 text-center z-10">
                             <div className="w-3.5 h-3.5 mx-auto rounded bg-[#E0F7FF] text-[#0088CC] flex items-center justify-center mb-0.5">
                               <Sparkles className="w-2 h-2" />
                             </div>
                             <p className="text-[7.5px] font-bold text-[#0B132B]">Alert Bot</p>
                           </div>
 
-                          {/* Sub-node Tag */}
                           <div className="absolute left-2.5 bottom-1.5 px-2 py-0.5 rounded-full bg-white border border-[#E2E8F0] shadow-2xs flex items-center gap-1 z-10">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#00C4FF]" />
                             <span className="text-[7.5px] font-bold text-[#0B132B]">Autonomous Nodes</span>
@@ -489,8 +470,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {/* ================================================= */}
                   {activeTab.id === 'software' && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-250 py-1">
-                      {/* Compact Architecture Console */}
-                      <div className="w-[240px] sm:w-[260px] h-[195px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
+                      <div className="w-full max-w-[260px] h-[185px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
                         <div className="flex items-center justify-between pb-1.5 border-b border-[#E2E8F0]">
                           <span className="text-[10.5px] font-bold text-[#0B132B]">Enterprise Software</span>
                           <span className="px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[8.5px] font-bold font-mono">
@@ -498,19 +478,24 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </span>
                         </div>
 
-                        {/* Connected Node Pipelines */}
                         <div className="space-y-1.5 my-auto">
-                          <div className="p-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between">
-                            <span className="text-[10px] font-medium text-[#0B132B]">API Gateway & Microservices</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <div className="p-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between gap-2">
+                            <span className="text-[9.5px] sm:text-[10px] font-medium text-[#0B132B] truncate">
+                              API Gateway &amp; Microservices
+                            </span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                           </div>
-                          <div className="p-1.5 rounded-lg bg-[#E0F7FF] border border-[#00C4FF]/30 flex items-center justify-between">
-                            <span className="text-[10px] font-semibold text-[#0088CC]">PostgreSQL DB Cluster</span>
-                            <span className="text-[9px] font-mono font-bold text-[#0088CC]">Synced</span>
+                          <div className="p-1.5 rounded-lg bg-[#E0F7FF] border border-[#00C4FF]/30 flex items-center justify-between gap-2">
+                            <span className="text-[9.5px] sm:text-[10px] font-semibold text-[#0088CC] truncate">
+                              PostgreSQL DB Cluster
+                            </span>
+                            <span className="text-[9px] font-mono font-bold text-[#0088CC] shrink-0">Synced</span>
                           </div>
-                          <div className="p-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between">
-                            <span className="text-[10px] font-medium text-[#0B132B]">Queue & Cache Layer</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <div className="p-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between gap-2">
+                            <span className="text-[9.5px] sm:text-[10px] font-medium text-[#0B132B] truncate">
+                              Queue &amp; Cache Layer
+                            </span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                           </div>
                         </div>
 
@@ -520,7 +505,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Badge Top-Right */}
                       <div className="absolute top-2 right-1 sm:right-2 px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] shadow-md flex items-center gap-1 z-20">
                         <ShieldCheck className="w-3 h-3 text-[#0088CC]" />
                         <span className="text-[10px] font-bold text-[#0B132B]">Secure Architecture</span>
@@ -533,8 +517,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                   {/* ================================================= */}
                   {activeTab.id === 'game' && (
                     <div className="relative w-full h-full flex items-center justify-center animate-in fade-in zoom-in-95 duration-250 py-1">
-                      {/* Compact Game Engine Canvas */}
-                      <div className="w-[240px] sm:w-[260px] h-[195px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
+                      <div className="w-full max-w-[260px] h-[185px] sm:h-[210px] rounded-xl bg-white border border-[#E2E8F0] shadow-[0_16px_40px_rgba(15,23,42,0.1)] p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden">
                         <div className="flex items-center justify-between pb-1.5 border-b border-[#E2E8F0]">
                           <div className="flex items-center gap-1.5">
                             <Gamepad2 className="w-3.5 h-3.5 text-[#0088CC]" />
@@ -545,9 +528,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                           </span>
                         </div>
 
-                        {/* Viewport simulation */}
                         <div className="flex-1 rounded-lg bg-gradient-to-br from-[#0B132B] to-[#1E293B] my-1.5 p-2 flex flex-col justify-between relative overflow-hidden">
-                          {/* Ambient glow inside game viewport */}
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-[#00C4FF]/25 rounded-full blur-md" />
 
                           <div className="flex items-center justify-between text-[8px] font-mono text-[#00C4FF] relative z-10">
@@ -559,7 +540,9 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                             <div className="w-8 h-8 mx-auto rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-1 shadow-sm">
                               <Gamepad2 className="w-4 h-4 text-[#00C4FF]" />
                             </div>
-                            <span className="text-[9px] font-bold text-white tracking-wide">WebGL / Unity / Canvas</span>
+                            <span className="text-[9px] font-bold text-white tracking-wide">
+                              WebGL / Unity / Canvas
+                            </span>
                           </div>
 
                           <div className="flex items-center justify-between text-[7.5px] font-mono text-slate-400 relative z-10">
@@ -574,7 +557,6 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                         </div>
                       </div>
 
-                      {/* Floating Badge Top-Right */}
                       <div className="absolute top-2 right-1 sm:right-2 px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] shadow-md flex items-center gap-1 z-20">
                         <Sparkles className="w-3 h-3 text-[#0088CC]" />
                         <span className="text-[10px] font-bold text-[#0B132B]">Game Development</span>
@@ -584,21 +566,20 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
                 </div>
               </div>
 
-              {/* Floating Bottom Bar - 100% Fixed Height (No Shifting) */}
-              <div className="mt-3 pt-2.5 sm:mt-3.5 sm:pt-3 border-t border-[#E2E8F0] flex items-center justify-between gap-2 h-9">
+              {/* Floating Bottom Bar */}
+              <div className="mt-3 pt-2.5 sm:mt-3.5 sm:pt-3 border-t border-[#E2E8F0] flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 min-h-[36px]">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-[11px] text-[#64748B] font-medium hidden sm:inline shrink-0">
                     Service Highlight:
                   </span>
-                  <span className="text-[11.5px] sm:text-xs text-[#0B132B] font-bold truncate max-w-[200px] sm:max-w-[260px]">
+                  <span className="text-[11.5px] sm:text-xs text-[#0B132B] font-bold truncate max-w-[175px] sm:max-w-[260px]">
                     {activeTab.tagline}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 ml-auto">
-                  {/* Devello-Style Green Floating Badge */}
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-2xs text-[11px] font-semibold text-[#0B132B]">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-500 fill-emerald-100" />
+                  <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white border border-[#E2E8F0] shadow-2xs text-[10.5px] sm:text-[11px] font-semibold text-[#0B132B]">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-500 fill-emerald-100 shrink-0" />
                     <span>{activeTab.floatingBadge}</span>
                   </div>
 
