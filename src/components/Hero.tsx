@@ -45,7 +45,7 @@ export default function Hero({ onNavigate }: HeroProps = {}) {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative min-h-screen pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
+    <section ref={heroRef} className="relative min-h-[auto] sm:min-h-screen pt-24 xs:pt-28 sm:pt-36 md:pt-40 pb-10 xs:pb-12 sm:pb-24 overflow-hidden bg-[#eae8e4] flex flex-col justify-between">
       {/* DEVZEL ORGANIC LIGHT & CAUSTIC SHADOW TEXTURE */}
       <div
         className="absolute inset-0 pointer-events-none opacity-45 -z-10"
@@ -73,87 +73,53 @@ export default function Hero({ onNavigate }: HeroProps = {}) {
      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
 
   {/* Headline */}
-  <h1 className="hero-stagger text-[30px] xs:text-[36px] sm:text-5xl md:text-[64px] lg:text-[70px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.12]">
+  <h1 className="hero-stagger text-[26px] xs:text-[32px] sm:text-5xl md:text-[64px] lg:text-[70px] font-normal sm:font-medium tracking-[-0.035em] text-[#0B132B] max-w-4xl mx-auto leading-[1.14] sm:leading-[1.12]">
   Building digital products
     <br className="hidden sm:inline" /> delivering powerful services.
   </h1>
 
   {/* Subtitle */}
-  <p className="hero-stagger mt-4 sm:mt-6 text-[14px] sm:text-[16.5px] text-[#64748B] max-w-[600px] px-2 sm:px-0 mx-auto font-normal leading-relaxed">
+  <p className="hero-stagger mt-3 sm:mt-6 text-[13px] xs:text-[14px] sm:text-[16.5px] text-[#64748B] max-w-[600px] px-2 sm:px-0 mx-auto font-normal leading-relaxed">
     TAVQEN Technologies is a digital technology company building modern
     websites, software products, and scalable solutions that help
     businesses grow and move forward.
   </p>
 
- {/* CTA */}
-<div className="hero-stagger mt-7 sm:mt-8 flex flex-row items-center justify-center gap-3 sm:gap-4 w-full px-4 sm:px-0">
-  <button
-    type="button"
-    onClick={() => {
-      if (onNavigate) {
-        onNavigate('/start-a-project');
-      } else {
-        window.location.hash = '/start-a-project';
-      }
-    }}
-    className="
-      inline-flex items-center justify-center
-      px-6 sm:px-7
-      py-2.5 sm:py-3
-      rounded-full
-      bg-gradient-to-r from-[#00D4FF] to-[#0088CC]
-      text-white
-      text-xs sm:text-[13.5px]
-      font-medium
-      shadow-[0_8px_25px_rgba(0,196,255,0.25)]
-      hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)]
-      hover:scale-[1.02]
-      active:scale-95
-      transition-all
-      cursor-pointer
-      whitespace-nowrap
-    "
-  >
-    <span>Start a Project</span>
-  </button>
+  {/* CTA */}
+  <div className="hero-stagger mt-5 sm:mt-8 flex items-center justify-center gap-3 sm:gap-4">
+    <button
+      type="button"
+      onClick={() => {
+        if (onNavigate) {
+          onNavigate('/start-a-project');
+        } else {
+          window.location.hash = '/start-a-project';
+        }
+      }}
+      className="inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00D4FF] to-[#0088CC] text-white text-xs sm:text-[13.5px] font-medium shadow-[0_8px_25px_rgba(0,196,255,0.25)] hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+    >
+      <span>Start a Project</span>
+    </button>
 
-  <button
-    type="button"
-    onClick={() => {
-      if (onNavigate) {
-        onNavigate('/our-work');
-      } else {
-        window.location.hash = '/our-work';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }}
-    className="
-      inline-flex items-center justify-center
-      px-6 sm:px-7
-      py-2.5 sm:py-3
-      rounded-full
-      bg-white/80 backdrop-blur-xs
-      text-[#0B132B]
-      text-xs sm:text-[13.5px]
-      font-medium
-      border border-black/[0.08]
-      shadow-[0_4px_16px_rgba(0,0,0,0.04)]
-      hover:bg-white hover:text-[#0088CC] hover:border-[#0088CC]/40
-      hover:shadow-[0_8px_24px_rgba(0,196,255,0.12)]
-      hover:scale-[1.02]
-      active:scale-95
-      transition-all
-      cursor-pointer
-      whitespace-nowrap
-    "
-  >
-    <span>Explore Our Work</span>
-  </button>
-</div>
+    <button
+      type="button"
+      onClick={() => {
+        if (onNavigate) {
+          onNavigate('/our-work');
+        } else {
+          window.location.hash = '/our-work';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }}
+      className="inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/80 backdrop-blur-xs text-[#0B132B] text-xs sm:text-[13.5px] font-medium border border-black/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:bg-white hover:text-[#0088CC] hover:border-[#0088CC]/40 hover:shadow-[0_8px_24px_rgba(0,196,255,0.12)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+    >
+      <span>Explore Our Work</span>
+    </button>
+  </div>
 
 </div>
       {/* CONTINUOUSLY SLIDING PRODUCT IMAGES SHOWCASE */}
-      <div className="mt-12 sm:mt-16 w-full relative">
+      <div className="mt-8 xs:mt-10 sm:mt-16 w-full relative">
         {/* Soft edge mask so cards fade seamlessly */}
         <div className="mask-radial-edges w-full overflow-hidden py-3 space-y-4 sm:space-y-5">
           {/* TRACK 1: Sliding Left */}

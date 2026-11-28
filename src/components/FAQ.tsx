@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, MessageSquare, Plus, Search, Sparkles } from 'lucide-react';
+import { ArrowRight, MessageSquare, Plus, Search } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 interface FAQItem {
   id: string;
@@ -99,7 +100,7 @@ export default function FAQ({ onNavigate }: FAQProps = {}) {
   return (
     <section
       id="faq"
-      className="py-12 sm:py-16 lg:py-18 bg-white relative overflow-x-clip border-t border-[#E2E8F0]"
+      className="py-10 xs:py-12 sm:py-16 lg:py-18 bg-white relative overflow-x-clip border-t border-[#E2E8F0]"
     >
       {/* Subtle Architectural Dot & Cyan Ambient Field */}
       <div
@@ -124,21 +125,15 @@ export default function FAQ({ onNavigate }: FAQProps = {}) {
           {/* LEFT STICKY COLUMN: HEADER, TOPICS & DIRECT HELP CARD      */}
           {/* ========================================================= */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4 sm:space-y-5" data-animate="fade-up">
-            <div>
-              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[10.5px] font-bold uppercase tracking-wider mb-2.5">
-                <Sparkles className="w-3 h-3" />
-                Questions &amp; Answers
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-bold tracking-tight text-[#0B132B] leading-[1.15]">
-                Frequently Asked{' '}
-                <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-                  Questions
-                </span>
-              </h2>
-              <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#64748B] font-normal leading-relaxed max-w-sm">
-                Clear answers about our engineering workflow, tech stack, launch timelines, and 100% source ownership.
-              </p>
-            </div>
+            <SectionHeading
+              align="left"
+              className="mb-0 sm:mb-0 lg:mb-0"
+              eyebrow="Questions & Answers"
+              title="Frequently Asked"
+              highlight="Questions."
+              description="Clear answers about our engineering workflow, tech stack, launch timelines, and 100% source ownership."
+              animate={false}
+            />
 
             {/* Search Input */}
             <div className="relative max-w-sm">

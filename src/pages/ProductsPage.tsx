@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import OurProducts from '../components/OurProducts';
 import TavqenProductsOrbit from '../components/TavqenProductsOrbit';
+import SectionHeading from '../components/SectionHeading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,13 +153,12 @@ function EditorialTimeline({
                 onMouseEnter={() => onSelect(idx)}
                 style={{ left: `${idx * stepPct}%` }}
                 aria-label={`Select ${item.title}`}
-                className={`absolute top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full text-[11px] font-bold tabular-nums flex items-center justify-center transition-all duration-500 cursor-pointer ${
-                  isActive
+                className={`absolute top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full text-[11px] font-bold tabular-nums flex items-center justify-center transition-all duration-500 cursor-pointer ${isActive
                     ? 'bg-gradient-to-br from-[#00D4FF] to-[#0088CC] text-white border-2 border-[#0B132B] shadow-[0_0_0_6px_rgba(0,196,255,0.2)] scale-110'
                     : isReached
                       ? 'bg-gradient-to-br from-[#00C4FF] to-[#0088CC] text-white shadow-[0_4px_14px_rgba(0,136,204,0.25)] hover:scale-105'
                       : 'bg-white text-[#0088CC] border-2 border-[#00C4FF]/50 hover:border-[#0088CC] hover:scale-105'
-                }`}
+                  }`}
               >
                 {item.number}
               </button>
@@ -177,23 +177,20 @@ function EditorialTimeline({
                 className="group cursor-pointer pr-3 xl:pr-8 last:pr-0"
               >
                 <div
-                  className={`h-full rounded-2xl p-3.5 xl:p-4 lg:-ml-2 xl:-ml-4 border transition-all duration-300 ${
-                    isActive
+                  className={`h-full rounded-2xl p-3.5 xl:p-4 lg:-ml-2 xl:-ml-4 border transition-all duration-300 ${isActive
                       ? 'bg-white border-[#00C4FF]/45 shadow-[0_14px_34px_rgba(0,136,204,0.1)]'
                       : 'border-transparent hover:bg-white/60 hover:border-[#E2E8F0]'
-                  }`}
+                    }`}
                 >
                   <span
-                    className={`block text-[10.5px] font-bold uppercase tracking-[0.16em] mb-2 transition-colors ${
-                      isActive ? 'text-[#0088CC]' : 'text-[#64748B]'
-                    }`}
+                    className={`block text-[10.5px] font-bold uppercase tracking-[0.16em] mb-2 transition-colors ${isActive ? 'text-[#0088CC]' : 'text-[#64748B]'
+                      }`}
                   >
                     {item.eyebrow}
                   </span>
                   <h3
-                    className={`text-lg xl:text-[21px] font-bold tracking-tight leading-snug mb-2 transition-colors ${
-                      isActive ? 'text-[#0B132B]' : 'text-[#1E293B] group-hover:text-[#0B132B]'
-                    }`}
+                    className={`text-lg xl:text-[21px] font-bold tracking-tight leading-snug mb-2 transition-colors ${isActive ? 'text-[#0B132B]' : 'text-[#1E293B] group-hover:text-[#0B132B]'
+                      }`}
                   >
                     {item.title}
                   </h3>
@@ -204,11 +201,10 @@ function EditorialTimeline({
                     {item.tags.map((tag) => (
                       <span
                         key={tag}
-                        className={`rounded-[4px] border px-2.5 py-1 text-[11px] transition-colors ${
-                          isActive
+                        className={`rounded-[4px] border px-2.5 py-1 text-[11px] transition-colors ${isActive
                             ? 'border-[#00C4FF]/60 bg-[#E0F7FF]/60 text-[#0088CC] font-semibold'
                             : 'border-[#CBD5E1] bg-white text-[#475569]'
-                        }`}
+                          }`}
                       >
                         {tag}
                       </span>
@@ -239,18 +235,16 @@ function EditorialTimeline({
             <div
               key={item.number}
               onClick={() => onSelect(idx)}
-              className={`relative rounded-2xl p-4 sm:p-5 border transition-all duration-300 cursor-pointer ${
-                isActive
+              className={`relative rounded-2xl p-4 sm:p-5 border transition-all duration-300 cursor-pointer ${isActive
                   ? 'bg-white border-[#00C4FF]/50 shadow-[0_10px_26px_rgba(0,136,204,0.08)]'
                   : 'bg-white/80 border-[#E2E8F0]'
-              }`}
+                }`}
             >
               <span
-                className={`absolute -left-11 top-4 w-9 h-9 rounded-full text-[11px] font-bold tabular-nums flex items-center justify-center transition-all duration-300 ${
-                  isActive
+                className={`absolute -left-11 top-4 w-9 h-9 rounded-full text-[11px] font-bold tabular-nums flex items-center justify-center transition-all duration-300 ${isActive
                     ? 'bg-gradient-to-br from-[#00D4FF] to-[#0088CC] text-white border-2 border-[#0B132B] shadow-[0_0_0_4px_rgba(0,196,255,0.2)]'
                     : 'bg-gradient-to-br from-[#00C4FF] to-[#0088CC] text-white'
-                }`}
+                  }`}
               >
                 {item.number}
               </span>
@@ -268,11 +262,10 @@ function EditorialTimeline({
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className={`px-2.5 py-0.5 rounded-[4px] border text-[10.5px] ${
-                      isActive
+                    className={`px-2.5 py-0.5 rounded-[4px] border text-[10.5px] ${isActive
                         ? 'border-[#00C4FF]/60 bg-[#E0F7FF]/60 text-[#0088CC] font-semibold'
                         : 'border-[#CBD5E1] bg-white text-[#475569]'
-                    }`}
+                      }`}
                   >
                     {tag}
                   </span>
@@ -286,38 +279,7 @@ function EditorialTimeline({
   );
 }
 
-interface EditorialRailProps {
-  stepNumber: string;
-  verticalLabel: string;
-  progressPercent: number;
-}
 
-/** Shared left vertical editorial index rail used across process sections. */
-function EditorialRail({ stepNumber, verticalLabel, progressPercent }: EditorialRailProps) {
-  return (
-    <div
-      className="hidden lg:flex flex-col items-center shrink-0 w-10 mr-5 xl:mr-8 pt-1 select-none"
-      aria-hidden="true"
-    >
-      <div className="relative w-[1.5px] h-28 bg-[#CBD5E1]/70 overflow-hidden">
-        <div
-          className="w-full bg-gradient-to-b from-[#00D4FF] to-[#0088CC] transition-all duration-700 ease-out"
-          style={{ height: `${progressPercent}%` }}
-        />
-      </div>
-
-      <div className="my-2 w-7 h-7 rounded-[4px] bg-gradient-to-br from-[#00D4FF] to-[#0088CC] text-white text-[10px] font-bold tabular-nums flex items-center justify-center shadow-[0_4px_12px_rgba(0,136,204,0.28)] transition-transform duration-300">
-        {stepNumber}
-      </div>
-
-      <span className="mt-2 text-[9.5px] font-bold tracking-[0.22em] uppercase text-[#0088CC] [writing-mode:vertical-rl]">
-        {verticalLabel}
-      </span>
-
-      <div className="mt-4 w-[1px] flex-1 bg-[#E2E8F0]" />
-    </div>
-  );
-}
 
 export default function ProductsPage({ onNavigate }: ProductsPageProps) {
   const whySectionRef = useRef<HTMLElement | null>(null);
@@ -406,7 +368,7 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
   };
 
   return (
-    <div className="pb-16 sm:pb-24 lg:pb-28 bg-[#F8FAFC] overflow-x-clip">
+    <div className="pb-10 xs:pb-14 sm:pb-24 lg:pb-28 bg-[#F8FAFC] overflow-x-clip">
       {/* ========================================================= */}
       {/* EXISTING UI 1: TAVQEN ORBITAL PRODUCTS COSMOS (UNCHANGED) */}
       {/* ========================================================= */}
@@ -424,43 +386,22 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
         ref={whySectionRef}
         onMouseEnter={() => setIsWhyPaused(true)}
         onMouseLeave={() => setIsWhyPaused(false)}
-        className="relative py-16 sm:py-24 bg-[#F8FAFC] border-t border-[#E2E8F0] overflow-hidden"
+        className="relative py-10 xs:py-12 sm:py-18 md:py-24 bg-[#F8FAFC] border-t border-[#E2E8F0] overflow-hidden"
       >
         <div className="w-full max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex">
-            {/* Left Vertical Editorial Rail (Desktop lg+) */}
-            <EditorialRail
-              stepNumber={WHY_PRINCIPLES[activePrinciple].number}
-              verticalLabel="Why Tavqen"
-              progressPercent={((activePrinciple + 1) / WHY_PRINCIPLES.length) * 100}
-            />
-
             {/* Main Editorial Content Canvas */}
             <div className="flex-1 min-w-0">
-              {/* Top Asymmetric Split Heading */}
-              <div className="why-reveal grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end mb-12 sm:mb-16">
-                <div className="lg:col-span-7">
-                  <span className="inline-block lg:hidden px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
-                    Why TAVQEN Products
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-semibold text-[#0B132B] tracking-[-0.025em] leading-[1.1]">
-                    Built with Purpose.
-                    <br />
-                    <span className="text-[#0B132B]">
-                      Developed Around{' '}
-                      <span className="bg-gradient-to-r from-[#0088CC] to-[#00C4FF] bg-clip-text text-transparent font-bold">
-                        Real Needs.
-                      </span>
-                    </span>
-                  </h2>
-                </div>
-
-                <div className="lg:col-span-5 lg:pb-1">
-                  <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed max-w-md">
-                    At TAVQEN Technology, useful software begins with understanding the people who use it—focusing on practical tasks, clear workflows, and ongoing improvement.
-                  </p>
-                </div>
-              </div>
+              {/* Top SectionHeading (Unified System) */}
+              <SectionHeading
+                align="left"
+                className="why-reveal mb-6 xs:mb-8 sm:mb-14 max-w-3xl"
+                eyebrow="Why TAVQEN Products"
+                title="Built with Purpose. Developed Around"
+                highlight="Real Needs."
+                description="At TAVQEN Technology, useful software begins with understanding the people who use it—focusing on practical tasks, clear workflows, and ongoing improvement."
+                animate={false}
+              />
 
               <EditorialTimeline
                 items={WHY_PRINCIPLES}
@@ -482,37 +423,25 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
         ref={howSectionRef}
         onMouseEnter={() => setIsHowPaused(true)}
         onMouseLeave={() => setIsHowPaused(false)}
-        className="py-16 sm:py-24 bg-white border-t border-[#E2E8F0] overflow-hidden"
+        className="py-10 xs:py-12 sm:py-18 md:py-24 bg-white border-t border-[#E2E8F0] overflow-hidden"
       >
         <div className="w-full max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex">
-            {/* Left Vertical Editorial Rail matching Why TAVQEN */}
-            <EditorialRail
-              stepNumber={LIFECYCLE_STEPS[activeLifecycle].step}
-              verticalLabel="How We Build"
-              progressPercent={((activeLifecycle + 1) / LIFECYCLE_STEPS.length) * 100}
-            />
-
             <div className="flex-1 min-w-0">
-              <div className="how-reveal flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 sm:mb-14">
-                <div className="max-w-2xl">
-                  <span className="inline-block lg:hidden px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
-                    How We Build
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-semibold text-[#0B132B] tracking-[-0.025em] leading-[1.1]">
-                    From Idea to{' '}
-                    <span className="bg-gradient-to-r from-[#0088CC] to-[#00C4FF] bg-clip-text text-transparent font-bold">
-                      Useful Software.
-                    </span>
-                  </h2>
-                  <p className="mt-3 text-sm sm:text-[15px] text-[#64748B] leading-relaxed">
-                    Every product moves through research, planning, engineering, testing, release, and continuous maintenance based on real user feedback.
-                  </p>
-                </div>
+              <div className="how-reveal flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 xs:mb-8 sm:mb-14">
+                <SectionHeading
+                  align="left"
+                  className="mb-0 max-w-2xl"
+                  eyebrow="How We Build"
+                  title="From Idea to"
+                  highlight="Useful Software."
+                  description="Every product moves through research, planning, engineering, testing, release, and continuous maintenance based on real user feedback."
+                  animate={false}
+                />
                 <button
                   type="button"
                   onClick={() => handleNav('/company')}
-                  className="self-start md:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0088CC] hover:text-[#0B132B] transition-colors cursor-pointer shrink-0"
+                  className="self-start md:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0088CC] hover:text-[#0B132B] transition-colors cursor-pointer shrink-0 mb-3 sm:mb-4 md:mb-6"
                 >
                   <span>Meet TAVQEN</span>
                   <ArrowRight className="w-4 h-4" />
@@ -530,9 +459,8 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
                       key={item.step}
                       onMouseEnter={() => setActiveLifecycle(idx)}
                       onClick={() => setActiveLifecycle(idx)}
-                      className={`group relative pt-9 pb-10 sm:pt-12 sm:pb-12 pl-8 pr-4 sm:pl-7 sm:pr-3.5 flex flex-col items-center text-center transition-colors duration-300 border-b border-[#E2E8F0]/70 lg:border-b-0 cursor-pointer ${
-                        isActive ? 'bg-[#F0F9FF]/75' : 'bg-white hover:bg-[#F8FAFC]/80'
-                      }`}
+                      className={`group relative pt-9 pb-10 sm:pt-12 sm:pb-12 pl-8 pr-4 sm:pl-7 sm:pr-3.5 flex flex-col items-center text-center transition-colors duration-300 border-b border-[#E2E8F0]/70 lg:border-b-0 cursor-pointer ${isActive ? 'bg-[#F0F9FF]/75' : 'bg-white hover:bg-[#F8FAFC]/80'
+                        }`}
                     >
                       {/* Soft Fading Vertical Seam Shadow (left edge) */}
                       <div
@@ -559,9 +487,8 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
                       {/* Protruding 2-Tone Folded Chevron Ribbon */}
                       <svg
                         viewBox="0 0 22 60"
-                        className={`pointer-events-none absolute left-0 top-[96px] sm:top-[110px] -translate-y-1/2 w-[18px] h-[50px] drop-shadow-[2px_3px_4px_rgba(0,136,204,0.2)] transition-transform duration-300 ${
-                          isActive ? 'translate-x-1 scale-105' : 'group-hover:translate-x-0.5'
-                        }`}
+                        className={`pointer-events-none absolute left-0 top-[96px] sm:top-[110px] -translate-y-1/2 w-[18px] h-[50px] drop-shadow-[2px_3px_4px_rgba(0,136,204,0.2)] transition-transform duration-300 ${isActive ? 'translate-x-1 scale-105' : 'group-hover:translate-x-0.5'
+                          }`}
                         aria-hidden="true"
                       >
                         <polygon points="0,0 20,30 12,30 0,12" fill="#38BDF8" />
@@ -570,18 +497,16 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
 
                       {/* Minimalist Line Icon */}
                       <div
-                        className={`mb-5 flex items-center justify-center w-10 h-10 transition-all duration-300 ${
-                          isActive ? 'text-[#0088CC] -translate-y-0.5' : 'text-[#0B132B] group-hover:-translate-y-0.5'
-                        }`}
+                        className={`mb-5 flex items-center justify-center w-10 h-10 transition-all duration-300 ${isActive ? 'text-[#0088CC] -translate-y-0.5' : 'text-[#0B132B] group-hover:-translate-y-0.5'
+                          }`}
                       >
                         <Icon className="w-8 h-8" strokeWidth={1.35} />
                       </div>
 
                       {/* Step Number + Uppercase Title */}
                       <span
-                        className={`text-[10.5px] font-bold tracking-widest tabular-nums mb-1 transition-colors ${
-                          isActive ? 'text-[#0088CC]' : 'text-[#64748B]'
-                        }`}
+                        className={`text-[10.5px] font-bold tracking-widest tabular-nums mb-1 transition-colors ${isActive ? 'text-[#0088CC]' : 'text-[#64748B]'
+                          }`}
                       >
                         {item.step}
                       </span>
@@ -605,17 +530,16 @@ export default function ProductsPage({ onNavigate }: ProductsPageProps) {
       {/* ========================================================= */}
       {/* EXISTING FINAL CALL TO ACTION BANNER                      */}
       {/* ========================================================= */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <div className="rounded-[24px] sm:rounded-[34px] lg:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-6 sm:p-10 md:p-12 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
-          <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
-            TAVQEN Technology Products
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#0B132B] tracking-tight max-w-xl leading-snug">
-            Find the Right Product for Your Needs
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#64748B] max-w-lg mb-7 sm:mb-8 leading-relaxed">
-            Explore the products developed by TAVQEN Technology, review supported platforms and features, or contact our team with product questions.
-          </p>
+      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 xs:mt-10 sm:mt-16">
+        <div className="rounded-[24px] sm:rounded-[34px] lg:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-4.5 xs:p-6 sm:p-10 md:p-12 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
+          <SectionHeading
+            eyebrow="TAVQEN Technology Products"
+            title="Find the Right Product for"
+            highlight="Your Needs."
+            description="Explore the products developed by TAVQEN Technology, review supported platforms and features, or contact our team with product questions."
+            className="mb-6 sm:mb-7"
+            animate={false}
+          />
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-3.5 w-full sm:w-auto">
             <button
               type="button"

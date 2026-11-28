@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Smartphone, Monitor, Gamepad2, Cpu, Bot, Check, ArrowRight, Sparkles, Bell, ShieldCheck, Zap } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 export interface WhatWeBuildProps {
   limit?: number;
@@ -478,24 +479,21 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
     <section
       id="services"
       className={`relative bg-[#F8FAFC] border-t border-[#E2E8F0] ${
-        isFullPage ? 'pt-24 sm:pt-32 pb-16 sm:pb-24' : 'py-16 sm:py-20 lg:py-24'
+        isFullPage ? 'pt-20 xs:pt-24 sm:pt-32 pb-12 xs:pb-16 sm:pb-24' : 'py-10 xs:py-12 sm:py-18 lg:py-24'
       }`}
     >
-      {/* SECTION HEADING */}
-      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14 text-center">
-        {isFullPage && (
-          <span className="inline-block px-3 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3">
-            Services & Capabilities
-          </span>
-        )}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] max-w-2xl mx-auto leading-[1.18]">
-          {isFullPage ? 'What We Build & end to end degital solutions ' : 'What We Build'}
-        </h2>
-        <p className="mt-2.5 sm:mt-3 text-[13.5px] sm:text-[14.5px] text-[#64748B] max-w-lg mx-auto font-normal leading-relaxed">
-          {isFullPage
-            ? 'Comprehensive digital product development covering mobile apps, web applications, SaaS platforms, and custom operational software.'
-            : 'Digital products designed to solve real problems, create better experiences, and help businesses grow.'}
-        </p>
+      {/* SECTION HEADING (Unified SectionHeading System) */}
+      <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Services & Capabilities"
+          title="End-to-End Solutions"
+          highlight="Built to Scale."
+          description={
+            isFullPage
+              ? 'Comprehensive digital product development covering mobile apps, web applications, SaaS platforms, and custom operational software.'
+              : 'Digital products designed to solve real problems, create better experiences, and help businesses grow.'
+          }
+        />
       </div>
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -574,7 +572,7 @@ export default function WhatWeBuild({ limit, isFullPage = false, onNavigate }: W
           {/* ========================================================= */}
           {/* RIGHT COLUMN: SCROLLABLE SERVICE DETAILS (COMPACT & CLEAN) */}
           {/* ========================================================= */}
-          <div className="lg:col-span-7 xl:col-span-6 space-y-12 sm:space-y-16 lg:py-2">
+          <div className="lg:col-span-7 xl:col-span-6 space-y-6 xs:space-y-8 sm:space-y-16 lg:py-2">
             {displayedServices.map((item, idx) => {
               const IconComponent = item.icon;
               const isActive = activeIndex === idx;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { ArrowRight, ArrowDown, Play, Pause } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 import tavqenLogo from '../assits/Tavqen-logo.png';
 import { TAVQEN_PRODUCTS, type ProductCategoryKey, type ProductDetail } from '../data/productsData';
 
@@ -105,34 +106,22 @@ export default function TavqenProductsOrbit({ onNavigate }: TavqenProductsOrbitP
           {/* LEFT COLUMN: HERO COPY & VERIFIED PRODUCT CATEGORIES      */}
           {/* ========================================================= */}
           <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 w-fit mb-3.5 sm:mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
-              <span className="text-[11px] font-bold tracking-widest uppercase text-[#0088CC]">
-                TAVQEN PRODUCTS
-              </span>
-            </div>
-
-            <h1 className="text-[28px] sm:text-[40px] lg:text-[48px] font-semibold text-[#0B132B] tracking-[-0.028em] leading-[1.12] sm:leading-[1.1] mb-3.5 sm:mb-4">
-              Software Products{' '}
-              <span className="block mt-1">
-                Built for{' '}
-                <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-[#00C4FF] via-[#0099E5] to-[#0088CC] bg-clip-text text-transparent font-bold">
-                    Everyday Needs
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-[#00D4FF]/85 via-[#0088CC]/60 to-transparent"
-                  />
-                </span>
-              </span>
-            </h1>
-
-            <p className="text-[13.5px] sm:text-[15.5px] lg:text-[16px] text-[#475569] leading-[1.65] sm:leading-[1.7] mb-6 sm:mb-7 font-normal max-w-lg">
-              Practical software crafted by{' '}
-              <span className="font-semibold text-[#0B132B]">TAVQEN Technology</span>
-              —from everyday PDF document workflows and private on-device video playback to focused creative utilities.
-            </p>
+            <SectionHeading
+              align="left"
+              as="h1"
+              eyebrow="TAVQEN PRODUCTS"
+              title="Software Products Built for"
+              highlight="Everyday Needs."
+              description={
+                <>
+                  Practical software crafted by{' '}
+                  <span className="font-semibold text-[#0B132B]">TAVQEN Technology</span>
+                  —from everyday PDF document workflows and private on-device video playback to focused creative utilities.
+                </>
+              }
+              className="mb-6 sm:mb-7"
+              animate={false}
+            />
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 mb-7 sm:mb-8">

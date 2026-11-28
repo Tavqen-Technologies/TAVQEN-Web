@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight, FileText, Play, Image as ImageIcon, ArrowRight } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 import pdfImg from '../assits/products/product1.webp';
 import playerImg from '../assits/products/product2.webp';
@@ -231,47 +232,36 @@ export default function OurProducts({ limit, isFullPage = false, onNavigate }: O
     <section
       id="products"
       className={`bg-white border-t border-[#E2E8F0] relative ${
-        isFullPage ? 'py-10 sm:py-14' : 'py-14 sm:py-18 lg:py-20'
+        isFullPage ? 'py-8 xs:py-10 sm:py-14' : 'py-10 xs:py-12 sm:py-18 lg:py-20'
       }`}
     >
       <div className="w-full max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ========================================================= */}
-        {/* SECTION HEADER                                            */}
+        {/* SECTION HEADER (Unified SectionHeading System)            */}
         {/* ========================================================= */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8 sm:mb-10" data-animate="fade-up">
-          <div>
-            {isFullPage && (
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[11px] font-semibold uppercase tracking-wider mb-2">
-                SaaS & Consumer Products
-              </span>
-            )}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] leading-[1.2]">
-              Software designed to
-              <br />
-              solve practical problems.
-            </h2>
-          </div>
-          <div className="max-w-[340px] md:pt-1">
-            <p className="text-[12.5px] sm:text-[13.5px] text-[#64748B] font-normal leading-relaxed">
-              {isFullPage
-                ? 'Explore products owned and developed by TAVQEN Technology, complete with verified features, supported platforms, and current availability.'
-                : 'Everyday software products we design, build, and maintain in-house—focused on clarity, utility, and continuous improvement.'}
-            </p>
-          </div>
-        </div>
+        <SectionHeading
+          eyebrow={isFullPage ? 'SaaS & Consumer Products' : 'Our Products'}
+          title="Software Designed to"
+          highlight="Solve Practical Problems."
+          description={
+            isFullPage
+              ? 'Explore products owned and developed by TAVQEN Technology, complete with verified features, supported platforms, and current availability.'
+              : 'Everyday software products we design, build, and maintain in-house—focused on clarity, utility, and continuous improvement.'
+          }
+        />
 
         {/* ========================================================= */}
         {/* PRODUCT ROWS (App-gallery format with compact cards)      */}
         {/* ========================================================= */}
-        <div className="space-y-8 sm:space-y-10">
+        <div className="space-y-6 xs:space-y-8 sm:space-y-10">
           {displayedProducts.map((product) => {
             const Icon = product.icon;
             return (
               <div
                 key={product.id}
                 data-animate="fade-up"
-                className="flex flex-col lg:flex-row items-start gap-5 lg:gap-7 xl:gap-8 pb-8 sm:pb-10 border-b border-[#E2E8F0] last:border-b-0 last:pb-0"
+                className="flex flex-col lg:flex-row items-start gap-4 sm:gap-5 lg:gap-7 xl:gap-8 pb-6 xs:pb-8 sm:pb-10 border-b border-[#E2E8F0] last:border-b-0 last:pb-0"
               >
                 {/* ---------------------------------------------------- */}
                 {/* LEFT INFO COLUMN: App metadata + Store badges        */}

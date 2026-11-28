@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 import { CLIENT_PROJECTS } from '../data/clientProjectsData';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -137,7 +138,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
     <section
       ref={sectionRef}
       id="work"
-      className="bg-[#F8FAFC] border-t border-[#E2E8F0] relative py-14 sm:py-18 lg:py-22 overflow-hidden"
+      className="bg-[#F8FAFC] border-t border-[#E2E8F0] relative py-10 xs:py-12 sm:py-18 lg:py-22 overflow-hidden"
     >
       {/* Subtle ambient background glow matching TAVQEN theme */}
       <div
@@ -150,23 +151,16 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
 
       <div className="w-full max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* SECTION HEADER (Matches TAVQEN typography & palette)       */}
+        {/* SECTION HEADER (Unified SectionHeading System)            */}
         {/* ========================================================= */}
-        <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 lg:mb-16">
-          <span className="work-header-item inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[11px] font-semibold uppercase tracking-wider mb-2.5">
-            <Sparkles className="w-3 h-3" />
-            <span>Our Work</span>
-          </span>
-          <h2 className="work-header-item text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] leading-[1.18]">
-            Selected work built to{' '}
-            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-              perform.
-            </span>
-          </h2>
-          <p className="work-header-item mt-2.5 sm:mt-3 text-[12.5px] sm:text-[13.5px] text-[#64748B] font-normal leading-relaxed">
-            Custom web platforms, fintech systems, healthcare software, and scalable e-commerce products engineered by TAVQEN Technology.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Our Work"
+          icon={Sparkles}
+          title="Selected work built to"
+          highlight="perform."
+          description="Custom web platforms, fintech systems, healthcare software, and scalable e-commerce products engineered by TAVQEN Technology."
+          itemClassName="work-header-item"
+        />
 
         {/* ========================================================= */}
         {/* ALTERNATING VERTICAL TIMELINE (Compact & Balanced Layout) */}

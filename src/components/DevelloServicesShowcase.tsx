@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Smartphone, Monitor, Database, Bot, ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Bell, Check, Gamepad2 } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 interface DevelloServicesShowcaseProps {
   onNavigate?: (path: string) => void;
@@ -89,7 +90,7 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
   };
 
   return (
-    <section className="relative pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 bg-[#F8FAFC] overflow-hidden">
+    <section className="relative pt-22 xs:pt-26 sm:pt-36 lg:pt-40 pb-10 xs:pb-14 sm:pb-24 bg-[#F8FAFC] overflow-hidden">
       {/* Subtle Cyan Ambient Radial Lighting (Light Theme) */}
       <div
         className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[850px] h-[550px] pointer-events-none opacity-30 -z-10"
@@ -99,28 +100,22 @@ export default function DevelloServicesShowcase({ onNavigate }: DevelloServicesS
       />
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* ========================================================= */}
           {/* LEFT SIDE: HEADING, SUBTITLE & CTAs                       */}
           {/* ========================================================= */}
           <div className="lg:col-span-5 flex flex-col justify-center">
-            {/* Eyebrow Label */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E0F7FF]/80 border border-[#00C4FF]/30 mb-3.5 sm:mb-4 w-fit">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC]" />
-              <span className="text-[11px] sm:text-xs font-mono font-semibold tracking-wider uppercase text-[#0088CC]">
-                Digital Services & Solutions
-              </span>
-            </div>
-
-            {/* Headline with Lighter/Modern Font Weight & Crisp Spacing */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[44px] font-normal sm:font-medium text-[#0B132B] tracking-[-0.03em] leading-[1.18] mb-3.5 sm:mb-4">
-              We build digital products and software that drive real growth.
-            </h1>
-
-            {/* Description / Subtitle */}
-            <p className="text-[14px] sm:text-[15.5px] text-[#64748B] leading-[1.68] mb-6 sm:mb-7 font-normal max-w-[490px]">
-              From mobile applications and modern web platforms to AI automations and custom enterprise systems, we partner with founders and teams to build fast, reliable, and user-centric digital experiences.
-            </p>
+            {/* Header (Unified SectionHeading System) */}
+            <SectionHeading
+              align="left"
+              as="h1"
+              eyebrow="Digital Services & Solutions"
+              title="We build digital products and software that drive"
+              highlight="real growth."
+              description="From mobile applications and modern web platforms to AI automations and custom enterprise systems, we partner with founders and teams to build fast, reliable, and user-centric digital experiences."
+              className="mb-4 xs:mb-5 sm:mb-7"
+              animate={false}
+            />
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3">

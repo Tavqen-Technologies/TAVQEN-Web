@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Compass, Palette, Code2, Rocket } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -215,7 +216,7 @@ export default function HowTavqen() {
     <section
       ref={sectionRef}
       id="how"
-      className="py-12 sm:py-16 lg:py-18 bg-[#F8FAFC] border-t border-[#E2E8F0] relative overflow-hidden"
+      className="py-10 xs:py-12 sm:py-16 lg:py-18 bg-[#F8FAFC] border-t border-[#E2E8F0] relative overflow-hidden"
     >
       {/* Subtle organic light accent */}
       <div
@@ -228,19 +229,14 @@ export default function HowTavqen() {
 
       <div className="w-full max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* SECTION HEADER                                            */}
+        {/* SECTION HEADER (Unified SectionHeading System)            */}
         {/* ========================================================= */}
-        <div className="max-w-2xl mx-auto text-center mb-8 sm:mb-12" data-animate="fade-up">
-          <span className="inline-block px-3 py-0.5 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[11px] font-semibold uppercase tracking-wider mb-2.5">
-            Our Approach
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] leading-[1.18]">
-            How TAVQEN
-          </h2>
-          <p className="mt-2.5 text-[12.5px] sm:text-[13.5px] text-[#64748B] font-normal leading-relaxed">
-            We turn ideas into practical digital products through a clear, collaborative, and technology-driven approach.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Our Approach"
+          title="How TAVQEN"
+          highlight="Builds Digital Products."
+          description="We turn ideas into practical digital products through a clear, collaborative, and technology-driven approach."
+        />
 
         {/* ========================================================= */}
         {/* DESKTOP & TABLET S-CURVE SERPENTINE RIBBON (md+)          */}
@@ -410,15 +406,15 @@ export default function HowTavqen() {
         {/* ========================================================= */}
         {/* MOBILE VERTICAL STEP FLOW (< md)                          */}
         {/* ========================================================= */}
-        <div className="md:hidden relative pl-5 border-l-2 border-[#00C4FF]/45 space-y-4">
+        <div className="md:hidden relative ml-2.5 pl-5 border-l-2 border-[#00C4FF]/45 space-y-4">
           {STEPS.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={step.number}
-                className="how-mobile-card relative rounded-[18px] bg-white border border-[#E2E8F0] p-4 shadow-[0_4px_18px_rgba(15,23,42,0.03)]"
+                className="how-mobile-card relative rounded-[18px] bg-white border border-[#E2E8F0] p-3.5 xs:p-4 shadow-[0_4px_18px_rgba(15,23,42,0.03)]"
               >
-                {/* Connector node */}
+                {/* Connector node perfectly centered on the border */}
                 <span className="absolute -left-[27px] top-6 w-3 h-3 rounded-full bg-[#00C4FF] border-2 border-white ring-4 ring-[#00C4FF]/15" />
 
                 <div className="flex items-center justify-between gap-2.5 mb-2.5">

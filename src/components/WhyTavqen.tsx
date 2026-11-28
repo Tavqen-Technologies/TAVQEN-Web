@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 interface PrincipleRow {
   number: string;
@@ -100,30 +101,19 @@ export default function WhyTavqen({ onNavigate }: WhyTavqenProps = {}) {
   return (
     <section
       id="why"
-      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] py-16 sm:py-20 lg:py-24"
+      className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] py-10 xs:py-12 sm:py-18 lg:py-24"
     >
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ========================================================= */}
-        {/* CENTERED TOP HEADER: Clear & Prominent "Why TAVQEN?"      */}
+        {/* CENTERED TOP HEADER: Unified SectionHeading System        */}
         {/* ========================================================= */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[#0088CC] text-xs font-mono font-bold tracking-wider uppercase mb-3.5 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC] animate-pulse" />
-            <span>Why TAVQEN?</span>
-          </div>
-
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-normal sm:font-medium tracking-tight text-[#0B132B] leading-[1.18]">
-            Built to create.{' '}
-            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-              Designed to evolve.
-            </span>
-          </h2>
-
-          <p className="mt-3 text-[13.5px] sm:text-[14.5px] text-[#64748B] font-normal leading-relaxed max-w-lg mx-auto">
-            Six principles that shape how we think, build, and deliver digital products.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Why TAVQEN?"
+          title="Built to create."
+          highlight="Designed to evolve."
+          description="Six principles that shape how we think, build, and deliver digital products."
+        />
 
         {/* ========================================================= */}
         {/* MINIMAL HORIZONTAL PRINCIPLE ROWS (Thin-line Editorial)   */}
@@ -132,7 +122,7 @@ export default function WhyTavqen({ onNavigate }: WhyTavqenProps = {}) {
           {PRINCIPLES.map((principle) => (
             <div
               key={principle.number}
-              className="group py-6 sm:py-8 border-t border-[#E2E8F0] transition-colors duration-200"
+              className="group py-4 xs:py-5 sm:py-8 border-t border-[#E2E8F0] transition-colors duration-200"
             >
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 md:gap-8 items-start">
                 

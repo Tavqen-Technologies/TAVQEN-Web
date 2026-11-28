@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -355,7 +356,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="testimonials"
-      className="py-12 sm:py-16 lg:py-18 bg-[#F8FAFC] relative overflow-hidden border-t border-[#E2E8F0]"
+      className="py-10 xs:py-12 sm:py-16 lg:py-18 bg-[#F8FAFC] relative overflow-hidden border-t border-[#E2E8F0]"
     >
       {/* Subtle organic cyan radial lighting */}
       <div
@@ -367,19 +368,14 @@ export default function Testimonials() {
 
       <div className="w-full max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* SECTION HEADER                                            */}
+        {/* SECTION HEADER (Unified SectionHeading System)            */}
         {/* ========================================================= */}
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10" data-animate="fade-up">
-          <span className="inline-block px-3 py-0.5 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[11px] font-semibold uppercase tracking-wider mb-2">
-            Client Testimonials
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0B132B] leading-[1.18]">
-            What clients say.
-          </h2>
-          <p className="mt-2 text-[12px] sm:text-[13px] text-[#64748B] font-normal leading-relaxed">
-            Reviews from verified projects, word for word.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Client Testimonials"
+          title="What Founders Say"
+          highlight="About Working With Us."
+          description="Reviews from verified client projects, architectures, and delivered software."
+        />
 
         {/* ========================================================= */}
         {/* COMPACT LEFT-FANNED CARD HAND                             */}

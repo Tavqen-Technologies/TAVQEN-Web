@@ -16,6 +16,7 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -283,7 +284,7 @@ export default function Careers({ isFullPage = false }: CareersProps) {
       ref={sectionRef}
       id="careers"
       className={`bg-[#F8FAFC] border-t border-[#E2E8F0] relative overflow-hidden ${
-        isFullPage ? 'pt-28 sm:pt-36 pb-20 sm:pb-28' : 'py-20 sm:py-24 lg:py-28'
+        isFullPage ? 'pt-24 xs:pt-28 sm:pt-36 pb-12 xs:pb-16 sm:pb-28' : 'py-12 xs:py-14 sm:py-20 lg:py-28'
       }`}
     >
       {/* Subtle Ambient TAVQEN Cyan & Mint Glow */}
@@ -297,30 +298,20 @@ export default function Careers({ isFullPage = false }: CareersProps) {
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* SECTION HEADER                                            */}
+        {/* SECTION HEADER (Unified SectionHeading System)            */}
         {/* ========================================================= */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16" data-animate="fade-up">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Careers at TAVQEN · We&apos;re Hiring</span>
-          </span>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B132B] leading-[1.14]">
-            Build software that ships,{' '}
-            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-              scales, and matters.
-            </span>
-          </h2>
-
-          <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[16px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto">
-            Join a high-ownership engineering and design studio crafting modern web platforms, mobile apps, and AI-powered SaaS products.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Careers at TAVQEN · We're Hiring"
+          title="Build software that ships,"
+          highlight="scales, and matters."
+          description="Join a high-ownership engineering and design studio crafting modern web platforms, mobile apps, and AI-powered SaaS products."
+          className="max-w-3xl mb-6 xs:mb-8 sm:mb-16"
+        />
 
         {/* ========================================================= */}
         {/* CULTURE & PERKS BENTO STRIP                               */}
         {/* ========================================================= */}
-        <div className="career-perks-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12 sm:mb-14">
+        <div className="career-perks-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 mb-8 xs:mb-10 sm:mb-14">
           {PERKS.map((perk) => {
             const Icon = perk.icon;
             return (
@@ -401,7 +392,7 @@ export default function Careers({ isFullPage = false }: CareersProps) {
                     setIsApplying(false);
                     setSubmittedRole(null);
                   }}
-                  className={`w-full text-left rounded-[22px] p-5 border transition-all duration-300 cursor-pointer group relative overflow-hidden ${
+                  className={`w-full text-left rounded-[22px] p-3.5 xs:p-4 sm:p-5 border transition-all duration-300 cursor-pointer group relative overflow-hidden ${
                     isSelected
                       ? 'bg-white border-[#00C4FF] shadow-[0_18px_40px_rgba(0,196,255,0.14)]'
                       : 'bg-white/90 border-[#E2E8F0] hover:bg-white hover:border-[#00C4FF]/45 shadow-[0_4px_16px_rgba(15,23,42,0.02)]'
@@ -490,7 +481,7 @@ export default function Careers({ isFullPage = false }: CareersProps) {
             <div
               ref={detailPanelRef}
               key={`${activeRole.id}-${isApplying}-${submittedRole ?? ''}`}
-              className="rounded-[28px] sm:rounded-[34px] bg-white border border-[#E2E8F0] shadow-[0_24px_60px_rgba(15,23,42,0.05)] p-6 sm:p-8 lg:p-10 relative overflow-hidden"
+              className="rounded-[24px] sm:rounded-[34px] bg-white border border-[#E2E8F0] shadow-[0_24px_60px_rgba(15,23,42,0.05)] p-4 xs:p-6 sm:p-8 lg:p-10 relative overflow-hidden"
             >
               {/* Top Glowing Cyan Accent */}
               <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-[#00C4FF]/70 to-transparent pointer-events-none" />

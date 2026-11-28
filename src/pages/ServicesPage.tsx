@@ -18,7 +18,7 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
   };
 
   return (
-    <div className="pb-20 sm:pb-28">
+    <div className="pb-12 xs:pb-16 sm:pb-28">
       {/* ========================================================= */}
       {/* DEVELLO-STYLE INTERACTIVE SERVICES SHOWCASE (AT VERY TOP) */}
       {/* ========================================================= */}
@@ -37,8 +37,8 @@ export default function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* ========================================================= */}
       {/* START A PROJECT CTA BANNER                                */}
       {/* ========================================================= */}
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <div className="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-8 sm:p-12 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 xs:mt-10 sm:mt-16">
+        <div className="rounded-[28px] sm:rounded-[40px] bg-gradient-to-r from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/60 border border-[#00C4FF]/30 p-5 xs:p-7 sm:p-12 text-center flex flex-col items-center shadow-[0_20px_50px_rgba(0,196,255,0.08)]">
           <span className="inline-block px-3.5 py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-xs font-semibold uppercase tracking-wider mb-3.5">
             Let's Build the Future
           </span>

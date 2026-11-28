@@ -11,12 +11,12 @@ import {
   Globe,
   Layers,
   Smartphone,
-  Sparkles,
 } from 'lucide-react';
 import {
   CLIENT_PROJECTS,
   type ClientProject,
 } from '../data/clientProjectsData';
+import SectionHeading from '../components/SectionHeading';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,11 +49,11 @@ function buildArcPath(cx: number, cy: number, r: number, startDeg: number, endDe
   return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 ${largeArc} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
 }
 
-const HUB_SVG_W = 450;
-const HUB_SVG_H = 430;
-const HUB_CX = 148;
-const HUB_CY = 215;
-const HUB_R_ARC = 150;
+const HUB_SVG_W = 390;
+const HUB_SVG_H = 390;
+const HUB_CX = 118;
+const HUB_CY = 195;
+const HUB_R_ARC = 124;
 
 export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
   const [filter, setFilter] = useState<WorkCategory>('all');
@@ -403,7 +403,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
   }, [handleStep]);
 
   return (
-    <div ref={pageRef} className="pt-24 sm:pt-28 pb-0 bg-[#F8FAFC] relative overflow-x-clip">
+    <div ref={pageRef} className="pt-20 xs:pt-24 sm:pt-28 pb-0 bg-[#F8FAFC] relative overflow-x-clip">
       {/* Subtle Ambient TAVQEN Radial Lighting */}
       <div
         className="absolute top-28 left-1/2 -translate-x-1/2 w-full max-w-[900px] h-[500px] pointer-events-none opacity-30 -z-10"
@@ -415,28 +415,23 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* PAGE HERO HEADER                                          */}
+        {/* PAGE HERO HEADER (Unified SectionHeading System)          */}
         {/* ========================================================= */}
-        <div className="work-hero-reveal text-center max-w-3xl mx-auto px-1 sm:px-0 mb-4 sm:mb-8">
-          <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-[#0088CC]/10 text-[#0088CC] text-[10.5px] sm:text-xs font-semibold uppercase tracking-wider mb-2 sm:mb-3">
-            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-            <span>Our Work</span>
-          </span>
-          <h1 className="text-[24px] sm:text-5xl md:text-[52px] font-semibold tracking-[-0.025em] text-[#0B132B] leading-[1.15] sm:leading-[1.12]">
-            Ideas We’ve Turned{' '}
-            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent font-bold">
-              Into Reality
-            </span>
-          </h1>
-          <p className="mt-2.5 sm:mt-4 text-[12.5px] sm:text-[16.5px] text-[#64748B] font-normal leading-[1.55] sm:leading-relaxed max-w-[340px] sm:max-w-2xl mx-auto">
-            Explore the projects we&apos;ve brought to life at TAVQEN Technology. From innovative websites and mobile applications to custom software and digital solutions, each project reflects our commitment to quality, creativity, and solving real-world challenges through technology.
-          </p>
-        </div>
+        <SectionHeading
+          as="h1"
+          className="work-hero-reveal max-w-3xl mb-4 sm:mb-8"
+          eyebrow="Our Work"
+          title="Ideas We’ve Turned"
+          highlight="Into Reality"
+          description="Explore the projects we've brought to life at TAVQEN Technology. From innovative websites and mobile applications to custom software and digital solutions, each project reflects our commitment to quality, creativity, and solving real-world challenges through technology."
+          itemClassName="work-hero-reveal"
+          animate={false}
+        />
 
         {/* ========================================================= */}
         {/* FILTER SEGMENTED DOCK WITH GLIDING INDICATOR              */}
         {/* ========================================================= */}
-        <div className="work-hero-reveal flex justify-center mb-5 sm:mb-9">
+        <div className="work-hero-reveal flex justify-center mb-4 xs:mb-5 sm:mb-9">
           <div
             ref={tabDockRef}
             className="relative inline-flex max-w-full flex-wrap items-center justify-center gap-1 p-1 sm:p-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-[0_12px_32px_rgba(15,23,42,0.05)]"
@@ -483,13 +478,13 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
         </div>
 
         {/* Sticky orbital hub (desktop) & sticky compact bar (mobile) paired with stacked showcase cards */}
-        <div className="block lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-10 lg:items-start mb-10 sm:mb-12">
+        <div className="block lg:grid lg:grid-cols-12 lg:gap-10 xl:gap-14 lg:items-start mb-16 sm:mb-20">
           {/* LEFT ORBITAL COLUMN / MOBILE STICKY BAR (stays sticky until all cards finish scrolling) */}
-          <div className="sticky top-[74px] sm:top-[84px] lg:top-24 lg:col-span-5 lg:self-start z-30 flex flex-col items-center w-full mb-5 lg:mb-0">
-            {/* Desktop Radial Arc Stage (compact scale on 1024px–1279px laptops to avoid overlapping right cards) */}
-            <div className="hidden lg:block relative mx-auto w-[364px] h-[350px] xl:w-[450px] xl:h-[430px] overflow-visible">
+          <div className="sticky top-[74px] sm:top-[84px] lg:top-24 lg:col-span-5 lg:self-start z-30 flex flex-col items-center w-full mb-6 lg:mb-0">
+            {/* Desktop Radial Arc Stage (compact scale to guarantee zero overlap with right cards) */}
+            <div className="hidden lg:block relative mx-auto w-full max-w-[370px] h-[390px] overflow-visible">
               <div
-                className="relative lg:scale-[0.80] xl:scale-100 origin-top-left"
+                className="relative origin-top-left"
                 style={{ width: `${HUB_SVG_W}px`, height: `${HUB_SVG_H}px` }}
               >
                 <svg
@@ -597,12 +592,12 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                 {/* Circular White Center Hub (clean spacing so text never clips) */}
                 <div
                   ref={hubRef}
-                  className="absolute rounded-full bg-white border border-[#E2E8F0] shadow-[0_24px_65px_rgba(15,23,42,0.08)] flex flex-col items-center justify-center text-center px-5 py-4 z-10 overflow-hidden"
+                  className="absolute rounded-full bg-white border border-[#E2E8F0] shadow-[0_20px_50px_rgba(15,23,42,0.06)] flex flex-col items-center justify-center text-center px-4 py-3 z-10 overflow-hidden"
                   style={{
-                    width: '236px',
-                    height: '236px',
-                    left: `${HUB_CX - 118}px`,
-                    top: `${HUB_CY - 118}px`,
+                    width: '200px',
+                    height: '200px',
+                    left: `${HUB_CX - 100}px`,
+                    top: `${HUB_CY - 100}px`,
                   }}
                 >
                   <div
@@ -613,48 +608,48 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                     }}
                   />
 
-                  <span className="relative z-10 px-2.5 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[9.5px] font-bold uppercase tracking-wider mb-1.5 whitespace-nowrap">
+                  <span className="relative z-10 px-2.5 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[9px] font-bold uppercase tracking-wider mb-1 whitespace-nowrap">
                     Client Portfolio
                   </span>
 
-                  <h2 className="relative z-10 text-[16px] font-bold text-[#0B132B] tracking-tight leading-snug">
+                  <h2 className="relative z-10 text-[15px] font-bold text-[#0B132B] tracking-tight leading-snug">
                     Client Solutions
                   </h2>
 
-                  <p className="relative z-10 text-[11px] text-[#64748B] mt-1 leading-snug max-w-[168px]">
-                    Click any milestone or scroll to inspect each client deliverable.
+                  <p className="relative z-10 text-[10.5px] text-[#64748B] mt-0.5 leading-snug max-w-[150px]">
+                    Click any milestone or scroll to inspect projects.
                   </p>
 
-                  <div className="relative z-10 mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] whitespace-nowrap">
+                  <div className="relative z-10 mt-1.5 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[9.5px] font-bold text-[#0088CC] whitespace-nowrap">
                     <span>{filteredStudies.length} Client Deliverables</span>
                   </div>
 
                   {filteredStudies.length > 1 && (
-                    <div className="relative z-10 mt-2.5 flex items-center gap-2">
+                    <div className="relative z-10 mt-2 flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => handleStep(-1)}
-                        className="w-6 h-6 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
+                        className="w-5.5 h-5.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
                         aria-label="Previous project"
                       >
-                        <ChevronLeft className="w-3.5 h-3.5" />
+                        <ChevronLeft className="w-3 h-3" />
                       </button>
-                      <span className="text-[11px] font-bold tabular-nums text-[#0B132B] px-1">
+                      <span className="text-[10.5px] font-bold tabular-nums text-[#0B132B] px-1">
                         0{safeActiveIndex + 1} / 0{filteredStudies.length}
                       </span>
                       <button
                         type="button"
                         onClick={() => handleStep(1)}
-                        className="w-6 h-6 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
+                        className="w-5.5 h-5.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0088CC] text-[#475569] hover:text-[#0088CC] flex items-center justify-center transition-colors cursor-pointer"
                         aria-label="Next project"
                       >
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ChevronRight className="w-3 h-3" />
                       </button>
                     </div>
                   )}
                 </div>
 
-                {/* Clickable 01..03 Milestone Labels along the Arc (click focuses/scrolls to project card) */}
+                {/* Clickable Milestone Labels along the Arc (Sleek and compact so ZERO overlap with cards) */}
                 {arcNodes.map((node) => {
                   const isActive = node.idx === safeActiveIndex;
                   return (
@@ -663,19 +658,21 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                       type="button"
                       onClick={() => scrollToCard(node.idx)}
                       style={{
-                        left: `${node.tail.x + 10}px`,
+                        left: `${node.tail.x + 8}px`,
                         top: `${node.tail.y}px`,
                         transform: 'translateY(-50%)',
                       }}
-                      className={`group/pill absolute z-20 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
-                        ? 'bg-white border-[#00C4FF] shadow-[0_10px_24px_rgba(0,196,255,0.18)] text-[#0B132B] scale-105'
-                        : 'bg-white/90 border-[#E2E8F0]/90 text-[#64748B] hover:text-[#0088CC] hover:border-[#00C4FF]/45 hover:bg-white'
+                      className={`group/pill absolute z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-300 cursor-pointer whitespace-nowrap shadow-2xs ${isActive
+                        ? 'bg-white border-[#00C4FF] shadow-[0_8px_22px_rgba(0,196,255,0.22)] text-[#0B132B] scale-105'
+                        : 'bg-white/95 border-[#E2E8F0] text-[#64748B] hover:text-[#0088CC] hover:border-[#00C4FF]/50 hover:bg-white'
                         }`}
                     >
-                      <span className="text-[11px] font-bold tabular-nums text-[#0088CC]">
-                        {node.study.number}
+                      <span className="text-[10px] font-bold tabular-nums text-[#0088CC] bg-[#E0F7FF] px-1.5 py-0.5 rounded-md">
+                        0{node.idx + 1}
                       </span>
-                      <span className="text-xs font-semibold">{node.study.shortTitle}</span>
+                      <span className="text-xs font-semibold text-[#0B132B] group-hover/pill:text-[#0088CC] transition-colors">
+                        {node.study.title}
+                      </span>
                     </button>
                   );
                 })}
@@ -795,7 +792,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
             {/* RIGHT STACKED COLUMN: All Client Deliverables */}
             <div className="lg:col-span-7 min-w-0">
               {filteredStudies.length > 0 ? (
-                <div className="space-y-4 sm:space-y-5 lg:space-y-5">
+                <div className="space-y-6 sm:space-y-8 lg:space-y-9">
                   {filteredStudies.map((project, idx) => {
                     const isActive = idx === safeActiveIndex;
                     return (
@@ -813,9 +810,9 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                             handleNav(project.link);
                           }
                         }}
-                        className={`work-radial-card scroll-mt-[176px] lg:scroll-mt-28 group relative rounded-[18px] sm:rounded-[22px] bg-white border transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-0.5 ${project.accentBorderHover} ${isActive
-                          ? 'border-[#00C4FF]/85 shadow-[0_16px_40px_rgba(0,196,255,0.14)]'
-                          : 'border-[#E2E8F0] shadow-[0_8px_24px_rgba(15,23,42,0.04)] hover:shadow-[0_14px_36px_rgba(0,196,255,0.10)]'
+                        className={`work-radial-card scroll-mt-[176px] lg:scroll-mt-28 group relative rounded-[22px] sm:rounded-[26px] bg-white border transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-1 ${project.accentBorderHover} ${isActive
+                          ? 'border-[#00C4FF]/85 shadow-[0_18px_45px_rgba(0,196,255,0.16)]'
+                          : 'border-[#E2E8F0] shadow-[0_8px_26px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_40px_rgba(0,196,255,0.12)]'
                           }`}
                       >
                         {/* Hover Ambient Glow */}
@@ -830,9 +827,9 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                             }`}
                         />
 
-                        {/* COMPACT & SLEEK HERO VISUAL STAGE */}
-                        <div className="relative p-2 sm:p-2.5 pb-0">
-                          <div className="relative w-full h-[140px] sm:h-[175px] xl:h-[195px] rounded-[14px] sm:rounded-[18px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 p-2 sm:p-2.5 flex items-center justify-center">
+                        {/* HERO VISUAL STAGE */}
+                        <div className="relative p-2.5 sm:p-3 pb-0">
+                          <div className="relative w-full h-[175px] sm:h-[215px] xl:h-[245px] rounded-[16px] sm:rounded-[20px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 p-2 sm:p-2.5 flex items-center justify-center">
                             {/* Tech Blueprint Micro-Grid Pattern */}
                             <div
                               className="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay z-0"
@@ -843,18 +840,18 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                             />
 
                             {/* Viewfinder Micro Corner Cyber Accents */}
-                            <div className="absolute top-1.5 right-1.5 w-2 h-2 border-t-2 border-r-2 border-[#00C4FF]/50 rounded-tr-[3px] pointer-events-none z-20" />
-                            <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b-2 border-r-2 border-[#00C4FF]/50 rounded-br-[3px] pointer-events-none z-20" />
+                            <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t-2 border-r-2 border-[#00C4FF]/50 rounded-tr-[3px] pointer-events-none z-20" />
+                            <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b-2 border-r-2 border-[#00C4FF]/50 rounded-br-[3px] pointer-events-none z-20" />
 
                             <img
                               src={project.image}
                               alt={project.title}
-                              className="w-full h-full object-cover object-top group-hover:scale-[1.025] transition-transform duration-700 ease-out relative z-10 rounded-[10px]"
+                              className="w-full h-full object-cover object-top group-hover:scale-[1.025] transition-transform duration-700 ease-out relative z-10 rounded-[12px]"
                             />
 
                             {/* Top Floating Number Badge */}
-                            <div className="absolute top-2 left-2 z-20 pointer-events-none">
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-2xs text-[9px] sm:text-[9.5px] font-bold text-[#0B132B] uppercase tracking-wider">
+                            <div className="absolute top-2.5 left-2.5 z-20 pointer-events-none">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-2xs text-[9.5px] sm:text-[10px] font-bold text-[#0B132B] uppercase tracking-wider">
                                 <span className="relative flex h-1.5 w-1.5">
                                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C4FF] opacity-75"></span>
                                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00C4FF]"></span>
@@ -867,33 +864,33 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                           </div>
                         </div>
 
-                        {/* COMPACT & REFINED EDITORIAL FOOTER */}
-                        <div className="relative z-10 px-3.5 sm:px-4.5 pt-3 pb-3.5">
+                        {/* REFINED EDITORIAL FOOTER */}
+                        <div className="relative z-10 px-4 sm:px-5 pt-3.5 pb-4">
                           {/* CATEGORY EYEBROW */}
                           <div className="mb-1">
                             <span
-                              className={`text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.1em] ${project.eyebrowColor}`}
+                              className={`text-[10px] sm:text-[10.5px] font-bold uppercase tracking-[0.1em] ${project.eyebrowColor}`}
                             >
                               {project.category}
                             </span>
                           </div>
 
                           {/* PROJECT TITLE */}
-                          <h3 className="text-base sm:text-[18px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors">
+                          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors">
                             {project.title}
                           </h3>
 
                           {/* SHORT DESCRIPTION */}
-                          <p className="mt-1 text-[11.5px] sm:text-[12.5px] text-[#64748B] leading-relaxed line-clamp-2">
+                          <p className="mt-1 text-xs sm:text-[13px] text-[#64748B] leading-relaxed line-clamp-2">
                             {project.description}
                           </p>
 
                           {/* TECH STACK BADGES */}
-                          <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                          <div className="flex flex-wrap items-center gap-1.5 mt-3">
                             {project.techStack.map((tech) => (
                               <span
                                 key={tech}
-                                className="px-2 py-0.5 rounded-full bg-[#F0F9FF] text-[#0088CC] border border-[#00C4FF]/25 text-[9.5px] sm:text-[10px] font-semibold"
+                                className="px-2.5 py-0.5 rounded-full bg-[#F0F9FF] text-[#0088CC] border border-[#00C4FF]/25 text-[10px] sm:text-[10.5px] font-semibold"
                               >
                                 {tech}
                               </span>
@@ -901,9 +898,9 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                           </div>
 
                           {/* CLEAN BOTTOM ROW: 01 / 04 and View Project → */}
-                          <div className="pt-2.5 mt-3 border-t border-[#E2E8F0]/80 flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-bold tabular-nums text-[#64748B]">
-                              {project.number} / {String(CLIENT_PROJECTS.length).padStart(2, '0')}
+                          <div className="pt-3 mt-3.5 border-t border-[#E2E8F0]/80 flex items-center justify-between gap-2">
+                            <span className="text-xs font-bold tabular-nums text-[#64748B]">
+                              {project.number}
                             </span>
 
                             <button
@@ -912,10 +909,10 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                                 e.stopPropagation();
                                 handleNav(project.link);
                               }}
-                              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-[11px] font-bold transition-all duration-300 cursor-pointer group/btn shadow-xs"
+                              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-xs font-bold transition-all duration-300 cursor-pointer group/btn shadow-xs"
                             >
                               <span>{project.buttonText}</span>
-                              <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
+                              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
                             </button>
                           </div>
                         </div>

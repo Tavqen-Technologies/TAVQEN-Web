@@ -64,15 +64,26 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
   };
 
   return (
-    <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pointer-events-none">
-      {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1180px]) */}
+    <>
+      {/* Top viewport header mask to prevent scrolled text from peeking out above the floating pill */}
       <div
-        className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-500 ease-out px-3.5 sm:px-6 md:px-7 py-2 sm:py-2.5 md:py-3 flex items-center justify-between border relative overflow-hidden ${
+        aria-hidden="true"
+        className={`fixed top-0 left-0 right-0 h-16 sm:h-20 pointer-events-none z-40 transition-opacity duration-300 ${
           isScrolled
-            ? 'translate-y-[2px] bg-white/95 backdrop-blur-xl border-black/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.07)]'
-            : 'translate-y-0 bg-white/90 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
+            ? 'opacity-100 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/95 to-transparent'
+            : 'opacity-0'
         }`}
-      >
+      />
+
+      <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pointer-events-none">
+        {/* Floating Pill Capsule aligned to Global Layout Container (max-w-[1180px]) */}
+        <div
+          className={`pointer-events-auto w-full max-w-[1180px] rounded-full transition-all duration-500 ease-out px-3.5 sm:px-6 md:px-7 py-2 sm:py-2.5 md:py-3 flex items-center justify-between border relative overflow-hidden ${
+            isScrolled
+              ? 'translate-y-[2px] bg-white border-black/[0.08] shadow-[0_12px_36px_rgba(15,23,42,0.08)]'
+              : 'translate-y-0 bg-white/95 backdrop-blur-md border-black/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.05)]'
+          }`}
+        >
         {/* TOP SIDE PROGRESS LINE: Advances smoothly as user scrolls down */}
         <div className="absolute top-0 left-6 right-6 h-[2.5px] bg-black/[0.03] rounded-full overflow-hidden pointer-events-none">
           <div
@@ -201,6 +212,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }: NavbarProp
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 }

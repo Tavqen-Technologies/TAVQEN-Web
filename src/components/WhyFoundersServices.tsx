@@ -1,4 +1,5 @@
 import { FileCode2, ShieldCheck, Activity, Target } from 'lucide-react';
+import SectionHeading from './SectionHeading';
 
 interface FounderReason {
   number: string;
@@ -40,7 +41,7 @@ const REASONS: FounderReason[] = [
 
 export default function WhyFoundersServices() {
   return (
-    <section className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] py-16 sm:py-20 lg:py-24">
+    <section className="relative bg-[#F8FAFC] border-t border-[#E2E8F0] py-10 xs:py-12 sm:py-18 lg:py-24">
       {/* Soft Ambient Radial Background Accent */}
       <div
         aria-hidden="true"
@@ -53,30 +54,19 @@ export default function WhyFoundersServices() {
 
       <div className="w-full max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ========================================================= */}
-        {/* HEADER: Centered, Clean Editorial TAVQEN Style            */}
+        {/* HEADER: Unified SectionHeading System                     */}
         {/* ========================================================= */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E0F7FF] border border-[#00C4FF]/30 text-[#0088CC] text-xs font-mono font-bold tracking-wider uppercase mb-3.5 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0088CC] animate-pulse" />
-            <span>Why Choose Us</span>
-          </div>
-
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-semibold tracking-tight text-[#0B132B] leading-[1.18]">
-            Why Founders{' '}
-            <span className="bg-gradient-to-r from-[#00D4FF] to-[#0088CC] bg-clip-text text-transparent">
-              Choose TAVQEN
-            </span>
-          </h2>
-
-          <p className="mt-3.5 text-[14px] sm:text-[15.5px] text-[#64748B] font-normal leading-relaxed max-w-2xl mx-auto">
-            We bring together business understanding, modern technology, and thoughtful engineering to transform ideas into reliable digital products.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Why Choose Us"
+          title="Why Founders"
+          highlight="Choose TAVQEN."
+          description="We bring together business understanding, modern technology, and thoughtful engineering to transform ideas into reliable digital products."
+        />
 
         {/* ========================================================= */}
         {/* COMPACT 2-COLUMN RESPONSIVE GRID (4 REASONS)              */}
         {/* ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-5 lg:gap-6">
           {REASONS.map((item) => {
             const IconComponent = item.icon;
             return (
