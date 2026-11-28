@@ -2,71 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { TAVQEN_PRODUCTS } from '../data/productsData';
+import { CLIENT_PROJECTS } from '../data/clientProjectsData';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface ProjectItem {
-  number: string;
-  id: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  impact: string;
-  tags: string[];
-  image: string;
-  alt: string;
-  icon: (typeof TAVQEN_PRODUCTS)[number]['icon'];
-  glowGradient: string;
-  accentBorderHover: string;
-  iconStyle: string;
-  eyebrowColor: string;
-}
 
 interface RecentWorkProps {
   onNavigate?: (path: string) => void;
 }
 
-const CARD_ACCENTS = [
-  {
-    glowGradient:
-      'radial-gradient(circle at 85% 90%, rgba(0, 196, 255, 0.22) 0%, rgba(155, 227, 223, 0.14) 38%, transparent 72%)',
-    accentBorderHover: 'hover:border-[#00C4FF]/60',
-    iconStyle: 'bg-[#E0F7FF] text-[#0088CC] border-[#00C4FF]/25',
-    eyebrowColor: 'text-[#0088CC]',
-  },
-  {
-    glowGradient:
-      'radial-gradient(circle at 85% 90%, rgba(0, 136, 204, 0.20) 0%, rgba(56, 189, 248, 0.14) 38%, transparent 72%)',
-    accentBorderHover: 'hover:border-[#0088CC]/55',
-    iconStyle: 'bg-[#F0F9FF] text-[#0284C7] border-[#38BDF8]/30',
-    eyebrowColor: 'text-[#0284C7]',
-  },
-  {
-    glowGradient:
-      'radial-gradient(circle at 85% 90%, rgba(14, 165, 233, 0.18) 0%, rgba(155, 227, 223, 0.14) 38%, transparent 72%)',
-    accentBorderHover: 'hover:border-[#00C4FF]/55',
-    iconStyle: 'bg-[#E0F7FF] text-[#0088CC] border-[#00C4FF]/25',
-    eyebrowColor: 'text-[#0088CC]',
-  },
-];
-
-const WORK_ITEMS: ProjectItem[] = TAVQEN_PRODUCTS.map((product, idx) => {
-  const accent = CARD_ACCENTS[idx % CARD_ACCENTS.length];
-  return {
-    number: `0${idx + 1}`,
-    id: product.id,
-    eyebrow: `${product.platforms[0] ?? 'Product'} · ${product.categoryLabel}`,
-    title: `${product.name} — ${product.tagline}`,
-    description: product.overview,
-    impact: `${product.status} · ${product.stats[0]?.value ?? product.version}`,
-    tags: product.features.slice(0, 3).map((f) => f.title),
-    image: product.image,
-    alt: product.alt,
-    icon: product.icon,
-    ...accent,
-  };
-});
+const WORK_ITEMS = CLIENT_PROJECTS.slice(0, 2);
 
 export default function RecentWork({ onNavigate }: RecentWorkProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -220,7 +164,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
             </span>
           </h2>
           <p className="work-header-item mt-2.5 sm:mt-3 text-[12.5px] sm:text-[13.5px] text-[#64748B] font-normal leading-relaxed">
-            Real software products developed in-house by TAVQEN Technology for everyday documents, local video playback, and focused creative tools.
+            Custom web platforms, fintech systems, healthcare software, and scalable e-commerce products engineered by TAVQEN Technology.
           </p>
         </div>
 
@@ -245,7 +189,6 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
           {/* Timeline Milestones (Tighter vertical spacing) */}
           <div className="space-y-6 sm:space-y-8 md:space-y-6">
             {WORK_ITEMS.map((project, idx) => {
-              const Icon = project.icon;
               const isLeft = idx % 2 === 0;
               const isActive = activeSteps.includes(idx);
 
@@ -281,16 +224,16 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                     }`}
                   >
                     <article
-                      onClick={() => handleNav(`/our-work?project=${project.id}`)}
+                      onClick={() => handleNav(project.link)}
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
-                          handleNav(`/our-work?project=${project.id}`);
+                          handleNav(project.link);
                         }
                       }}
-                      className={`work-timeline-card group relative rounded-[20px] sm:rounded-[22px] bg-white border border-[#E2E8F0] ${project.accentBorderHover} p-4 sm:p-5 shadow-[0_6px_25px_rgba(15,23,42,0.03)] hover:shadow-[0_16px_40px_rgba(0,196,255,0.12)] hover:-translate-y-1 transition-all duration-400 overflow-hidden cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-[#00C4FF]/50`}
+                      className={`work-timeline-card group relative rounded-[18px] sm:rounded-[20px] bg-white border border-[#E2E8F0] ${project.accentBorderHover} p-3.5 sm:p-4 shadow-[0_4px_20px_rgba(15,23,42,0.03)] hover:shadow-[0_16px_36px_rgba(0,196,255,0.12)] hover:-translate-y-1 transition-all duration-400 overflow-hidden cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-[#00C4FF]/50`}
                     >
                       {/* Subtle Corner Ambient Glow */}
                       <div
@@ -298,74 +241,77 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
                         style={{ background: project.glowGradient }}
                       />
 
+                      {/* Unique Viewfinder Top-Right Corner Accent */}
+                      <div className="absolute top-2.5 right-2.5 w-2 h-2 border-t-2 border-r-2 border-[#00C4FF]/30 group-hover:border-[#00C4FF] transition-colors rounded-tr-[3px] pointer-events-none" />
+
                       {/* Subtle Top Edge Highlight */}
-                      <div className="absolute top-0 left-6 right-6 h-[1.5px] bg-gradient-to-r from-transparent via-[#00C4FF]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute top-0 left-6 right-6 h-[1.5px] bg-gradient-to-r from-transparent via-[#00C4FF]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                       <div className="relative z-10">
-                        {/* Card Header Row: Icon + Uppercase Eyebrow + Watermark Index */}
-                        <div className="flex items-start justify-between gap-3 mb-2.5">
-                          <div className="flex items-center gap-2.5 pt-0.5">
-                            <div
-                              className={`w-7 h-7 rounded-lg border flex items-center justify-center flex-shrink-0 shadow-2xs transition-transform duration-300 group-hover:scale-105 ${project.iconStyle}`}
-                            >
-                              <Icon className="w-3.5 h-3.5 stroke-[2]" />
-                            </div>
+                        {/* Card Header Row: Eyebrow + Watermark Index */}
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <div className="flex items-center gap-2 pt-0.5">
                             <span
                               className={`text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.1em] leading-tight ${project.eyebrowColor}`}
                             >
-                              {project.eyebrow}
+                              {project.category}
                             </span>
                           </div>
 
-                          {/* Watermark Number (01, 02, 03) */}
-                          <span className="text-3xl sm:text-4xl font-black tracking-tighter tabular-nums text-[#0B132B]/[0.05] group-hover:text-[#0088CC]/[0.12] transition-colors duration-400 leading-none select-none">
+                          {/* Watermark Number (01, 02, 03, 04) */}
+                          <span className="text-2xl sm:text-3xl font-black tracking-tighter tabular-nums text-[#0B132B]/[0.06] group-hover:text-[#0088CC]/[0.14] transition-colors duration-400 leading-none select-none">
                             {project.number}
                           </span>
                         </div>
 
                         {/* Project Title */}
-                        <h3 className="text-base sm:text-[17px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors duration-300">
+                        <h3 className="text-[15px] sm:text-base font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors duration-300">
                           {project.title}
                         </h3>
 
                         {/* Project Description */}
-                        <p className="mt-1.5 text-[11.5px] sm:text-[12.5px] text-[#64748B] leading-relaxed font-normal">
+                        <p className="mt-1 text-[11px] sm:text-[11.5px] text-[#64748B] leading-relaxed font-normal line-clamp-2">
                           {project.description}
                         </p>
 
-                        {/* Compact Project Preview Visual */}
-                        <div className="mt-3.5 relative h-[135px] sm:h-[155px] rounded-[14px] overflow-hidden border border-black/[0.06] bg-[#F1F5F9] shadow-[0_4px_16px_rgba(15,23,42,0.04)]">
+                        {/* Compact Unique Project Preview Visual */}
+                        <div className="mt-2.5 relative h-[115px] sm:h-[130px] rounded-[12px] overflow-hidden border border-[#E2E8F0]/90 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 shadow-[0_3px_12px_rgba(15,23,42,0.04)]">
+                          {/* Tech Micro Blueprint Dot Matrix */}
+                          <div
+                            className="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay z-10"
+                            style={{
+                              backgroundImage: 'radial-gradient(circle, #0088CC 0.75px, transparent 0.75px)',
+                              backgroundSize: '12px 12px',
+                            }}
+                          />
+
                           <img
                             src={project.image}
-                            alt={project.alt}
+                            alt={project.title}
                             className="w-full h-full object-cover object-top transition-transform duration-600 ease-out group-hover:scale-[1.03]"
                             loading="lazy"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none z-10" />
 
-                          {/* Floating Status / Metric Badge */}
-                          <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-black/[0.06] shadow-2xs">
-                            <span className="text-[10px] font-bold text-[#0B132B]">
-                              {project.impact}
-                            </span>
-                          </div>
+                          {/* Viewfinder Bottom-Left Corner Accent */}
+                          <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b-2 border-r-2 border-[#00C4FF]/50 rounded-br-[2px] pointer-events-none z-20" />
                         </div>
 
                         {/* Footer: Tags + Action */}
-                        <div className="mt-3.5 pt-2.5 border-t border-[#E2E8F0]/80 flex flex-wrap items-center justify-between gap-2">
+                        <div className="mt-2.5 pt-2 border-t border-[#E2E8F0]/80 flex flex-wrap items-center justify-between gap-1.5">
                           <div className="flex flex-wrap gap-1">
-                            {project.tags.map((tag, tIdx) => (
+                            {project.techStack.map((tag, tIdx) => (
                               <span
                                 key={tIdx}
-                                className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/90 border border-[#E2E8F0] text-[#475569] group-hover:border-[#00C4FF]/35 transition-colors"
+                                className="px-1.5 py-0.5 rounded-md text-[9px] sm:text-[9.5px] font-medium bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] group-hover:border-[#00C4FF]/35 group-hover:text-[#0088CC] transition-colors"
                               >
                                 {tag}
                               </span>
                             ))}
                           </div>
 
-                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0088CC] group-hover:text-[#00C4FF] transition-colors">
-                            <span>View Build</span>
+                          <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] font-semibold text-[#0088CC] group-hover:text-[#00C4FF] transition-colors">
+                            <span>{project.buttonText || 'View Project'}</span>
                             <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                           </span>
                         </div>
@@ -391,7 +337,7 @@ export default function RecentWork({ onNavigate }: RecentWorkProps) {
             <ArrowRight className="w-3.5 h-3.5 text-[#0088CC] transition-transform duration-300 group-hover:translate-x-0.5" />
           </button>
           <p className="mt-2 text-[11px] text-[#94A3B8]">
-            Inspect all {WORK_ITEMS.length} TAVQEN products, workflows, and product notes
+            Inspect all {CLIENT_PROJECTS.length} client projects, technical architectures, and live platforms
           </p>
         </div>
       </div>

@@ -6,17 +6,17 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  FileText,
+  Cloud,
   FolderKanban,
+  Globe,
   Layers,
+  Smartphone,
   Sparkles,
-  TrendingUp,
 } from 'lucide-react';
 import {
-  getProductById,
-  TAVQEN_PRODUCTS,
-  type ProductGalleryItem,
-} from '../data/productsData';
+  CLIENT_PROJECTS,
+  type ClientProject,
+} from '../data/clientProjectsData';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,100 +24,13 @@ interface OurWorkPageProps {
   onNavigate?: (path: string) => void;
 }
 
-interface CaseStudy {
-  id: string;
-  number: string;
-  itemKind: 'product' | 'project';
-  targetRoute: string;
-  actionLabel: string;
-  notesLabel: string;
-  categoryLabel: string;
-  shortTitle: string;
-  title: string;
-  badgeText: string;
-  impact: string;
-  overview: string;
-  challenge: string;
-  solution: string;
-  capabilities: string[];
-  image: string;
-  alt: string;
-  gallery?: ProductGalleryItem[];
-  icon: typeof FileText;
-  stats: { label: string; value: string }[];
-}
-
-const PRODUCT_NOTES: Record<
-  string,
-  { focus: string; architecture: string; capabilities: string[]; impact: string }
-> = {
-  pdf: {
-    focus:
-      'Everyday document workflows—merging files, splitting page ranges, converting images, and shrinking oversized PDFs—often require switching across cluttered apps.',
-    architecture:
-      'Built an integrated Android workspace with 22+ organized PDF utilities and quick Home tool search inside one clean interface.',
-    capabilities: ['Merge & Split PDF', 'Images ↔ PDF', 'Compress PDF'],
-    impact: '22+ PDF Tools · Available',
-  },
-  player: {
-    focus:
-      'Playing locally stored videos on mobile should stay straightforward and private—without forced accounts, cloud syncing, or losing playback position.',
-    architecture:
-      'Engineered on-device folder and title search, Continue Watching auto-resume, customizable 10s seek and speed presets, plus dark/system themes.',
-    capabilities: ['Continue Watching', '10s Seek · Speed', 'On-Device Search'],
-    impact: 'On-Device Playback · v1.0',
-  },
-  imagetool: {
-    focus:
-      'Preparing everyday images—resizing dimensions, converting formats, and balancing file size—should not require opening complex desktop design software.',
-    architecture:
-      'Currently in active development as a streamlined utility for preset resizing, PNG/JPG/WebP conversion, and readable file compression.',
-    capabilities: ['Dimension Resize', 'PNG / JPG / WebP', 'Smart Compression'],
-    impact: 'In Active Development',
-  },
-};
-
-const CASE_STUDIES: CaseStudy[] = TAVQEN_PRODUCTS.map((product, idx) => {
-  const notes = PRODUCT_NOTES[product.id] ?? {
-    focus: product.flowDescription,
-    architecture: product.overview,
-    capabilities: product.features.slice(0, 3).map((f) => f.title),
-    impact: product.status,
-  };
-
-  return {
-    id: product.id,
-    number: `0${idx + 1}`,
-    itemKind: 'product',
-    targetRoute: `/product?id=${product.id}`,
-    actionLabel: 'View Product',
-    notesLabel: 'Product Notes',
-    categoryLabel: product.categoryLabel,
-    shortTitle: product.name,
-    title: `${product.name} — ${product.tagline}`,
-    badgeText: `${product.version} · ${product.platforms[0] ?? 'Cross-Platform'}`,
-    impact: notes.impact,
-    overview: product.overview,
-    challenge: notes.focus,
-    solution: notes.architecture,
-    capabilities: notes.capabilities,
-    image: product.image,
-    alt: product.alt,
-    gallery: product.gallery ?? [],
-    icon: product.icon,
-    stats: product.stats,
-  };
-});
-
-// Real client projects will be listed here once published
-const PROJECT_STUDIES: CaseStudy[] = [];
+type WorkCategory = 'all' | 'Web & Mobile Platform' | 'FinTech Dashboard' | 'Healthcare Platform' | 'E-Commerce';
 
 function resolveInitialWorkIndex(): number {
   if (typeof window === 'undefined') return 0;
   const param = new URLSearchParams(window.location.search).get('project');
   if (!param) return 0;
-  const resolved = getProductById(param).id;
-  const idx = CASE_STUDIES.findIndex((c) => c.id === resolved);
+  const idx = CLIENT_PROJECTS.findIndex((c) => c.id === param || c.link.includes(param));
   return idx >= 0 ? idx : 0;
 }
 
@@ -143,15 +56,11 @@ const HUB_CY = 215;
 const HUB_R_ARC = 150;
 
 export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
-  const [filter, setFilter] = useState<'product' | 'project'>('product');
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<WorkCategory>('all');
   const [activeIndex, setActiveIndex] = useState(resolveInitialWorkIndex);
   const [showAllMobilePills, setShowAllMobilePills] = useState(false);
-  const [selectedShotMap, setSelectedShotMap] = useState<Record<string, number>>({});
 
   const pageRef = useRef<HTMLDivElement | null>(null);
-  const galleryRowRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const galleryBtnRefs = useRef<Record<string, (HTMLButtonElement | null)[]>>({});
   const arcRef = useRef<SVGPathElement | null>(null);
   const hubRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -171,8 +80,11 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
 
   const filterTabs = useMemo(
     () => [
-      { id: 'product' as const, label: 'Product', icon: Layers, badge: String(CASE_STUDIES.length) },
-      { id: 'project' as const, label: 'Project', icon: FolderKanban, badge: String(PROJECT_STUDIES.length) },
+      { id: 'all' as const, label: 'All Projects', icon: Layers, badge: String(CLIENT_PROJECTS.length) },
+      { id: 'Web & Mobile Platform' as const, label: 'Web & Mobile', icon: Smartphone, badge: '1' },
+      { id: 'FinTech Dashboard' as const, label: 'FinTech', icon: Globe, badge: '1' },
+      { id: 'Healthcare Platform' as const, label: 'Healthcare', icon: Cloud, badge: '1' },
+      { id: 'E-Commerce' as const, label: 'E-Commerce', icon: FolderKanban, badge: '1' },
     ],
     []
   );
@@ -232,7 +144,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
   };
 
   const filteredStudies = useMemo(
-    () => (filter === 'product' ? CASE_STUDIES : PROJECT_STUDIES),
+    () => (filter === 'all' ? CLIENT_PROJECTS : CLIENT_PROJECTS.filter((p) => p.category === filter)),
     [filter]
   );
 
@@ -240,7 +152,6 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
     if (prevFilterRef.current !== filter) {
       prevFilterRef.current = filter;
       setActiveIndex(0);
-      setExpandedId(null);
       setShowAllMobilePills(false);
     }
   }, [filter]);
@@ -358,7 +269,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
     [filteredStudies.length, scrollToCard]
   );
 
-  // Sync deep-link ?project= to matching product card on initial mount
+  // Sync deep-link ?project= to matching project card on initial mount
   useEffect(() => {
     if (didInitialDeepLinkRef.current) return;
     didInitialDeepLinkRef.current = true;
@@ -367,10 +278,10 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
       new URLSearchParams(window.location.search).get('project') ||
       new URLSearchParams(window.location.hash.split('?')[1] || '').get('project');
     if (param) {
-      const resolved = getProductById(param).id;
-      const idx = CASE_STUDIES.findIndex((c) => c.id === resolved);
+      const idx = CLIENT_PROJECTS.findIndex(
+        (c: ClientProject) => c.id === param || c.link.includes(param)
+      );
       if (idx >= 0) {
-        setFilter('product');
         setActiveIndex(idx);
       }
     }
@@ -703,25 +614,19 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                   />
 
                   <span className="relative z-10 px-2.5 py-0.5 rounded-full bg-[#E0F7FF] text-[#0088CC] text-[9.5px] font-bold uppercase tracking-wider mb-1.5 whitespace-nowrap">
-                    TAVQEN Studio
+                    Client Portfolio
                   </span>
 
                   <h2 className="relative z-10 text-[16px] font-bold text-[#0B132B] tracking-tight leading-snug">
-                    {filter === 'product' ? 'Our Real Products' : 'Client Projects'}
+                    Client Solutions
                   </h2>
 
                   <p className="relative z-10 text-[11px] text-[#64748B] mt-1 leading-snug max-w-[168px]">
-                    {filter === 'product'
-                      ? 'Click any milestone or scroll to inspect each build.'
-                      : 'Real client project showcases will be added soon.'}
+                    Click any milestone or scroll to inspect each client deliverable.
                   </p>
 
                   <div className="relative z-10 mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[10px] font-bold text-[#0088CC] whitespace-nowrap">
-                    <span>
-                      {filter === 'product'
-                        ? `${CASE_STUDIES.length} In-House Builds`
-                        : '0 Projects Published'}
-                    </span>
+                    <span>{filteredStudies.length} Client Deliverables</span>
                   </div>
 
                   {filteredStudies.length > 1 && (
@@ -804,7 +709,7 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                       <div className="flex items-center gap-2 min-w-0">
                         <span className="w-2 h-2 rounded-full bg-[#00C4FF] shrink-0" />
                         <span className="text-xs font-bold text-[#0B132B] truncate">
-                          {filter === 'product' ? 'Our Real Products' : 'Client Projects'}
+                          Client Projects &amp; Deliverables
                         </span>
                       </div>
 
@@ -887,237 +792,131 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
               })()}
             </div>
 
-            {/* RIGHT STACKED COLUMN: All Real Products (or Honest Empty State for Projects) */}
+            {/* RIGHT STACKED COLUMN: All Client Deliverables */}
             <div className="lg:col-span-7 min-w-0">
               {filteredStudies.length > 0 ? (
-                <div className="space-y-5 sm:space-y-6 lg:space-y-7">
-                  {filteredStudies.map((study, idx) => {
+                <div className="space-y-4 sm:space-y-5 lg:space-y-5">
+                  {filteredStudies.map((project, idx) => {
                     const isActive = idx === safeActiveIndex;
-                    const isExpanded = expandedId === study.id;
-                    const gallery = study.gallery ?? [];
-                    const shotIdx = selectedShotMap[study.id] ?? 0;
-                    const activeShot = gallery[shotIdx];
-                    const displayImg = activeShot?.image ?? study.image;
                     return (
                       <div
-                        key={`${study.itemKind}-${study.id}`}
+                        key={project.id}
                         ref={(el) => {
                           cardRefs.current[idx] = el;
                         }}
-                        onClick={() => handleNav(study.targetRoute)}
+                        onClick={() => handleNav(project.link)}
                         role="button"
                         tabIndex={0}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            handleNav(study.targetRoute);
+                            handleNav(project.link);
                           }
                         }}
-                        className={`work-radial-card scroll-mt-[176px] lg:scroll-mt-28 group relative rounded-[20px] sm:rounded-[26px] bg-white border transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-1 ${isActive
-                          ? 'border-[#00C4FF]/80 shadow-[0_20px_50px_rgba(0,196,255,0.14)]'
-                          : 'border-[#E2E8F0] shadow-[0_12px_32px_rgba(15,23,42,0.05)] hover:border-[#00C4FF]/55 hover:shadow-[0_18px_42px_rgba(0,196,255,0.10)]'
+                        className={`work-radial-card scroll-mt-[176px] lg:scroll-mt-28 group relative rounded-[18px] sm:rounded-[22px] bg-white border transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-0.5 ${project.accentBorderHover} ${isActive
+                          ? 'border-[#00C4FF]/85 shadow-[0_16px_40px_rgba(0,196,255,0.14)]'
+                          : 'border-[#E2E8F0] shadow-[0_8px_24px_rgba(15,23,42,0.04)] hover:shadow-[0_14px_36px_rgba(0,196,255,0.10)]'
                           }`}
                       >
+                        {/* Hover Ambient Glow */}
+                        <div
+                          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{ background: project.glowGradient }}
+                        />
+
                         {/* Top Active Highlight Hairline */}
                         <div
                           className={`absolute top-0 left-8 right-8 sm:left-10 sm:right-10 h-[2px] bg-gradient-to-r from-transparent via-[#00C4FF]/85 to-transparent pointer-events-none z-20 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-70'
                             }`}
                         />
 
-                        {/* COMPACT HERO VISUAL STAGE (uncropped object-contain for full product clarity) */}
-                        <div className="relative p-2 sm:p-3 pb-0">
-                          <div className="relative w-full h-[175px] sm:h-[220px] xl:h-[245px] rounded-[16px] sm:rounded-[20px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/55 p-2.5 sm:p-3 pt-9 sm:pt-3 flex items-center justify-center">
-                            <img
-                              src={displayImg}
-                              alt={activeShot ? `${study.shortTitle} — ${activeShot.title}` : study.alt}
-                              className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                        {/* COMPACT & SLEEK HERO VISUAL STAGE */}
+                        <div className="relative p-2 sm:p-2.5 pb-0">
+                          <div className="relative w-full h-[140px] sm:h-[175px] xl:h-[195px] rounded-[14px] sm:rounded-[18px] overflow-hidden border border-[#E2E8F0]/80 bg-gradient-to-br from-[#F8FAFC] via-[#F0F9FF] to-[#E0F7FF]/50 p-2 sm:p-2.5 flex items-center justify-center">
+                            {/* Tech Blueprint Micro-Grid Pattern */}
+                            <div
+                              className="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay z-0"
+                              style={{
+                                backgroundImage: 'radial-gradient(circle, #0088CC 0.75px, transparent 0.75px)',
+                                backgroundSize: '12px 12px',
+                              }}
                             />
 
-                            {/* Top Floating Glass Badges */}
-                            <div className="absolute top-2 left-2 right-2 sm:top-2.5 sm:left-2.5 sm:right-2.5 flex flex-wrap items-center justify-between gap-1.5 z-10 pointer-events-none">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-sm text-[9px] sm:text-[10px] font-bold text-[#0B132B] uppercase tracking-wider">
-                                <span className="text-[#0088CC] tabular-nums">{study.number}</span>
-                                <span className="text-[#CBD5E1]">·</span>
-                                <span>{study.categoryLabel}</span>
-                              </span>
+                            {/* Viewfinder Micro Corner Cyber Accents */}
+                            <div className="absolute top-1.5 right-1.5 w-2 h-2 border-t-2 border-r-2 border-[#00C4FF]/50 rounded-tr-[3px] pointer-events-none z-20" />
+                            <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b-2 border-r-2 border-[#00C4FF]/50 rounded-br-[3px] pointer-events-none z-20" />
 
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-sm text-[9px] sm:text-[10px] font-bold text-[#0088CC]">
-                                <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0088CC]" />
-                                <span>{study.impact}</span>
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover object-top group-hover:scale-[1.025] transition-transform duration-700 ease-out relative z-10 rounded-[10px]"
+                            />
+
+                            {/* Top Floating Number Badge */}
+                            <div className="absolute top-2 left-2 z-20 pointer-events-none">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E2E8F0] shadow-2xs text-[9px] sm:text-[9.5px] font-bold text-[#0B132B] uppercase tracking-wider">
+                                <span className="relative flex h-1.5 w-1.5">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C4FF] opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00C4FF]"></span>
+                                </span>
+                                <span className="text-[#0088CC] tabular-nums">{project.number}</span>
+                                <span className="text-[#CBD5E1]">·</span>
+                                <span className={project.eyebrowColor}>{project.category}</span>
                               </span>
                             </div>
                           </div>
-
-                          {/* Interactive App Screen Gallery Strip with Left / Right Controls */}
-                          {gallery.length > 1 && (() => {
-                            const selectCardShot = (nextIdx: number) => {
-                              const wrapped = (nextIdx + gallery.length) % gallery.length;
-                              setSelectedShotMap((prev) => ({ ...prev, [study.id]: wrapped }));
-                              const row = galleryRowRefs.current[study.id];
-                              const btn = galleryBtnRefs.current[study.id]?.[wrapped];
-                              if (row && btn) {
-                                const rowRect = row.getBoundingClientRect();
-                                const btnRect = btn.getBoundingClientRect();
-                                const targetLeft =
-                                  row.scrollLeft +
-                                  (btnRect.left - rowRect.left) -
-                                  (row.clientWidth - btnRect.width) / 2;
-                                row.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
-                              }
-                            };
-
-                            return (
-                              <div
-                                onClick={(e) => e.stopPropagation()}
-                                className="mt-2 flex items-center gap-1.5"
-                              >
-                                <button
-                                  type="button"
-                                  onClick={() => selectCardShot(shotIdx - 1)}
-                                  className="w-7 h-7 rounded-full border border-[#E2E8F0] bg-white hover:border-[#0088CC] hover:text-[#0088CC] text-[#475569] shadow-2xs flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer"
-                                  aria-label={`Previous ${study.shortTitle} screen`}
-                                >
-                                  <ChevronLeft className="w-3.5 h-3.5" />
-                                </button>
-
-                                <div
-                                  ref={(el) => {
-                                    galleryRowRefs.current[study.id] = el;
-                                  }}
-                                  className="flex-1 flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth py-0.5"
-                                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                                >
-                                  {gallery.map((shot, gIdx) => {
-                                    const isShotSelected = gIdx === shotIdx;
-                                    return (
-                                      <button
-                                        key={shot.title}
-                                        ref={(el) => {
-                                          if (!galleryBtnRefs.current[study.id]) {
-                                            galleryBtnRefs.current[study.id] = [];
-                                          }
-                                          galleryBtnRefs.current[study.id][gIdx] = el;
-                                        }}
-                                        type="button"
-                                        onClick={() => selectCardShot(gIdx)}
-                                        className={`shrink-0 flex items-center gap-1.5 p-0.5 pr-2 rounded-lg border text-left transition-all cursor-pointer ${isShotSelected
-                                          ? 'bg-[#F0F9FF] border-[#00C4FF] shadow-[0_3px_10px_rgba(0,196,255,0.16)] text-[#0B132B]'
-                                          : 'bg-white border-[#E2E8F0] text-[#64748B] hover:border-[#00C4FF]/50 hover:text-[#0B132B]'
-                                          }`}
-                                      >
-                                        <div className="w-6 h-6 rounded-md bg-[#F8FAFC] border border-[#E2E8F0]/70 overflow-hidden flex items-center justify-center shrink-0">
-                                          <img
-                                            src={shot.image}
-                                            alt={shot.title}
-                                            className="w-full h-full object-contain"
-                                          />
-                                        </div>
-                                        <span className="text-[10px] font-semibold whitespace-nowrap">
-                                          {shot.title}
-                                        </span>
-                                      </button>
-                                    );
-                                  })}
-                                </div>
-
-                                <button
-                                  type="button"
-                                  onClick={() => selectCardShot(shotIdx + 1)}
-                                  className="w-7 h-7 rounded-full border border-[#E2E8F0] bg-white hover:border-[#0088CC] hover:text-[#0088CC] text-[#475569] shadow-2xs flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer"
-                                  aria-label={`Next ${study.shortTitle} screen`}
-                                >
-                                  <ChevronRight className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            );
-                          })()}
                         </div>
 
-                        {/* COMPACT EDITORIAL FOOTER */}
-                        <div className="relative z-10 px-3.5 sm:px-5 pt-2.5 sm:pt-3 pb-3.5 sm:pb-4">
-                          <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                            {study.capabilities.map((cap) => (
-                              <span
-                                key={cap}
-                                className="px-2 py-0.5 rounded-full bg-[#F0F9FF] text-[#0088CC] border border-[#00C4FF]/25 text-[9.5px] sm:text-[10px] font-semibold"
-                              >
-                                {cap}
-                              </span>
-                            ))}
-                            <span className="w-full sm:w-auto sm:ml-auto text-[10.5px] font-semibold text-[#64748B] pt-0.5 sm:pt-0">
-                              {study.badgeText}
+                        {/* COMPACT & REFINED EDITORIAL FOOTER */}
+                        <div className="relative z-10 px-3.5 sm:px-4.5 pt-3 pb-3.5">
+                          {/* CATEGORY EYEBROW */}
+                          <div className="mb-1">
+                            <span
+                              className={`text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.1em] ${project.eyebrowColor}`}
+                            >
+                              {project.category}
                             </span>
                           </div>
 
-                          <div className="mb-2.5 sm:mb-3">
-                            <h3 className="text-base sm:text-[18.5px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors">
-                              {study.title}
-                            </h3>
-                            <p className="mt-1 text-[11.5px] sm:text-[12.5px] text-[#64748B] leading-snug line-clamp-2">
-                              {study.overview}
-                            </p>
+                          {/* PROJECT TITLE */}
+                          <h3 className="text-base sm:text-[18px] font-bold text-[#0B132B] tracking-tight leading-snug group-hover:text-[#0088CC] transition-colors">
+                            {project.title}
+                          </h3>
+
+                          {/* SHORT DESCRIPTION */}
+                          <p className="mt-1 text-[11.5px] sm:text-[12.5px] text-[#64748B] leading-relaxed line-clamp-2">
+                            {project.description}
+                          </p>
+
+                          {/* TECH STACK BADGES */}
+                          <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                            {project.techStack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-2 py-0.5 rounded-full bg-[#F0F9FF] text-[#0088CC] border border-[#00C4FF]/25 text-[9.5px] sm:text-[10px] font-semibold"
+                              >
+                                {tech}
+                              </span>
+                            ))}
                           </div>
 
-                          {/* Optional On-Demand Notes Drawer */}
-                          {isExpanded && (
-                            <div
-                              onClick={(e) => e.stopPropagation()}
-                              className="mb-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]"
+                          {/* CLEAN BOTTOM ROW: 01 / 04 and View Project → */}
+                          <div className="pt-2.5 mt-3 border-t border-[#E2E8F0]/80 flex items-center justify-between gap-2">
+                            <span className="text-[11px] font-bold tabular-nums text-[#64748B]">
+                              {project.number} / {String(CLIENT_PROJECTS.length).padStart(2, '0')}
+                            </span>
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleNav(project.link);
+                              }}
+                              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-[11px] font-bold transition-all duration-300 cursor-pointer group/btn shadow-xs"
                             >
-                              <div>
-                                <span className="text-[9.5px] font-bold text-[#0B132B] uppercase tracking-wider block mb-0.5">
-                                  Practical Need
-                                </span>
-                                <p className="text-[11px] text-[#64748B] leading-snug">{study.challenge}</p>
-                              </div>
-                              <div className="sm:border-l sm:border-[#E2E8F0] sm:pl-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2E8F0]">
-                                <span className="text-[9.5px] font-bold text-[#0088CC] uppercase tracking-wider block mb-0.5">
-                                  Built Solution
-                                </span>
-                                <p className="text-[11px] text-[#475569] leading-snug">{study.solution}</p>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Clean Minimal Metrics + CTA Footer */}
-                          <div className="pt-2.5 border-t border-[#E2E8F0]/80 flex flex-col sm:flex-row flex-wrap sm:items-center justify-between gap-2.5">
-                            <div className="grid grid-cols-3 gap-2.5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-1.5">
-                              {study.stats.map((s, sIdx) => (
-                                <div key={sIdx} className="flex flex-col leading-tight">
-                                  <span className="text-xs sm:text-sm font-bold text-[#0B132B] tabular-nums">
-                                    {s.value}
-                                  </span>
-                                  <span className="mt-0.5 text-[9.5px] sm:text-[10px] text-[#64748B] font-medium">
-                                    {s.label}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-
-                            <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto sm:ml-auto">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setExpandedId(isExpanded ? null : study.id);
-                                }}
-                                className="px-2.5 py-1 rounded-full bg-[#F8FAFC] hover:bg-[#F1F5F9] border border-[#E2E8F0] text-[#475569] text-[11px] font-semibold transition-colors cursor-pointer"
-                              >
-                                {isExpanded ? 'Hide Notes' : study.notesLabel}
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleNav(study.targetRoute);
-                                }}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-[11px] font-bold transition-all duration-300 cursor-pointer group/btn shadow-xs"
-                              >
-                                <span>{study.actionLabel}</span>
-                                <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
-                              </button>
-                            </div>
+                              <span>{project.buttonText}</span>
+                              <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -1135,27 +934,19 @@ export default function OurWorkPage({ onNavigate }: OurWorkPageProps) {
                     <FolderKanban className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg sm:text-2xl font-bold text-[#0B132B] tracking-tight">
-                    No Client Projects Published Yet
+                    No Projects In This Category
                   </h3>
                   <p className="mt-2.5 text-xs sm:text-sm text-[#64748B] max-w-md mx-auto leading-relaxed">
-                    We only showcase real, verified work here. Verified client project case studies will be added soon—meanwhile, explore our 3 real products.
+                    Switch back to All Projects to explore all verified client deliverables.
                   </p>
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                     <button
                       type="button"
-                      onClick={() => setFilter('product')}
+                      onClick={() => setFilter('all')}
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0B132B] hover:bg-[#0088CC] text-white text-xs font-bold transition-colors cursor-pointer"
                     >
-                      <span>Explore Real Products ({CASE_STUDIES.length})</span>
+                      <span>View All Projects ({CLIENT_PROJECTS.length})</span>
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleNav('/contact')}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F8FAFC] hover:bg-[#F0F9FF] border border-[#E2E8F0] hover:border-[#00C4FF]/40 text-[#0B132B] text-xs font-semibold transition-colors cursor-pointer"
-                    >
-                      <span>Start a Project</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[#0088CC]" />
                     </button>
                   </div>
                 </div>

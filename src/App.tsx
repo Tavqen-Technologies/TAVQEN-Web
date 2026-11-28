@@ -37,7 +37,7 @@ export default function App() {
     if (target === 'products') return 'products';
     if (target === 'product' || target.startsWith('product/')) return 'product-detail';
     if (target === 'our-work' || target === 'work') return 'work';
-    if (target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
+    if (target.startsWith('projects/') || target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
     if (target === 'careers' || target === 'career') return 'careers';
     if (target === 'start-a-project' || target === 'project' || target === 'contact') return 'start-a-project';
 
@@ -124,7 +124,7 @@ export default function App() {
     if (target === 'products') return 'products';
     if (target === 'product' || target.startsWith('product/')) return 'product-detail';
     if (target === 'our-work' || target === 'work') return 'work';
-    if (target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
+    if (target.startsWith('projects/') || target === 'work-detail' || target.includes('work-detail')) return 'work-detail';
     if (target === 'careers' || target === 'career') return 'careers';
     if (target === 'start-a-project' || target === 'project' || target === 'contact') return 'start-a-project';
 

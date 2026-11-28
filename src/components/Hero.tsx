@@ -85,72 +85,71 @@ export default function Hero({ onNavigate }: HeroProps = {}) {
     businesses grow and move forward.
   </p>
 
-  {/* CTA */}
-  <div className="hero-stagger mt-7 sm:mt-8 flex flex-col xs:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
-    <button
-      type="button"
-      onClick={() => {
-        if (onNavigate) {
-          onNavigate('/start-a-project');
-        } else {
-          window.location.hash = '/start-a-project';
-        }
-      }}
-      className="
-        w-full xs:w-auto
-        inline-flex items-center justify-center
-        px-6 sm:px-7
-        py-2.5 sm:py-3
-        rounded-full
-        bg-gradient-to-r from-[#00D4FF] to-[#0088CC]
-        text-white
-        text-xs sm:text-[13.5px]
-        font-medium
-        shadow-[0_8px_25px_rgba(0,196,255,0.25)]
-        hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)]
-        hover:scale-[1.02]
-        active:scale-95
-        transition-all
-        cursor-pointer
-      "
-    >
-      <span>Start a Project</span>
-    </button>
-    <button
-      type="button"
-      onClick={() => {
-        const target = document.getElementById('work') || document.getElementById('products');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else if (onNavigate) {
-          onNavigate('/our-work');
-        } else {
-          window.location.hash = '/our-work';
-        }
-      }}
-      className="
-        w-full xs:w-auto
-        inline-flex items-center justify-center
-        px-6 sm:px-7
-        py-2.5 sm:py-3
-        rounded-full
-        bg-white/80 backdrop-blur-xs
-        text-[#0B132B]
-        text-xs sm:text-[13.5px]
-        font-medium
-        border border-black/[0.08]
-        shadow-[0_4px_16px_rgba(0,0,0,0.04)]
-        hover:bg-white hover:text-[#0088CC] hover:border-[#0088CC]/40
-        hover:shadow-[0_8px_24px_rgba(0,196,255,0.12)]
-        hover:scale-[1.02]
-        active:scale-95
-        transition-all
-        cursor-pointer
-      "
-    >
-      <span>Explore Our Work</span>
-    </button>
-  </div>
+ {/* CTA */}
+<div className="hero-stagger mt-7 sm:mt-8 flex flex-row items-center justify-center gap-3 sm:gap-4 w-full px-4 sm:px-0">
+  <button
+    type="button"
+    onClick={() => {
+      if (onNavigate) {
+        onNavigate('/start-a-project');
+      } else {
+        window.location.hash = '/start-a-project';
+      }
+    }}
+    className="
+      inline-flex items-center justify-center
+      px-6 sm:px-7
+      py-2.5 sm:py-3
+      rounded-full
+      bg-gradient-to-r from-[#00D4FF] to-[#0088CC]
+      text-white
+      text-xs sm:text-[13.5px]
+      font-medium
+      shadow-[0_8px_25px_rgba(0,196,255,0.25)]
+      hover:shadow-[0_10px_30px_rgba(0,196,255,0.35)]
+      hover:scale-[1.02]
+      active:scale-95
+      transition-all
+      cursor-pointer
+      whitespace-nowrap
+    "
+  >
+    <span>Start a Project</span>
+  </button>
+
+  <button
+    type="button"
+    onClick={() => {
+      if (onNavigate) {
+        onNavigate('/our-work');
+      } else {
+        window.location.hash = '/our-work';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }}
+    className="
+      inline-flex items-center justify-center
+      px-6 sm:px-7
+      py-2.5 sm:py-3
+      rounded-full
+      bg-white/80 backdrop-blur-xs
+      text-[#0B132B]
+      text-xs sm:text-[13.5px]
+      font-medium
+      border border-black/[0.08]
+      shadow-[0_4px_16px_rgba(0,0,0,0.04)]
+      hover:bg-white hover:text-[#0088CC] hover:border-[#0088CC]/40
+      hover:shadow-[0_8px_24px_rgba(0,196,255,0.12)]
+      hover:scale-[1.02]
+      active:scale-95
+      transition-all
+      cursor-pointer
+      whitespace-nowrap
+    "
+  >
+    <span>Explore Our Work</span>
+  </button>
+</div>
 
 </div>
       {/* CONTINUOUSLY SLIDING PRODUCT IMAGES SHOWCASE */}
